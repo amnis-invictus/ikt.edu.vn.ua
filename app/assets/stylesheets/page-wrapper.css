@@ -1,0 +1,5 @@
+.page-wrapper {
+  overflow: hidden;
+  background-color: #fff;
+  display: flex;
+}

@@ -1,0 +1,20 @@
+.header {
+  min-height: 100px;
+}
+
+.header img {
+  height: 100px;
+  margin: 0 auto;
+  display: block;
+}
+
+.header__logo {
+  position: absolute;
+  width: 140px;
+}
+
+.header__main {
+  position: relative;
+  left: 140px;
+  width: 820px;
+}

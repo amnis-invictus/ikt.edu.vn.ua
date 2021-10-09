@@ -1,0 +1,28 @@
+ul.nav {
+  width: 140px;
+  list-style: none;
+  border-top: 1px solid #666;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+ul.nav li {
+  border-bottom: 1px solid #666;
+}
+
+ul.nav a,
+ul.nav a:visited {
+  padding: 5px;
+  display: block;
+  width: 130px;
+  text-decoration: none;
+  background-color: #c6d580;
+  color: #000;
+}
+
+ul.nav a:hover,
+ul.nav a:active,
+ul.nav a:focus {
+  background-color: #adb96e;
+  color: #fff;
+}

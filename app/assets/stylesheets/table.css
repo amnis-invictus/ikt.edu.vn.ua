@@ -1,0 +1,34 @@
+@charset "utf-8";
+
+.content div table {
+  width: 880px;
+  margin: 0px auto;
+}
+
+table {
+  border-collapse: collapse;
+  border: 1px solid black;
+}
+
+table th {
+  border: 2px solid black;
+}
+
+table td {
+  border: 1px solid black;
+}
+
+table > thead > tr th {
+  padding: 1px 2px;
+  font-size: 16px;
+  text-align: center;
+}
+
+table > tbody > tr td {
+  font-size: 14px;
+  padding: 0px 2px;
+}
+
+table > tbody > tr:nth-child(even) {
+  background: #cccccc;
+}

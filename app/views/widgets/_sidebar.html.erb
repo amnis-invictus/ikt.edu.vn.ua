@@ -1,0 +1,15 @@
+<div id="sidebar">
+  <ul class="nav">
+    <li><%= link_to 'Реєстрація', [:new, resource, :user] %></li>
+    <li><%= link_to 'Зареєстровані', [resource, :users] %></li>
+    <li><%= link_to 'Завдання', [:content, resource] %></li>
+    <li><%= link_to 'Відправлення розв\'язків', [:new, resource, :solution] %></li>
+    <li><%= link_to 'Статистика олімпіади', [resource, :stats] %></li>
+    <li><%= link_to 'Результати олімпіада', [resource, :results] %></li>
+    <li><%= link_to 'Архів', [:contests, archived: true] %></li>
+    <li><%= link_to 'Головна', :root %></li>
+    <li></li>
+  </ul>
+  <div id="time">--:--:--</div>
+</div>
+<script async src="/plugins/time.php?datetime_zone=3" type="text/javascript"></script>

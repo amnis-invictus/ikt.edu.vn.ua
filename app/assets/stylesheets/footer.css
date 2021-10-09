@@ -1,0 +1,13 @@
+.footer-text {
+  text-align: center;
+}
+
+.footer-hotlog-wrapper {
+  background-color: #8FBC8F;
+  margin-left: 940px;
+  width: 94px;
+  padding-top: 5px;
+  border-radius: 5px;
+  border: 2px solid #FFF;
+  position: absolute; top: 25px;
+}

@@ -6,11 +6,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <%= stylesheet_link_tag 'font', media: 'all' %>
     <%= stylesheet_link_tag 'application', media: 'all' %>
     <%= yield :stylesheets %>
     <%= javascript_include_tag :application %>
   </head>
   <body>
-    <%= yield %>
+    <div id="container">
+      <%= render 'widgets/header' %>
+      <div class="page-wrapper">
+        <%= render 'widgets/sidebar' %>
+        <div id="contents" class="content">
+          <%= yield %>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+      <%= render 'widgets/footer' %>
+    </div>
   </body>
 </html>
