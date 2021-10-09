@@ -18,7 +18,6 @@ gem 'rails_admin', '~> 2.0'
 gem 'redis', '~> 4.0', require: %w[redis redis/connection/hiredis]
 gem 'redis-namespace'
 gem 'sassc-rails'
-gem 'simple_form'
 gem 'uglifier'
 
 group :development, :test do

@@ -252,9 +252,6 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
-    simple_form (5.1.0)
-      actionpack (>= 5.2)
-      activemodel (>= 5.2)
     spring (3.0.0)
     sprockets (4.0.2)
       concurrent-ruby (~> 1.0)
@@ -309,7 +306,6 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   sassc-rails
-  simple_form
   spring
   tzinfo-data
   uglifier
