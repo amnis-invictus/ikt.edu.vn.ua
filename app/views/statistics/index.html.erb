@@ -1,0 +1,15 @@
+<h3>Статистика олімпіади</h3>
+<table style="width: 100%;">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Прізвище, Ім'я, По батькові</th>
+      <% contest.tasks.order(:id).each do |task| %>
+        <th><%= task.display_name %></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render collection %>
+  </tbody>
+</table>

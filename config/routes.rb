@@ -10,6 +10,6 @@ Rails.application.routes.draw do
 
     resource :upload, only: %i[new create edit update]
 
-    resources :stats, :results, only: :index
+    resources :statistics, :results, only: :index
   end
 end
