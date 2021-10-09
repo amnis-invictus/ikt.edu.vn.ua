@@ -1,0 +1,20 @@
+<div id="container">
+  <h1>Інформаційні технології</h1>
+  <div align="center">
+    <p><span>Вітаємо вас на офіційному сайті олімпіади</span></p>
+    <% Contest.where(archived: false).find_each do |contest| %>
+      <%= link_to contest.display_name, contest, class: 'btn btn-4 btn-4c' %>
+    <% end %>
+    <%= link_to 'Архів', [:contests, archived: true], class: 'btn btn-4 btn-4c' %>
+    <p>
+      <span>
+        <a href="/pamyatka/ikt_2018.docx" style="text-decoration: underline; color: #09ffea;">
+          Пам'ятка учасника олімпіади (оновлено 04.12.2018)
+        </a>
+      </span>
+    </p>
+  </div>
+</div>
+<%= content_for :stylesheets do %>
+  <%= stylesheet_link_tag 'home', media: 'all' %>
+<% end %>
