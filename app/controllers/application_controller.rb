@@ -8,6 +8,6 @@ class ApplicationController < ActionController::Base
   private
 
   def contest
-    @contest = Contest.find params[:contest_id]
+    @contest ||= Contest.find params[:contest_id]
   end
 end
