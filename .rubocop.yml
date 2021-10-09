@@ -80,8 +80,6 @@ Layout/ArrayAlignment:
   EnforcedStyle: with_fixed_indentation
 Layout/HashAlignment:
   EnforcedLastArgumentHashStyle: always_ignore
-Layout/SpaceInsideStringInterpolation:
-  EnforcedStyle: space
 Layout/SpaceInLambdaLiteral:
   EnforcedStyle: require_space
 Layout/FirstArrayElementIndentation:
