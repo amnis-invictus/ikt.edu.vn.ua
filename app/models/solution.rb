@@ -37,7 +37,7 @@ class Solution < ApplicationRecord
   def file_name_must_match_task_file_names
     return unless task && file.attached?
 
-    unless task.file_names.all? { file.filename.to_s == _1 }
+    unless task.file_names.any? { file.filename.to_s == _1 }
       accepted = task.file_names.map { "\"#{_1}\"" }.join(', ')
       errors.add :base, "\"#{file.filename}\" Не допустима назва файлу. Очікується #{accepted}."
     end
