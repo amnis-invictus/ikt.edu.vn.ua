@@ -11,6 +11,10 @@ class UsersController < ApplicationController
 
   attr_reader :resource
 
+  def collection
+    @collection ||= contest.users.order :id
+  end
+
   def resource_params
     params.require(:user).permit \
       :name,
