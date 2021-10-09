@@ -13,10 +13,10 @@ gem 'jbuilder', '~> 2.7'
 gem 'jquery-rails'
 gem 'pg', '~> 1.1'
 gem 'puma', '~> 5.0'
-gem 'rails_admin', '~> 2.0'
 gem 'rails', '~> 6.1.4', '>= 6.1.4.1'
-gem 'redis-namespace'
+gem 'rails_admin', '~> 2.0'
 gem 'redis', '~> 4.0', require: %w[redis redis/connection/hiredis]
+gem 'redis-namespace'
 gem 'sassc-rails'
 gem 'simple_form'
 gem 'uglifier'
@@ -29,13 +29,13 @@ group :development, :test do
 end
 
 group :development do
-  gem 'rack-mini-profiler', '~> 2.0'
-  gem 'listen', '~> 3.3'
-  gem 'spring'
   gem 'bullet'
   gem 'capistrano'
   gem 'capistrano-rails'
+  gem 'listen', '~> 3.3'
+  gem 'rack-mini-profiler', '~> 2.0'
+  gem 'spring'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
