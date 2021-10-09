@@ -1,7 +1,6 @@
 require Rails.root.join 'lib/rails_admin/config/fields/types/citext'
 
 RailsAdmin.config do |config|
-
   ### Popular gems integration
 
   ## == Devise ==
