@@ -13,6 +13,7 @@ gem 'jbuilder', '~> 2.7'
 gem 'jquery-rails'
 gem 'pg', '~> 1.1'
 gem 'puma', '~> 5.0'
+gem 'rails_admin', '~> 2.0'
 gem 'rails', '~> 6.1.4', '>= 6.1.4.1'
 gem 'redis-namespace'
 gem 'redis', '~> 4.0', require: %w[redis redis/connection/hiredis]
