@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_09_111745) do
+ActiveRecord::Schema.define(version: 2021_10_09_212035) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -72,7 +72,9 @@ ActiveRecord::Schema.define(version: 2021_10_09_111745) do
     t.inet "ips", default: [], null: false, array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "upload_number", default: 1, null: false
     t.index ["task_id"], name: "index_solutions_on_task_id"
+    t.index ["user_id", "task_id", "upload_number"], name: "index_solutions_on_user_id_and_task_id_and_upload_number", unique: true
     t.index ["user_id"], name: "index_solutions_on_user_id"
   end
 
@@ -99,6 +101,7 @@ ActiveRecord::Schema.define(version: 2021_10_09_111745) do
     t.inet "registration_ips", default: [], null: false, array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["contest_id", "secret"], name: "index_users_on_contest_id_and_secret"
     t.index ["contest_id"], name: "index_users_on_contest_id"
   end
 

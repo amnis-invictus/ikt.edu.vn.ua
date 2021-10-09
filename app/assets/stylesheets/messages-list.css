@@ -1,4 +1,7 @@
-.errors-container {
+.messages-list {
   list-style: none;
+}
+
+.error {
   color: red;
 }

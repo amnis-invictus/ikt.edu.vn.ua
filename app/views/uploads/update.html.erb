@@ -1,0 +1,18 @@
+<ul class="messages-list">
+  <% resource.solutions.each_with_index do |solution, index| %>
+    <% solution.errors.full_messages.each do |error_message| %>
+      <li class="error">
+        <%= solution.task_display_name || index %>: <%= error_message %>
+      </li>
+    <% end %>
+
+    <% if solution.errors.blank? %>
+      <li>
+        <%= solution.task_display_name || index %>: успішно завантажений на сервер
+        <% if solution.upload_number > 1 %>
+          (<%= solution.upload_number %> разів із <%= solution.task_upload_limit %>)
+        <% end %>
+      </li>
+    <% end %>
+  <% end %>
+</ul>

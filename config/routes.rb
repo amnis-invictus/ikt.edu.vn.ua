@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
     resources :users, only: %i[index new create]
 
-    resources :solutions, only: %i[new create]
+    resource :upload, only: %i[new create edit update]
 
     resources :stats, :results, only: :index
   end

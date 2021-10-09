@@ -1,0 +1,18 @@
+<h3 class="for-form">Відправка розв'язків</h3>
+
+<%= form_with model: resource, url: [contest, :upload], method: :patch, class: 'default-form' do |f| %>
+  <%= f.hidden_field :secret %>
+
+  <%= f.fields_for :solutions, include_id: false do |b| %>
+    <%= b.hidden_field :task_id %>
+
+    <div class="field">
+      <%= b.label :file, b.object.task_display_name %>
+      <%= b.file_field :file %>
+    </div>
+  <% end %>
+
+  <div class="field" align="right">
+    <%= f.submit 'Завантажити', class: 'btn' %>
+  </div>
+<% end %>

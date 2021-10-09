@@ -1,5 +1,5 @@
-<ul class="errors-container">
+<ul class="messages-list">
   <% resource.errors.full_messages.each do |message| %>
-    <li><%= message %></li>
+    <li class="error"><%= message %></li>
   <% end %>
 </ul>
