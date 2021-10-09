@@ -1,0 +1,21 @@
+uk:
+  users:
+    new:
+      city_prompt: Виберіть місто (район)
+      grade_prompt: Виберіть клас
+      contest_site_prompt: Виберіть заклад, у якому ви пишете олімпіаду
+  activerecord:
+    errors:
+      messages:
+        blank: не може бути порожнім
+        invalid: помилковий
+        taken: вже зареєстровано
+    attributes:
+      user:
+        registration_secret: Код доступу
+        name: Прізвище, Ім'я, По батькові
+        email: Ваш e-mail
+        city: Місто
+        institution: Ваш навчальний заклад
+        grade: Клас
+        contest_site: Заклад, у якому ви пишете олімпіаду

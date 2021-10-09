@@ -1,0 +1,7 @@
+<h3 class="for-form">Реєстрація учасника</h3>
+
+<% if resource.errors.any? %>
+  <%= render 'errors' %>
+<% else %>
+  <%= render 'form' %>
+<% end %>

@@ -3,5 +3,11 @@ class ApplicationController < ActionController::Base
 
   before_action :build_resource, only: :create
 
-  helper_method :current_user, :parent, :collection, :resource
+  helper_method :current_user, :parent, :collection, :resource, :contest
+
+  private
+
+  def contest
+    @contest = Contest.find params[:contest_id]
+  end
 end

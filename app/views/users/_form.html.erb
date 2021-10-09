@@ -1,0 +1,37 @@
+<%= form_with model: [contest, resource], id: 'regform', class: 'default-form' do |f| %>
+  <%= f.hidden_field 'registration_ips[]' %>
+  <div class="field">
+    <%= f.password_field :registration_secret, required: true, placeholder: true %>
+  </div>
+  <div class="field">
+    <%= f.text_field :name, required: true, placeholder: true %>
+  </div>
+  <div class="field">
+    <%= f.email_field :email, required: true, placeholder: true %>
+  </div>
+  <div class="field">
+    <%= f.select :city, ['м. Вінниця'], required: true, prompt: t('users.new.city_prompt') %>
+  </div>
+  <div class="field">
+    <%= f.text_field :institution, required: true, placeholder: true %>
+  </div>
+  <div class="field">
+    <%= f.select :grade, [
+          ['11 клас', 11],
+          ['10 клас', 10],
+          ['9 клас', 9],
+          ['8 клас і нижче', 8],
+      ], required: true, prompt: t('users.new.grade_prompt') %>
+  </div>
+  <div class="field">
+    <%= f.select :contest_site, [
+      ['Вінницький технічний ліцей, каб №23', 'ВТЛ-23'],
+      ['Вінницький технічний ліцей, каб №28', 'ВТЛ-28'],
+      ['Вінницький технічний ліцей, каб №29', 'ВТЛ-29'],
+      ['Вінницький технічний ліцей, каб №12', 'ВТЛ-12'],
+      ], required: true, prompt: t('users.new.contest_site_prompt') %>
+  </div>
+  <div class="field" align="right">
+    <%= f.submit 'Зареєструватись', class: 'btn' %>
+  </div>
+<% end %>

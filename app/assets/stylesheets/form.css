@@ -1,0 +1,55 @@
+form.default-form {
+  width: 400px;
+  background-color: #fff;
+}
+
+h3.for-form {
+  color: #222426;
+  font-size: 1.5em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+form.default-form div.field {
+  margin-right: 6px;
+  display: block;
+  width: 100%;
+}
+
+form.default-form div.field label {
+  color: #333333;
+  font-size: 1em;
+  padding-left: 3px;
+}
+
+form.default-form div.field input,
+form.default-form div.field select {
+  color: #333333;
+  margin-bottom: 10px;
+  width: 100%;
+  font-size: 1em;
+  padding: 3px;
+  border-radius: 3px;
+  box-sizing: border-box;
+}
+
+form.default-form div.field input.btn {
+  width: auto;
+  padding: 8px;
+  color: #fff;
+  border: 1px solid #636363;
+  font-size: 20px;
+  background: rgb(83, 181, 174); /* Old browsers */
+  background: -moz-linear-gradient(-45deg, rgba(83, 181, 174, 1) 0%, rgba(0, 112, 105, 1) 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(
+    -45deg,
+    rgba(83, 181, 174, 1) 0%,
+    rgba(0, 112, 105, 1) 100%
+  ); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(
+    135deg,
+    rgba(83, 181, 174, 1) 0%,
+    rgba(0, 112, 105, 1) 100%
+  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#53b5ae', endColorstr='#007069',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}

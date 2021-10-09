@@ -1,7 +1,7 @@
 class ContestsController < ApplicationController
   private
 
-  def resource
-    @resource = Contest.find params[:id]
+  def contest
+    @contest = Contest.find params[:id]
   end
 end

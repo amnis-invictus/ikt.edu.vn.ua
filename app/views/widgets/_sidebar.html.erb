@@ -1,11 +1,11 @@
 <div id="sidebar">
   <ul class="nav">
-    <li><%= link_to 'Реєстрація', [:new, resource, :user] %></li>
-    <li><%= link_to 'Зареєстровані', [resource, :users] %></li>
-    <li><%= link_to 'Завдання', [:content, resource] %></li>
-    <li><%= link_to 'Відправлення розв\'язків', [:new, resource, :solution] %></li>
-    <li><%= link_to 'Статистика олімпіади', [resource, :stats] %></li>
-    <li><%= link_to 'Результати олімпіада', [resource, :results] %></li>
+    <li><%= link_to 'Реєстрація', [:new, contest, :user] %></li>
+    <li><%= link_to 'Зареєстровані', [contest, :users] %></li>
+    <li><%= link_to 'Завдання', [:content, contest] %></li>
+    <li><%= link_to 'Відправлення розв\'язків', [:new, contest, :solution] %></li>
+    <li><%= link_to 'Статистика олімпіади', [contest, :stats] %></li>
+    <li><%= link_to 'Результати олімпіада', [contest, :results] %></li>
     <li><%= link_to 'Архів', [:contests, archived: true] %></li>
     <li><%= link_to 'Головна', :root %></li>
     <li></li>
