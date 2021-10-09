@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  before_action { I18n.locale = :uk }
+
   before_action :initialize_resource, only: :new
 
   before_action :build_resource, only: :create
