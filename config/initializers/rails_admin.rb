@@ -49,4 +49,6 @@ RailsAdmin.config do |config|
         ActiveSupport::SecurityUtils.secure_compare(password, expected_pass)
     end
   end
+
+  config.parent_controller = 'AdminController'
 end
