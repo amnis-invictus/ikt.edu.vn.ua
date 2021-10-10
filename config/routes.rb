@@ -12,4 +12,6 @@ Rails.application.routes.draw do
 
     resources :statistics, :results, only: :index
   end
+
+  resource :timer, only: :show
 end
