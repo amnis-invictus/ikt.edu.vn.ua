@@ -10,8 +10,13 @@ class User < ApplicationRecord
   has_many :results, inverse_of: :user
 
   before_create :assign_secret
+  before_save :ips_compact, if: :registration_ips_changed?
 
   private
+
+  def ips_compact
+    self.registration_ips = registration_ips.compact
+  end
 
   def registration_secret_must_be_valid
     unless ActiveSupport::SecurityUtils.secure_compare registration_secret, contest.registration_secret
