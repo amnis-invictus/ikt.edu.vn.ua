@@ -50,4 +50,21 @@ RailsAdmin.config do |config|
   end
 
   config.parent_controller = 'AdminController'
+
+  config.model 'Task' do |_config|
+    configure :file_names, :pg_string_array
+  end
+
+  config.model 'User' do |_config|
+    configure :registration_ips, :pg_inet_array
+  end
+
+  config.model 'Solution' do |_config|
+    configure :ips, :pg_inet_array
+  end
+
+  config.model 'Contest' do |_config|
+    configure :cities, :pg_string_array
+    configure :contest_sites, :pg_string_array
+  end
 end

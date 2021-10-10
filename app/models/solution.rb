@@ -7,10 +7,15 @@ class Solution < ApplicationRecord
   has_one_attached :file
 
   before_validation :assign_upload_number, on: :create
+  before_save :ips_compact, if: :ips_changed?
 
   delegate :display_name, :upload_limit, to: :task, prefix: true, allow_nil: true
 
   private
+
+  def ips_compact
+    self.ips = ips.compact
+  end
 
   def assign_upload_number
     return unless user && task
