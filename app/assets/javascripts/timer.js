@@ -7,10 +7,10 @@ var datetime = {
     return str.length == 2 ? str : '0' + str;
   },
   update: function () {
-    var time = Math.round(((new Date()).valueOf() + this.offset) / 1000);
-    var si = time % 60;
-    var mi = parseInt(time / 60) % 60;
-    var hi = parseInt(time / 3600 + this.gmt) % 24;
+    var date = new Date((new Date()).valueOf() + this.offset);
+    var si = date.getSeconds();
+    var mi = date.getMinutes();
+    var hi = date.getHours();
     this.element.innerHTML = this.width(hi) + ':' + this.width(mi) + ':' + this.width(si);
   },
   synchronize: function () {
