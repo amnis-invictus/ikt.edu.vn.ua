@@ -8,7 +8,7 @@
 
     <div class="field">
       <%= b.label :file, b.object.task_display_name %>
-      <%= b.file_field :file, direct_upload: true %>
+      <%= b.file_field :file, direct_upload: true, accept: b.object.task_accepted_ext %>
     </div>
   <% end %>
 
