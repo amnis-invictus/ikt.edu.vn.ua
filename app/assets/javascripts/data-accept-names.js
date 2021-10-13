@@ -5,7 +5,7 @@ $(document).on('change', 'input[type="file"][data-accept-names]', function () {
     var name = this.files[0].name;
     if (acceptNames.every(function (v) { return v != name; })) {
       var accepted = acceptNames.map(function (v) { return '"' + v + '"'; }).join(', ');
-      var error = '"' + name + '" Не допустима назва файлу. Очікується ' + accepted + '.';
+      var error = '"' + name + '" - не допустима назва файлу. Очікується ' + accepted + '.';
       this.setCustomValidity(error);
       alert(error);
     }

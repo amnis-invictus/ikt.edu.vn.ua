@@ -39,7 +39,7 @@ class Solution < ApplicationRecord
 
     unless task.file_names.any? { file.filename.to_s == _1 }
       accepted = task.file_names.map { "\"#{_1}\"" }.join(', ')
-      errors.add :base, "\"#{file.filename}\" Не допустима назва файлу. Очікується #{accepted}."
+      errors.add :base, "\"#{file.filename}\" - не допустима назва файлу. Очікується #{accepted}."
     end
   end
 end
