@@ -8,7 +8,7 @@ class Solution < ApplicationRecord
 
   before_validation :assign_upload_number, on: :create
 
-  delegate :display_name, :upload_limit, :accepted_ext, to: :task, prefix: true, allow_nil: true
+  delegate :display_name, :upload_limit, :accepted_ext, :file_names, to: :task, prefix: true, allow_nil: true
 
   private
 
