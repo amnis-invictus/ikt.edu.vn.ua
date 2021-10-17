@@ -10,7 +10,7 @@
     <%= f.email_field :email, required: true, placeholder: true %>
   </div>
   <div class="field">
-    <%= f.select :city, ['м. Вінниця'], required: true, prompt: t('users.new.city_prompt') %>
+    <%= f.select :city, resource.contest.cities, required: true, prompt: t('users.new.city_prompt') %>
   </div>
   <div class="field">
     <%= f.text_field :institution, required: true, placeholder: true %>
