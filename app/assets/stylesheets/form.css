@@ -52,4 +52,5 @@ form.default-form div.field input.btn {
     rgba(0, 112, 105, 1) 100%
   ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#53b5ae', endColorstr='#007069',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+  cursor: pointer;
 }
