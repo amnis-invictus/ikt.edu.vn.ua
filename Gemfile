@@ -19,6 +19,7 @@ gem 'redis', '~> 4.0', require: %w[redis redis/connection/hiredis]
 gem 'redis-namespace'
 gem 'sassc-rails'
 gem 'uglifier'
+gem 'pundit'
 
 group :development, :test do
   gem 'rubocop'
