@@ -1,1 +1,5 @@
-<%== contest.content %>
+<% if contest.task_open? %>
+  <%== contest.content %>
+<% else %>
+  <p class="error">Перегляд завдання заборонено. Повідомте технічного працівника.</p>
+<% end %>
