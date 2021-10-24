@@ -18,4 +18,23 @@ class Upload
     @solutions = solutions.filter { _1.file.present? }
     solutions.each &:save if valid?
   end
+
+  def messages
+    result = []
+    result << { type: :error, text: 'Виберіть хоча б один файл!' } if solutions.blank?
+    solutions.each_with_index do |solution, index|
+      name = solution.task_display_name || index
+      if solution.errors.blank? && solution.persisted?
+        text = "#{name}: успішно завантажений на сервер"
+        text << " (#{solution.upload_number} разів із #{solution.task_upload_limit})" if solution.upload_number > 1
+        result << { type: :info, text: text }
+      elsif solution.errors.blank?
+        text = "#{name}: Помилка! Не вдалося завантажити файл на сервер!"
+        result << { type: :error, text: text }
+      else
+        solution.errors.full_messages.each { result << { type: :error, text: _1 } }
+      end
+    end
+    result
+  end
 end

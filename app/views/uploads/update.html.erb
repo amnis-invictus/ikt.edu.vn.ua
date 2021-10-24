@@ -5,29 +5,7 @@
 <% end %>
 
 <ul class="messages-list">
-  <% resource.solutions.each_with_index do |solution, index| %>
-    <% name = solution.task_display_name || index %>
-    <% if solution.errors.blank? && solution.persisted? %>
-      <li>
-        <%= name %>: успішно завантажений на сервер
-        <% if solution.upload_number > 1 %>
-          (<%= solution.upload_number %> разів із <%= solution.task_upload_limit %>)
-        <% end %>
-      </li>
-    <% elsif solution.errors.blank? %>
-      <li class="error">
-        <%= name %>: Помилка! Не вдалося завантажити файл на сервер!
-      </li>
-    <% else %>
-      <% solution.errors.full_messages.each do |error_message| %>
-        <li class="error">
-          <%= name %>: <%= error_message %>
-        </li>
-      <% end %>
-    <% end %>
-  <% end %>
-
-  <% if resource.solutions.blank?  %>
-    <li class="error">Виберіть хоча б один файл!</li>
+  <% resource.messages.each do |message| %>
+    <%= tag.li message[:text], class: message[:type] %>
   <% end %>
 </ul>
