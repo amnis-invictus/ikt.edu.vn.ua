@@ -9,6 +9,8 @@ class ApplicationController < ActionController::Base
 
   before_action { cookies.permanent.encrypted[:ikt_device_id] ||= SecureRandom.uuid }
 
+  before_action { Rails.logger.info "  Device ID: #{cookies.encrypted[:ikt_device_id]}" }
+
   before_action :initialize_resource, only: :new
 
   before_action :build_resource, only: :create
@@ -40,7 +42,7 @@ class ApplicationController < ActionController::Base
   def logger_params
     {
       contest_id: contest.id,
-      device_id: cookies.permanent.encrypted[:ikt_device_id],
+      device_id: cookies.encrypted[:ikt_device_id],
       action: "#{controller_name}##{action_name}",
       status: @status,
       values: logger_values,
