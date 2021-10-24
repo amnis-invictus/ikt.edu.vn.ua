@@ -6,11 +6,20 @@
   </div>
 <% end %>
 
-<%= form_with model: resource, url: [contest, :upload], class: 'default-form' do |f| %>
-  <div class="field">
-    <%= f.password_field :secret, required: true, placeholder: 'Код доступу' %>
-  </div>
-  <div class="field" align="right">
-    <%= f.submit 'Підтвердити', class: 'btn' %>
-  </div>
+<% if policy(resource).create? %>
+  <%= form_with model: resource, url: [contest, :upload], class: 'default-form' do |f| %>
+    <div class="field">
+      <%= f.password_field :secret, required: true, placeholder: 'Код доступу' %>
+    </div>
+
+    <%= f.fields_for :solutions, include_id: false do |b| %>
+      <%= b.hidden_field :task_id %>
+    <% end %>
+
+    <div class="field" align="right">
+      <%= f.submit 'Підтвердити', class: 'btn' %>
+    </div>
+  <% end %>
+<% else %>
+  <p class="error">Відправка розв'язків заборонена. Повідомте технічного працівника.</p>
 <% end %>
