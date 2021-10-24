@@ -6,13 +6,21 @@ end
 
 class RailsAdminPgStringArray < RailsAdminPgArray
   def parse_input params
-    params[name] = params[name].split(',').collect(&:strip) if params[name].is_a? ::String
+    params[name] = params[name].split(',').filter_map { _1.strip.presence } if params[name].is_a? ::String
   end
 end
 
 class RailsAdminPgInetArray < RailsAdminPgArray
   def parse_input params
-    params[name] = params[name].split(',').collect(&:strip) if params[name].is_a? ::String
+    params[name] = params[name].split(',').filter_map { cast_value _1 } if params[name].is_a? ::String
+  end
+
+  private
+
+  def cast_value value
+    IPAddr.new value.strip
+  rescue ArgumentError
+    nil
   end
 end
 
