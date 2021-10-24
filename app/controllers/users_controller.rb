@@ -1,8 +1,6 @@
 class UsersController < ApplicationController
   log_action only: :create
 
-  rescue_from(Pundit::NotAuthorizedError) { redirect_to action: :new }
-
   def create
     if resource.save
       @status = :success
@@ -50,5 +48,9 @@ class UsersController < ApplicationController
       ['usr secret', resource.secret],
       ['errors', resource.errors],
     ]
+  end
+
+  def handle_not_authorized
+    redirect_to action: :new
   end
 end
