@@ -1,4 +1,6 @@
-require Rails.root.join 'lib/rails_admin/config/fields/types/citext'
+RailsAdmin::Config::Fields::Types.register :citext, RailsAdmin::Config::Fields::Types::Citext
+RailsAdmin::Config::Fields::Types.register :pg_string_array, RailsAdmin::Config::Fields::Types::PgStringArray
+RailsAdmin::Config::Fields::Types.register :pg_inet_array, RailsAdmin::Config::Fields::Types::PgInetArray
 
 RailsAdmin.config do |config|
   ### Popular gems integration
