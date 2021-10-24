@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  rescue_from(Pundit::NotAuthorizedError) { redirect_to action: :new }
+
   def create
     if resource.save
       render :create
