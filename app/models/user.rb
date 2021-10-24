@@ -14,6 +14,8 @@ class User < ApplicationRecord
   private
 
   def registration_secret_must_be_valid
+    return unless contest
+
     unless ActiveSupport::SecurityUtils.secure_compare registration_secret, contest.registration_secret
       errors.add :registration_secret, :invalid
     end
