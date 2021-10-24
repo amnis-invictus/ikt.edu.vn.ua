@@ -1,10 +1,14 @@
 class UsersController < ApplicationController
+  log_action only: :create
+
   rescue_from(Pundit::NotAuthorizedError) { redirect_to action: :new }
 
   def create
     if resource.save
+      @status = :success
       render :create
     else
+      @status = :error
       render :new
     end
   end
@@ -36,5 +40,15 @@ class UsersController < ApplicationController
 
   def build_resource
     @resource = contest.users.build resource_params
+  end
+
+  def logger_values
+    [
+      ['reg secret', params.dig(:user, :registration_secret)],
+      ['ip', params.dig(:user, :registration_ips)],
+      ['name', params.dig(:user, :name)],
+      ['usr secret', resource.secret],
+      ['errors', resource.errors],
+    ]
   end
 end
