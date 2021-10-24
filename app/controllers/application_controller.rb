@@ -1,7 +1,11 @@
 class ApplicationController < ActionController::Base
   include Pundit
 
-  rescue_from(Pundit::NotAuthorizedError) { head 403 }
+  rescue_from Pundit::NotAuthorizedError do
+    @status = :not_authorized
+    CustomLogger.write logger_params
+    handle_not_authorized
+  end
 
   before_action { I18n.locale = :uk }
 
@@ -47,6 +51,10 @@ class ApplicationController < ActionController::Base
       status: @status,
       values: logger_values,
     }
+  end
+
+  def handle_not_authorized
+    head 403
   end
 
   class << self

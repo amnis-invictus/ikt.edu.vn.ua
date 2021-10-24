@@ -3,8 +3,6 @@ class UploadsController < ApplicationController
 
   before_action :build_resource, only: %i[create update], prepend: true
 
-  rescue_from(Pundit::NotAuthorizedError) { redirect_to action: :new }
-
   def create
     if resource.valid?
       @status = :success
@@ -40,5 +38,9 @@ class UploadsController < ApplicationController
     result = [['usr secret', resource.secret], ['errors', resource.errors]]
     result << ['messages', resource.messages] if action_name == 'update'
     result
+  end
+
+  def handle_not_authorized
+    redirect_to action: :new
   end
 end
