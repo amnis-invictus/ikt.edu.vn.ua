@@ -5,6 +5,10 @@ class ApplicationController < ActionController::Base
 
   before_action { I18n.locale = :uk }
 
+  before_action { @status = :unknown }
+
+  before_action { cookies.permanent.encrypted[:ikt_device_id] ||= SecureRandom.uuid }
+
   before_action :initialize_resource, only: :new
 
   before_action :build_resource, only: :create
@@ -31,5 +35,27 @@ class ApplicationController < ActionController::Base
 
   def pundit_user
     OpenStruct.new contest: contest
+  end
+
+  def logger_params
+    {
+      contest_id: contest.id,
+      device_id: cookies.permanent.encrypted[:ikt_device_id],
+      action: "#{controller_name}##{action_name}",
+      status: @status,
+      values: logger_values,
+    }
+  end
+
+  class << self
+    def log_action **params
+      around_action **params do |_, action|
+        action.call
+      rescue StandardError => e
+        CustomLogger.write logger_params.merge(exception: e)
+      else
+        CustomLogger.write logger_params
+      end
+    end
   end
 end
