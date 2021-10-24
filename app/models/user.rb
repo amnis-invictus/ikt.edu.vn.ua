@@ -3,7 +3,7 @@ class User < ApplicationRecord
 
   validates :name, :email, :city, :institution, :contest_site, :grade, presence: true
   validates :name, uniqueness: { scope: :contest }
-  validate :registration_secret_must_be_valid
+  validate :registration_secret_must_be_valid, on: :create
 
   belongs_to :contest, inverse_of: :users
   has_many :solutions, inverse_of: :user
