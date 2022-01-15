@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
 
   before_action :authorize_collection, only: :index
 
-  helper_method :current_user, :parent, :collection, :resource, :contest
+  helper_method :judge?, :parent, :collection, :resource, :contest
 
   private
 
@@ -61,6 +61,17 @@ class ApplicationController < ActionController::Base
 
   def handle_not_authorized
     head 403
+  end
+
+  def judge?
+    @judge ||= authenticate_with_http_basic &method(:login_procedure)
+  end
+
+  def login_procedure name, password
+    # This comparison uses & so that it doesn't short circuit and
+    # uses `secure_compare` so that length information isn't leaked.
+    ActiveSupport::SecurityUtils.secure_compare(name, 'judge') &
+      ActiveSupport::SecurityUtils.secure_compare(password, contest.judge_password)
   end
 
   class << self

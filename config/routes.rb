@@ -13,7 +13,7 @@ Rails.application.routes.draw do
     resources :statistics, :results, only: :index
 
     resource :judge, only: :show do
-      get :content, :users_csv
+      get :users_csv
     end
   end
 
