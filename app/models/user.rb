@@ -11,8 +11,13 @@ class User < ApplicationRecord
   has_many :results, inverse_of: :user
 
   before_create :assign_secret
+  after_commit :send_email, on: :create
 
   private
+
+  def send_email
+    UserMailer.email(self).deliver_later
+  end
 
   def registration_secret_must_be_valid
     return unless contest && registration_secret.present?
