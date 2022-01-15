@@ -3,6 +3,11 @@ class JudgesController < ApplicationController
     send_data UsersList.new(contest, params[:separator]).build_csv, filename: 'users-list.csv'
   end
 
+  def destroy
+    session.clear
+    redirect_to :root
+  end
+
   private
 
   def authorize_resource

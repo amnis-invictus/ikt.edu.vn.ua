@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
     resources :statistics, :results, only: :index
 
-    resource :judge, only: :show do
+    resource :judge, only: %i[show destroy] do
       get :users_csv
     end
   end
