@@ -11,6 +11,10 @@ Rails.application.routes.draw do
     resource :upload, only: %i[new create update]
 
     resources :statistics, :results, only: :index
+
+    resource :judge, only: :show do
+      get :content, :users_csv
+    end
   end
 
   resource :timer, only: :show
