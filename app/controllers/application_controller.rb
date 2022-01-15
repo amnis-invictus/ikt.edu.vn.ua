@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  IP_HEADERS = %w[HTTP_CLIENT_IP HTTP_X_FORWARDED_FOR REMOTE_ADDR].freeze
+
   include Pundit
 
   rescue_from Pundit::NotAuthorizedError do
@@ -26,6 +28,10 @@ class ApplicationController < ActionController::Base
   helper_method :current_user, :parent, :collection, :resource, :contest
 
   private
+
+  def ip_addresses
+    IP_HEADERS.map { request.headers[_1].presence }.compact
+  end
 
   def authorize_resource
     authorize resource

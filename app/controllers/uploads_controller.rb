@@ -23,7 +23,7 @@ class UploadsController < ApplicationController
   attr_reader :resource
 
   def resource_params
-    params.require(:upload).permit(:secret, solutions_attributes: %i[task_id file])
+    params.require(:upload).permit(:secret, solutions_attributes: %i[task_id file]).merge(ips: ip_addresses)
   end
 
   def initialize_resource
@@ -35,7 +35,7 @@ class UploadsController < ApplicationController
   end
 
   def logger_values
-    result = [['usr secret', resource.secret], ['errors', resource.errors]]
+    result = [['usr secret', resource.secret], ['errors', resource.errors], ['ip', ip_addresses]]
     result << ['messages', resource.messages] if action_name == 'update'
     result
   end
