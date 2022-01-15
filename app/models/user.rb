@@ -3,6 +3,7 @@ class User < ApplicationRecord
 
   validates :name, :email, :city, :institution, :contest_site, :grade, presence: true
   validates :name, uniqueness: { scope: :contest }
+  validates :registration_secret, presence: true, on: :create
   validate :registration_secret_must_be_valid, on: :create
 
   belongs_to :contest, inverse_of: :users
@@ -14,7 +15,7 @@ class User < ApplicationRecord
   private
 
   def registration_secret_must_be_valid
-    return unless contest
+    return unless contest && registration_secret.present?
 
     unless ActiveSupport::SecurityUtils.secure_compare registration_secret, contest.registration_secret
       errors.add :registration_secret, :invalid
