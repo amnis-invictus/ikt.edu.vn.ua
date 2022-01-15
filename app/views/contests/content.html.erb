@@ -1,5 +1,15 @@
 <% if contest.task_open? %>
   <%== contest.content %>
+
+  <div class="additional-content">
+    <h3 class="additional-content__header">Додаткові матеріали</h3>
+
+    <ul class="additional-content__list">
+      <% contest.additinal_content.each do |f| %>
+        <li><%= link_to f.filename, f %></li>
+      <% end %>
+    </ul>
+  </div>
 <% else %>
   <p class="error">Перегляд завдання заборонено. Повідомте технічного працівника.</p>
 <% end %>
