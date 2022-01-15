@@ -1,0 +1,21 @@
+<p><%= link_to 'Завдання', [:content, contest, :judge] %></p>
+
+<p>
+  <% if contest.all_archive_file.attached? %>
+    <%= link_to 'Усі розв\'язки', contest.all_archive_file %>
+  <% else %>
+    Архів з усіма розв'язками відсутній. Повідомте адміністратора.
+  <% end %>
+</p>
+
+<p>
+  <% if contest.last_archive_file.attached? %>
+    <%= link_to 'Останні розв\'язки', contest.last_archive_file %>
+  <% else %>
+    Архів з останніми розв'язками відсутній. Повідомте адміністратора.
+  <% end %>
+</p>
+
+<p><%= link_to 'Список учасників (роздільник кома)', [:users_csv, contest, :judge, separator: ','] %></p>
+
+<p><%= link_to 'Список учасників (роздільник крапка з комою)', [:users_csv, contest, :judge, separator: ';'] %></p>
