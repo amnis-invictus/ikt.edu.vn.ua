@@ -1,4 +1,4 @@
-<% if contest.task_open? %>
+<% if contest.task_open? || judge? %>
   <%== contest.content %>
 
   <div class="additional-content">
