@@ -1,7 +1,11 @@
 class UploadsController < ApplicationController
   log_action only: %i[create update]
-
   before_action :build_resource, only: %i[create update], prepend: true
+  skip_before_action :authorize_resource, only: :show
+
+  def show
+    redirect_to action: :new
+  end
 
   def create
     if resource.valid?
