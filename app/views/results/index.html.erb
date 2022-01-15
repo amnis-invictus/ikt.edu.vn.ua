@@ -1,0 +1,25 @@
+<h3>Результати олімпіади</h3>
+
+<% if contest.preliminary_results.attached? %>
+  <h4><%= link_to 'Попередні результати', contest.preliminary_results %></h4>
+<% end %>
+
+<% if contest.final_results.attached? %>
+  <h4><%= link_to 'Остаточні результати', contest.final_results %></h4>
+<% end %>
+
+<% if contest.criterias.attached? %>
+  <h4><%= link_to 'Критерії оцінювання', contest.criterias %></h4>
+<% end %>
+
+<% if contest.judge_solution.attached? %>
+  <h4><%= link_to 'Розв\'язки журі', contest.judge_solution %></h4>
+<% end %>
+
+<% if contest.author_solution.attached? %>
+  <h4><%= link_to 'Розв\'язки автора', contest.author_solution %></h4>
+<% end %>
+
+<% if contest.all_archive.attached? && contest.archive_open? %>
+  <h4><%= link_to 'Архів розв\'язків учасників', contest.all_archive %></h4>
+<% end %>

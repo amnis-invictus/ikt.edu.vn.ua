@@ -1,16 +1,16 @@
 <p><%= link_to 'Завдання', [:content, contest, :judge] %></p>
 
 <p>
-  <% if contest.all_archive_file.attached? %>
-    <%= link_to 'Усі розв\'язки', contest.all_archive_file %>
+  <% if contest.all_archive.attached? %>
+    <%= link_to 'Усі розв\'язки', contest.all_archive %>
   <% else %>
     Архів з усіма розв'язками відсутній. Повідомте адміністратора.
   <% end %>
 </p>
 
 <p>
-  <% if contest.last_archive_file.attached? %>
-    <%= link_to 'Останні розв\'язки', contest.last_archive_file %>
+  <% if contest.last_archive.attached? %>
+    <%= link_to 'Останні розв\'язки', contest.last_archive %>
   <% else %>
     Архів з останніми розв'язками відсутній. Повідомте адміністратора.
   <% end %>
