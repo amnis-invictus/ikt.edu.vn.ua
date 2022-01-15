@@ -31,3 +31,10 @@
 
 en:
   hello: "Hello world"
+
+  admin:
+    actions:
+      archive_all:
+        title: Archive all solutions for '%{object_label}'
+        menu: Archive All
+        breadcrumb: Archive All
