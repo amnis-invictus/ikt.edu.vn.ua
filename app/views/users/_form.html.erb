@@ -1,5 +1,4 @@
 <%= form_with model: [contest, resource], id: 'regform', class: 'default-form', html: { autocomplete: 'off' } do |f| %>
-  <%= f.hidden_field 'registration_ips[]' %>
   <div class="field">
     <%= f.password_field :registration_secret, required: true, placeholder: true, autocomplete: 'new-password' %>
   </div>
