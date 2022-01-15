@@ -9,7 +9,13 @@ uk:
       messages:
         blank: не може бути порожнім
         invalid: помилковий
-        taken: вже зареєстровано
+      models:
+        user:
+          attributes:
+            name:
+              format: '%{message}'
+              blank: Прізвище, Ім'я, По батькові не може бути пустим
+              taken: Учасник на ім'я %{value} вже зареєстрований
     attributes:
       user:
         registration_secret: Код доступу
