@@ -9,6 +9,7 @@ class Contest < ApplicationRecord
   has_one_attached :criterias
   has_one_attached :preliminary_results
   has_one_attached :final_results
+  has_many_attached :additinal_content
   has_many :tasks, inverse_of: :contest
   has_many :users, inverse_of: :contest
 end

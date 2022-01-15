@@ -1,0 +1,13 @@
+.additional-content {
+  font-family: 'Times New Roman', 'serif';
+  font-size: 14pt;
+  margin-top: 1em;
+
+  &__header {
+    font-weight: bold;
+  }
+
+  &__list {
+    margin-left: 1em;
+  }
+}
