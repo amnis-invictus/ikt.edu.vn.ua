@@ -18,6 +18,7 @@ gem 'rails', '~> 6.1.4', '>= 6.1.4.1'
 gem 'rails_admin', '~> 2.0'
 gem 'redis', '~> 4.0', require: %w[redis redis/connection/hiredis]
 gem 'redis-namespace'
+gem 'rubyzip', require: 'zip'
 gem 'sassc-rails'
 gem 'uglifier'
 

@@ -2,6 +2,8 @@ RailsAdmin::Config::Fields::Types.register :citext, RailsAdmin::Config::Fields::
 RailsAdmin::Config::Fields::Types.register :pg_string_array, RailsAdmin::Config::Fields::Types::PgStringArray
 RailsAdmin::Config::Fields::Types.register :pg_inet_array, RailsAdmin::Config::Fields::Types::PgInetArray
 
+RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::ArchiveAll
+
 RailsAdmin.config do |config|
   ### Popular gems integration
 
@@ -35,6 +37,8 @@ RailsAdmin.config do |config|
     show
     edit
     delete
+
+    archive_all
 
     ## With an audit adapter, you can add:
     # history_index
