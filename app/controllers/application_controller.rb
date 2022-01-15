@@ -69,6 +69,7 @@ class ApplicationController < ActionController::Base
         action.call
       rescue StandardError => e
         CustomLogger.write logger_params.merge(exception: e)
+        raise
       else
         CustomLogger.write logger_params
       end
