@@ -3,6 +3,7 @@ RailsAdmin::Config::Fields::Types.register :pg_string_array, RailsAdmin::Config:
 RailsAdmin::Config::Fields::Types.register :pg_inet_array, RailsAdmin::Config::Fields::Types::PgInetArray
 
 RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::ArchiveAll
+RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::ArchiveLast
 
 RailsAdmin.config do |config|
   ### Popular gems integration
@@ -39,6 +40,7 @@ RailsAdmin.config do |config|
     delete
 
     archive_all
+    archive_last
 
     ## With an audit adapter, you can add:
     # history_index

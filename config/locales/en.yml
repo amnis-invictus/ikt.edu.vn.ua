@@ -38,3 +38,7 @@ en:
         title: Archive all solutions for '%{object_label}'
         menu: Archive All
         breadcrumb: Archive All
+      archive_last:
+        title: Archive last solutions per task for '%{object_label}'
+        menu: Archive Last
+        breadcrumb: Archive Last
