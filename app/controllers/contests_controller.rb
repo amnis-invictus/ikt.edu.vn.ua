@@ -6,4 +6,8 @@ class ContestsController < ApplicationController
   def contest
     @contest ||= Contest.find params[:id]
   end
+
+  def collection
+    @collection ||= Contest.where archived: true
+  end
 end
