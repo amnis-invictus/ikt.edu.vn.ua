@@ -15,6 +15,7 @@ class Solution < ApplicationRecord
   def assign_upload_number
     return unless user && task
 
+    # TODO: fix possible race condition
     self.upload_number = Solution.where(user: user, task: task).count + 1
   end
 
