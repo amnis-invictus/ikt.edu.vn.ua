@@ -7,10 +7,15 @@ class Solution < ApplicationRecord
   has_one_attached :file
 
   before_validation :assign_upload_number, on: :create
+  after_commit :send_email, on: :create
 
   delegate :display_name, :upload_limit, :accepted_ext, :file_names, to: :task, prefix: true, allow_nil: true
 
   private
+
+  def send_email
+    SolutionMailer.email(self).deliver_later
+  end
 
   def assign_upload_number
     return unless user && task

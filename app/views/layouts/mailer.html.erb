@@ -2,12 +2,23 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <style>
-      /* Email styles need to be inline */
-    </style>
   </head>
 
-  <body>
-    <%= yield %>
+  <body style="background:#f0f0f0;padding:0;margin:0">
+    <div style="max-width:580px;margin:32px auto 0;background:#fff;padding:40px">
+      <div style="padding:0;margin:0">
+        <center style="padding:0;margin:0">
+          <%= image_tag 'icat.jpeg', style: 'max-width:50%;padding:0;margin:0;width:auto;display:block', alt: 'Logo Image' %>
+        </center>
+      </div>
+      <div style="margin:0;padding:32px 0 0 0">
+        <%= yield %>
+      </div>
+    </div>
+    <div style="padding:0;margin:0">
+      <p style="color:#777;font-size:12px;text-align:center;padding:20px 0;margin:0;font-family:Helvetica,Arial,sans-serif;font-weight:400">
+        © VTL <%= Time.zone.now.year %>. All Rights Reserved.
+      </p>
+    </div>
   </body>
 </html>

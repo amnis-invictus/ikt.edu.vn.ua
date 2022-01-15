@@ -1,0 +1,11 @@
+<p style="color:#0a0a0a;text-align:center;padding:2px;margin:0;font-family:Helvetica,Arial,sans-serif;font-weight:400;font-size:20px">
+  Шановн(ий/а) <%= @user.name %>, ви успішно зареєстровані у системі проведення олімпіад з інформаційних технологій.
+</p>
+<p style="color:#0a0a0a;text-align:center;padding:0;margin:20px;font-family:Helvetica,Arial,sans-serif;font-weight:400;font-size:20px">
+  Ваш персональний код:
+</p>
+<div style="background:#f0f0f0;width:80%;margin:0 auto;padding:5px">
+  <p style="color:#0a0a0a;margin:20px;text-align:center;padding:0;font-family:Helvetica,Arial,sans-serif;font-weight:400;font-size:20px">
+    <%= @user.secret %>
+  </p>
+</div>
