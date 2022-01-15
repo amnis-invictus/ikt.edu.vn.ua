@@ -64,14 +64,7 @@ class ApplicationController < ActionController::Base
   end
 
   def judge?
-    @judge ||= authenticate_with_http_basic &method(:login_procedure)
-  end
-
-  def login_procedure name, password
-    # This comparison uses & so that it doesn't short circuit and
-    # uses `secure_compare` so that length information isn't leaked.
-    ActiveSupport::SecurityUtils.secure_compare(name, 'judge') &
-      ActiveSupport::SecurityUtils.secure_compare(password, contest.judge_password)
+    session[:judge_contest] == contest.id
   end
 
   class << self
