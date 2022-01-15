@@ -9,9 +9,9 @@ class Archive
     File.open(archive_path).tap do |io|
       attachment = { io: io, filename: File.basename(archive_path) }
       if @last_only
-        @contest.last_archive_file = attachment
+        @contest.last_archive = attachment
       else
-        @contest.all_archive_file = attachment
+        @contest.all_archive = attachment
       end
       @contest.save!
     end
