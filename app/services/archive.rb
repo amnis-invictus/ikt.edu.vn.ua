@@ -38,7 +38,7 @@ class Archive
   def write_last_solutions user, zip
     @contest.tasks.each do |task|
       solution = user.solutions.where(task: task).order(:id).last
-      write_solution zip, user.secret, solution
+      write_solution zip, user.secret, solution unless solution.nil?
     end
   end
 
