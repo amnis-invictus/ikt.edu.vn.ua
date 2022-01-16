@@ -46,3 +46,7 @@ en:
         title: Check duplicate files in solutions for '%{object_label}'
         menu: Check Duplicates
         breadcrumb: Check Duplicates
+      ips_mismatch:
+        title: Check mismatched IPs for user solutions & registration for '%{object_label}'
+        menu: Check IPs
+        breadcrumb: Check IPs
