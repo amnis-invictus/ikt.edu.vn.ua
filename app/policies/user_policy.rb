@@ -8,6 +8,6 @@ class UserPolicy < ApplicationPolicy
   end
 
   def create?
-    contest.registration_open?
+    contest.registration_open? && !contest.archived?
   end
 end

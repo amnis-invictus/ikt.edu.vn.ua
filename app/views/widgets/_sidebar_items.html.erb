@@ -1,4 +1,6 @@
-<li><%= link_to 'Реєстрація', [:new, contest, :user] %></li>
+<% unless contest.archived? %>
+  <li><%= link_to 'Реєстрація', [:new, contest, :user] %></li>
+<% end %>
 <li><%= link_to 'Зареєстровані', [contest, :users] %></li>
 <li><%= link_to 'Завдання', [:content, contest] %></li>
 <% unless contest.archived? %>
