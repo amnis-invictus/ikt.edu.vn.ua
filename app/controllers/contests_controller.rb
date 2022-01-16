@@ -4,10 +4,10 @@ class ContestsController < ApplicationController
   private
 
   def contest
-    @contest ||= Contest.find params[:id]
+    @contest ||= Contest.available.find params[:id]
   end
 
   def collection
-    @collection ||= Contest.where archived: true
+    @collection ||= Contest.available.where archived: true
   end
 end

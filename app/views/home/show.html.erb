@@ -18,7 +18,7 @@
         <% Contest.where(archived: false).find_each do |contest| %>
           <%= link_to contest.display_name, contest, class: 'btn btn-4 btn-4c' %>
         <% end %>
-        <%= link_to 'Архів', [:contests], class: 'btn btn-4 btn-4c' %>
+        <%= link_to 'Архів', [:contests], class: 'btn btn-4 btn-4c' unless Contest.any_active? %>
         <p>
           <span>
             <a href="/pamyatka/ikt_2018.docx" style="text-decoration: underline; color: #09ffea;">
