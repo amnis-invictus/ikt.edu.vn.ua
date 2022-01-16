@@ -1,7 +1,9 @@
 <li><%= link_to 'Реєстрація', [:new, contest, :user] %></li>
 <li><%= link_to 'Зареєстровані', [contest, :users] %></li>
 <li><%= link_to 'Завдання', [:content, contest] %></li>
-<li><%= link_to 'Відправлення розв\'язків', [:new, contest, :upload] %></li>
+<% unless contest.archived? %>
+  <li><%= link_to 'Відправлення розв\'язків', [:new, contest, :upload] %></li>
+<% end %>
 <li><%= link_to 'Статистика олімпіади', [contest, :statistics] %></li>
 <li><%= link_to 'Результати олімпіади', [contest, :results] %></li>
 <% if contest.archived? %>
