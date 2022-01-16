@@ -12,4 +12,5 @@ class Contest < ApplicationRecord
   has_many_attached :additinal_content
   has_many :tasks, inverse_of: :contest
   has_many :users, inverse_of: :contest
+  has_many :solutions, through: :users
 end

@@ -1,0 +1,30 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Task</th>
+      <th colspan="2">File</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @collection.each do |checksum, solutions| %>
+      <tr><td colspan="4"></td></tr>
+      <tr>
+        <th colspan="3"><%= checksum %></th>
+        <th><%= solutions.size %></th>
+      </tr>
+      <% solutions.each do |solution| %>
+        <tr>
+          <td><%= solution.user.secret %></td>
+          <td><%= solution.task.display_name %></td>
+          <td><%= number_to_human_size solution.file.byte_size %></td>
+          <td>
+            <%= link_to main_app.url_for(solution.file), target: '_blank' do %>
+              <i class="icon-download"></i>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
