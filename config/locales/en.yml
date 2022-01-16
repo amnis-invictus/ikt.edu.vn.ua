@@ -42,3 +42,7 @@ en:
         title: Archive last solutions per task for '%{object_label}'
         menu: Archive Last
         breadcrumb: Archive Last
+      checksum_duplicates:
+        title: Check duplicate files in solutions for '%{object_label}'
+        menu: Check Duplicates
+        breadcrumb: Check Duplicates
