@@ -5,6 +5,7 @@ RailsAdmin::Config::Fields::Types.register :pg_inet_array, RailsAdmin::Config::F
 RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::ArchiveAll
 RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::ArchiveLast
 RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::ChecksumDuplicates
+RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::IpsMismatch
 
 RailsAdmin.config do |config|
   ### Popular gems integration
@@ -43,6 +44,7 @@ RailsAdmin.config do |config|
     archive_all
     archive_last
     checksum_duplicates
+    ips_mismatch
 
     ## With an audit adapter, you can add:
     # history_index

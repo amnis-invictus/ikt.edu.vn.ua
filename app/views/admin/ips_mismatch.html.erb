@@ -1,0 +1,23 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>IPs</th>
+      <th>Task</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @collection.each do |ips, secret, solutions| %>
+      <tr><td colspan="2"></td></tr>
+      <tr>
+        <th><%= ips.join(', ') %></th>
+        <th><%= secret %></th>
+      </tr>
+      <% solutions.each do |solution| %>
+        <tr>
+          <td><%= solution.ips.join(', ') %></td>
+          <td><%= solution.task.display_name %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
