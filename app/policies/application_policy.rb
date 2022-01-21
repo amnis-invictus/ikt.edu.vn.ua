@@ -1,20 +1,18 @@
 class ApplicationPolicy
   class Scope
-    attr_reader :context, :scope
+    attr_reader :contest, :scope
 
-    delegate_missing_to :context, allow_nil: true
-
-    def initialize context, scope
-      @context, @scope = context, scope
+    def initialize contest, scope
+      @contest, @scope = contest, scope
     end
   end
 
-  attr_reader :context, :resource
+  attr_reader :contest, :resource
 
-  delegate_missing_to :context, allow_nil: true
+  delegate_missing_to :contest, allow_nil: true
 
-  def initialize context, resource
-    @context, @resource = context, resource
+  def initialize contest, resource
+    @contest, @resource = contest, resource
   end
 
   def index?

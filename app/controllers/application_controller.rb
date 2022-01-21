@@ -45,9 +45,7 @@ class ApplicationController < ActionController::Base
     @contest ||= Contest.available.find params[:contest_id]
   end
 
-  def pundit_user
-    OpenStruct.new contest: contest
-  end
+  alias pundit_user contest
 
   def logger_params
     {
