@@ -7,10 +7,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Set up Ruby 2.7.3
+      - name: Set up Ruby 3.1.0
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.7.3
+          ruby-version: 3.1.0
           bundler-cache: true
       - name: Run static code analysis using rubocop
         run: bundle exec rubocop --parallel
