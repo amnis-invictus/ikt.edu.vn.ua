@@ -2,9 +2,9 @@ Rails.application.configure do
   if Rails.env.production?
     config.action_mailer.raise_delivery_errors = true
 
-    config.action_mailer.default_url_options = { host: 'ikt.edu.vn.ua', protocol: :https }
+    config.action_mailer.default_url_options = { host: ENV["APPLICATION_HOST"], protocol: :https }
 
-    config.action_mailer.asset_host = 'https://ikt.edu.vn.ua'
+    config.action_mailer.asset_host = "https://#{ENV['APPLICATION_HOST']}"
   else
     config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
