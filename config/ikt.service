@@ -1,0 +1,17 @@
+[Unit]
+  Description = IKT Application
+  After = network.service
+
+[Service]
+  User = arch-user
+  Group = arch-user
+  WorkingDirectory = /home/arch-user/ikt/current
+  Environment = 'RAILS_ENV=production'
+  Environment = 'SOCKET=unix:///home/arch-user/ikt/current/tmp/sockets/server.sock'
+  Environment = 'PIDFILE=/home/arch-user/ikt/current/tmp/pids/server.pid'
+  Environment = 'PATH=/home/arch-user/.rbenv/shims:/usr/local/sbin:/usr/local/bin:/usr/bin'
+  ExecStart = /usr/bin/env bundle exec puma --config /home/arch-user/ikt/current/config/puma.rb
+  Restart = always
+
+[Install]
+  WantedBy = multi-user.target
