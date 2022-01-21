@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from Pundit::NotAuthorizedError do
     @status = :not_authorized
-    CustomLogger.write logger_params
+    CustomLogger.write **logger_params
     handle_not_authorized
   end
 
@@ -70,10 +70,10 @@ class ApplicationController < ActionController::Base
       around_action **params do |_, action|
         action.call
       rescue StandardError => e
-        CustomLogger.write logger_params.merge(exception: e)
+        CustomLogger.write **logger_params, exception: e
         raise
       else
-        CustomLogger.write logger_params
+        CustomLogger.write **logger_params
       end
     end
   end
