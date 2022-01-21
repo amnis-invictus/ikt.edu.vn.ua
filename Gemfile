@@ -22,6 +22,11 @@ gem 'rubyzip', require: 'zip'
 gem 'sassc-rails'
 gem 'uglifier'
 
+# Temporarily fix for ruby 3.1
+gem 'net-imap', require: false
+gem 'net-pop', require: false
+gem 'net-smtp', require: false
+
 group :development, :test do
   gem 'rubocop'
   gem 'rubocop-performance'
