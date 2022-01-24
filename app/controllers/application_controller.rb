@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  IP_HEADERS = %w[HTTP_CLIENT_IP HTTP_X_FORWARDED_FOR REMOTE_ADDR].freeze
+  IP_HEADERS = %w[HTTP_CLIENT_IP HTTP_X_FORWARDED_FOR REMOTE_ADDR X-Forwarded-For X-Real-IP].freeze
 
   include Pundit
 
@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
   private
 
   def ip_addresses
-    IP_HEADERS.map { request.headers[_1].presence }.compact
+    IP_HEADERS.filter_map { request.headers[_1].presence }.map { _1.split(',').map(&:strip) }.flatten.uniq
   end
 
   def authorize_resource
