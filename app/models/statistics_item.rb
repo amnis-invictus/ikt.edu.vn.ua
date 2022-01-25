@@ -9,7 +9,7 @@ class StatisticsItem
 
   def records
     tasks.order(:id).map do |task|
-      next 'no' if (solution = solutions.where(task: task).last).nil?
+      next 'no' if (solution = solutions.where(task:).last).nil?
 
       "#{solution.upload_number} (#{solution.created_at.in_time_zone('Europe/Kiev').strftime('%Y-%m-%d %H:%M')})"
     end

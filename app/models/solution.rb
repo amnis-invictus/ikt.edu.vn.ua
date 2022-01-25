@@ -21,7 +21,7 @@ class Solution < ApplicationRecord
     return unless user && task
 
     # TODO: fix possible race condition
-    self.upload_number = Solution.where(user: user, task: task).count + 1
+    self.upload_number = Solution.where(user:, task:).count + 1
   end
 
   def user_and_task_contests_must_match

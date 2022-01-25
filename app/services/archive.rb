@@ -7,7 +7,7 @@ class Archive
   def build
     archive_path = write_archive
     File.open(archive_path).tap do |io|
-      attachment = { io: io, filename: File.basename(archive_path) }
+      attachment = { io:, filename: File.basename(archive_path) }
       if @last_only
         @contest.last_archive = attachment
       else
@@ -37,7 +37,7 @@ class Archive
 
   def write_last_solutions user, zip
     @contest.tasks.each do |task|
-      solution = user.solutions.where(task: task).order(:id).last
+      solution = user.solutions.where(task:).order(:id).last
       write_solution zip, user.secret, solution unless solution.nil?
     end
   end
