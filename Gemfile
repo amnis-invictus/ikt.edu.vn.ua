@@ -28,11 +28,14 @@ gem 'net-pop', require: false
 gem 'net-smtp', require: false
 
 group :development, :test do
+  gem 'capybara'
+  gem 'factory_bot_rails'
   gem 'rspec-rails'
   gem 'rubocop'
   gem 'rubocop-performance'
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
+  gem 'selenium-webdriver'
 end
 
 group :development do
