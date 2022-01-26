@@ -105,8 +105,9 @@ RSpec.configure do |config|
   config.include FormHelpers
 end
 
+browser = ENV['UI_TEST_ENGINE']&.downcase == 'chrome' ? :chrome : :firefox
 driver = 'selenium'
-driver = "#{driver}_chrome" if ENV['UI_TEST_ENGINE']&.downcase == 'chrome'
+driver = "#{driver}_chrome" if browser == :chrome
 driver = "#{driver}_headless" if ENV['UI_TEST_HEADLESS'] || ENV['CI']
 
 Capybara.default_driver = driver.to_sym
@@ -114,9 +115,6 @@ Capybara.server = :puma, { Silent: true } if ENV['UI_TEST_SILENT_PUMA']
 
 if ENV['SELENIUM_CUSTOM_URL']
   Capybara.register_driver driver.to_sym do |app|
-    Capybara::Selenium::Driver.new \
-      app,
-      browser: ENV['UI_TEST_ENGINE']&.downcase == 'chrome' ? :chrome : :firefox,
-      url: ENV['SELENIUM_CUSTOM_URL']
+    Capybara::Selenium::Driver.new app, browser:, url: ENV['SELENIUM_CUSTOM_URL']
   end
 end
