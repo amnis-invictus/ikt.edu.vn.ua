@@ -115,3 +115,12 @@ driver = "#{driver}_headless" if ENV['UI_TEST_HEADLESS'] || ENV['CI']
 
 Capybara.default_driver = driver.to_sym
 Capybara.server = :puma, { Silent: true } if ENV['UI_TEST_SILENT_PUMA']
+
+if ENV['SELENIUM_CUSTOM_URL']
+  Capybara.register_driver driver.to_sym do |app|
+    Capybara::Selenium::Driver.new \
+      app,
+      browser: ENV['UI_TEST_ENGINE']&.downcase == 'chrome' ? :chrome : :firefox,
+      url: ENV['SELENIUM_CUSTOM_URL']
+  end
+end
