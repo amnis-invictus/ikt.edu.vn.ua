@@ -113,3 +113,4 @@ driver = "#{driver}_chrome" if ENV['UI_TEST_ENGINE']&.downcase == 'chrome'
 driver = "#{driver}_headless" if ENV['UI_TEST_HEADLESS'] || ENV['CI']
 
 Capybara.default_driver = driver.to_sym
+Capybara.server = :puma, { Silent: true } if ENV['UI_TEST_SILENT_PUMA']
