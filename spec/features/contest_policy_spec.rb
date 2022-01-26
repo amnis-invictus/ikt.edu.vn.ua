@@ -31,7 +31,7 @@ RSpec.feature 'ContestPolicy', type: :feature, ui: true do
       given(:contest) { create :contest, task_open: false }
 
       scenario { expect(page).to have_content 'Перегляд завдання заборонено. Повідомте технічного працівника.' }
-      scenario { expect(page).to have_no_content contest.content }
+      scenario { expect(page.html).to_not include contest.content }
       scenario { expect(page).to have_no_content 'Додаткові матеріали' }
     end
 
@@ -39,7 +39,7 @@ RSpec.feature 'ContestPolicy', type: :feature, ui: true do
       given(:contest) { create :contest, task_open: true }
 
       scenario { expect(page).to have_no_content 'Перегляд завдання заборонено. Повідомте технічного працівника.' }
-      scenario { expect(page).to have_content contest.content }
+      scenario { expect(page.html).to include contest.content }
       scenario { expect(page).to have_content 'Додаткові матеріали' }
     end
   end

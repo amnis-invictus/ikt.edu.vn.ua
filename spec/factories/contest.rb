@@ -8,8 +8,6 @@ FactoryBot.define do
     task_open { true }
     upload_open { true }
     judge_password { 'password' }
-
-    # No HTML tags, because capybara page.have_content ignoring any HTML tags and normalizing whitespace
-    content { 'What is Lorem Ipsum? Lorem Ipsum is simply dummy text of the printing and typesetting industry.' }
+    content { '<h2>What is Lorem Ipsum?</h2><p>Lorem <b>Ipsum</b> is simply dummy text of the industry.</p>' }
   end
 end
