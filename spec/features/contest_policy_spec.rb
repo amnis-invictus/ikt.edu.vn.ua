@@ -32,4 +32,13 @@ RSpec.feature 'Contest policy', type: :feature, ui: true do
     expect(page).to have_no_content contest.content
     expect(page).to have_no_content 'Додаткові матеріали'
   end
+
+  scenario 'when task open' do
+    contest = create :contest, task_open: true
+
+    visit "/contests/#{contest.id}/content"
+    expect(page).to have_no_content 'Перегляд завдання заборонено. Повідомте технічного працівника.'
+    expect(page).to have_content contest.content
+    expect(page).to have_content 'Додаткові матеріали'
+  end
 end
