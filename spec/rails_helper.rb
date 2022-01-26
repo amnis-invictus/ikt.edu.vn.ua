@@ -110,6 +110,6 @@ end
 
 driver = 'selenium'
 driver = "#{driver}_chrome" if ENV['UI_TEST_ENGINE']&.downcase == 'chrome'
-driver = "#{driver}_headless" unless ENV['CI'].nil?
+driver = "#{driver}_headless" if ENV['UI_TEST_HEADLESS'] || ENV['CI']
 
 Capybara.default_driver = driver.to_sym
