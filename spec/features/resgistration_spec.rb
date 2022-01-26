@@ -23,5 +23,15 @@ RSpec.feature 'User registration', type: :feature, ui: true do
       click_button 'commit'
       expect(page).to have_content 'Ви успішно зареєстровані.'
     end
+
+    scenario 'with wrong registration_secret should fail' do
+      within 'form' do
+        fill_in 'user_registration_secret', with: @contest.registration_secret.reverse
+        fill_in 'user_email', with: 'john.doe@example.com'
+        select @contest.contest_sites.first, from: 'user_contest_site'
+      end
+      click_button 'commit'
+      expect(page).to have_content 'Код доступу помилковий'
+    end
   end
 end
