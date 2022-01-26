@@ -1,52 +1,32 @@
 require 'rails_helper'
 
 RSpec.feature 'User registration', type: :feature, ui: true do
-  given(:contest) { create :contest }
+  given!(:contest) { create :contest }
 
-  before do
-    visit "/contests/#{contest.id}/users/new"
-    within 'form' do
-      fill_in 'user_registration_secret', with: contest.registration_secret
-      fill_in 'user_name', with: 'John Doe'
-      select contest.cities.last, from: 'user_city'
-      fill_in 'user_institution', with: 'New York Regional College'
-      select '10', from: 'user_grade'
-    end
+  before { visit "/contests/#{contest.id}/users/new" }
+
+  context 'with everything valid' do
+    before { fill_new_user_form attributes_for :user }
+    before { click_button 'commit' }
+    scenario { expect(page).to have_content 'Ви успішно зареєстровані.' }
   end
 
-  scenario 'should be successful' do
-    within 'form' do
-      fill_in 'user_email', with: 'john.doe@example.com'
-      select contest.contest_sites.first, from: 'user_contest_site'
-    end
-    click_button 'commit'
-    expect(page).to have_content 'Ви успішно зареєстровані.'
+  context 'with invalid registration secret' do
+    before { fill_new_user_form attributes_for :user, registration_secret: SecureRandom.base36 }
+    before { click_button 'commit' }
+    scenario { expect(page).to have_content 'Код доступу помилковий' }
   end
 
-  scenario 'with wrong registration_secret should fail' do
-    within 'form' do
-      fill_in 'user_registration_secret', with: contest.registration_secret.reverse
-      fill_in 'user_email', with: 'john.doe@example.com'
-      select contest.contest_sites.first, from: 'user_contest_site'
-    end
-    click_button 'commit'
-    expect(page).to have_content 'Код доступу помилковий'
+  context 'without contest site' do
+    before { fill_new_user_form attributes_for :user, contest_site: nil }
+    before { click_button 'commit' }
+    scenario { expect(page).to have_content 'Заклад, у якому ви пишете олімпіаду не може бути порожнім' }
   end
 
-  scenario 'without user_contest_site should fail' do
-    within 'form' do
-      fill_in 'user_email', with: 'john.doe@example.com'
-    end
-    click_button 'commit'
-    expect(page).to have_content 'Заклад, у якому ви пишете олімпіаду не може бути порожнім'
-  end
-
-  scenario 'without user_email should fail (no post)' do
-    within 'form' do
-      select contest.contest_sites.first, from: 'user_contest_site'
-    end
-    click_button 'commit'
-    expect(page).to have_content 'РЕЄСТРАЦІЯ УЧАСНИКА'
-    expect(page).to have_no_content 'Ваш e-mail не може бути порожнім'
+  context 'without email' do
+    before { fill_new_user_form attributes_for :user, email: nil }
+    before { click_button 'commit' }
+    scenario('should stay on registration page') { expect(page).to have_content 'РЕЄСТРАЦІЯ УЧАСНИКА' }
+    scenario { expect(page).to have_no_content 'Ваш e-mail не може бути порожнім' }
   end
 end
