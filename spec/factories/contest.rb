@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :contest do
     display_name { '1st USA olympiad' }
     cities { ['New York', 'Los Angeles', 'Chicago'] }
-    contest_sites { ['New York School', 'Los Angeles Collage', 'Chicago University'] }
+    contest_sites { ['New York School', 'Los Angeles College', 'Chicago University'] }
     registration_secret { 'ABC123' }
     registration_open { true }
     task_open { true }
