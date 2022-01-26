@@ -41,4 +41,14 @@ RSpec.feature 'Contest policy', type: :feature, ui: true do
     expect(page).to have_content contest.content
     expect(page).to have_content 'Додаткові матеріали'
   end
+
+  scenario 'when upload closed' do
+    contest = create :contest, upload_open: false
+
+    visit "/contests/#{contest.id}/upload/new"
+    expect(page).to have_content 'ВІДПРАВКА РОЗВ\'ЯЗКІВ'
+    expect(page).to have_content 'Відправка розв\'язків заборонена. Повідомте технічного працівника.'
+    expect(page).to have_no_field 'upload_secret'
+    expect(page).to have_no_button 'commit'
+  end
 end
