@@ -23,6 +23,12 @@ RSpec.feature 'User registration', type: :feature, ui: true do
     scenario { expect(page).to have_content 'Заклад, у якому ви пишете олімпіаду не може бути порожнім' }
   end
 
+  context 'without grade' do
+    before { fill_new_user_form attributes_for :user, grade: nil }
+    before { click_button 'commit' }
+    scenario { expect(page).to have_content 'Клас не може бути порожнім' }
+  end
+
   context 'without email' do
     before { fill_new_user_form attributes_for :user, email: nil }
     before { click_button 'commit' }
