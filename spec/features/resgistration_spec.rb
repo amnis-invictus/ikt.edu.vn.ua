@@ -33,5 +33,13 @@ RSpec.feature 'User registration', type: :feature, ui: true do
       click_button 'commit'
       expect(page).to have_content 'Код доступу помилковий'
     end
+
+    scenario 'without user_contest_site should fail' do
+      within 'form' do
+        fill_in 'user_email', with: 'john.doe@example.com'
+      end
+      click_button 'commit'
+      expect(page).to have_content 'Заклад, у якому ви пишете олімпіаду не може бути порожнім'
+    end
   end
 end
