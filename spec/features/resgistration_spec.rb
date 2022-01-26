@@ -41,5 +41,14 @@ RSpec.feature 'User registration', type: :feature, ui: true do
       click_button 'commit'
       expect(page).to have_content 'Заклад, у якому ви пишете олімпіаду не може бути порожнім'
     end
+
+    scenario 'without user_email should fail (no post)' do
+      within 'form' do
+        select @contest.contest_sites.first, from: 'user_contest_site'
+      end
+      click_button 'commit'
+      expect(page).to have_content 'РЕЄСТРАЦІЯ УЧАСНИКА'
+      expect(page).to have_no_content 'Ваш e-mail не може бути порожнім'
+    end
   end
 end
