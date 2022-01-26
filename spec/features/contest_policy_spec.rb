@@ -9,8 +9,7 @@ RSpec.feature 'ContestPolicy', type: :feature, ui: true do
 
       scenario { expect(page).to have_content 'РЕЄСТРАЦІЯ УЧАСНИКА' }
       scenario { expect(page).to have_content 'Реєстрація заборонена. Повідомте технічного працівника.' }
-      scenario { expect(page).to have_no_content 'Виберіть місто (район)' }
-      scenario { expect(page).to have_no_content contest.contest_sites.first }
+      scenario { expect(page).to have_no_css 'form#regform', visible: :all }
       scenario { expect(page).to have_no_button 'commit' }
     end
 
@@ -19,8 +18,7 @@ RSpec.feature 'ContestPolicy', type: :feature, ui: true do
 
       scenario { expect(page).to have_content 'РЕЄСТРАЦІЯ УЧАСНИКА' }
       scenario { expect(page).to have_no_content 'Реєстрація заборонена. Повідомте технічного працівника.' }
-      scenario { expect(page).to have_content 'Виберіть місто (район)' }
-      scenario { expect(page).to have_content contest.contest_sites.first }
+      scenario { expect(page).to have_css 'form#regform', visible: true }
       scenario { expect(page).to have_button 'commit' }
     end
   end
@@ -54,7 +52,7 @@ RSpec.feature 'ContestPolicy', type: :feature, ui: true do
 
       scenario { expect(page).to have_content 'ВІДПРАВКА РОЗВ\'ЯЗКІВ' }
       scenario { expect(page).to have_content 'Відправка розв\'язків заборонена. Повідомте технічного працівника.' }
-      scenario { expect(page).to have_no_field 'upload_secret' }
+      scenario { expect(page).to have_no_css 'form', visible: :all }
       scenario { expect(page).to have_no_button 'commit' }
     end
 
@@ -63,7 +61,7 @@ RSpec.feature 'ContestPolicy', type: :feature, ui: true do
 
       scenario { expect(page).to have_content 'ВІДПРАВКА РОЗВ\'ЯЗКІВ' }
       scenario { expect(page).to have_no_content 'Відправка розв\'язків заборонена. Повідомте технічного працівника.' }
-      scenario { expect(page).to have_field 'upload_secret' }
+      scenario { expect(page).to have_css 'form', visible: true }
       scenario { expect(page).to have_button 'commit' }
     end
   end
