@@ -8,6 +8,7 @@ require File.expand_path('../config/environment', __dir__)
 abort 'The Rails environment is running in production mode!' if Rails.env.production?
 
 require 'rspec/rails'
+require 'capybara/rspec'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -66,4 +67,18 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+end
+
+browser = ENV['UI_TEST_ENGINE']&.downcase == 'chrome' ? :chrome : :firefox
+driver = 'selenium'
+driver = "#{driver}_chrome" if browser == :chrome
+driver = "#{driver}_headless" if ENV['UI_TEST_HEADLESS'] || ENV['CI']
+
+Capybara.default_driver = driver.to_sym
+Capybara.server = :puma, { Silent: true } if ENV['UI_TEST_SILENT_PUMA']
+
+if ENV['SELENIUM_CUSTOM_URL']
+  Capybara.register_driver driver.to_sym do |app|
+    Capybara::Selenium::Driver.new app, browser:, url: ENV['SELENIUM_CUSTOM_URL']
+  end
 end
