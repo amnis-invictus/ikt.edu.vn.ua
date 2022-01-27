@@ -113,6 +113,11 @@ GEM
       ruby2_keywords
     erubi (1.10.0)
     execjs (2.8.1)
+    factory_bot (6.2.0)
+      activesupport (>= 5.0.0)
+    factory_bot_rails (6.2.0)
+      factory_bot (~> 6.2.0)
+      railties (>= 5.0.0)
     ffi (1.15.5)
     globalid (1.0.0)
       activesupport (>= 5.0)
@@ -355,6 +360,7 @@ DEPENDENCIES
   capybara
   dotenv-rails
   draper
+  factory_bot_rails
   hiredis
   image_processing (~> 1.2)
   jbuilder (~> 2.7)

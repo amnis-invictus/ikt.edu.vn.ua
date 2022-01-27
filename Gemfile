@@ -29,6 +29,7 @@ gem 'net-smtp', require: false
 
 group :development, :test do
   gem 'capybara'
+  gem 'factory_bot_rails'
   gem 'rspec-rails'
   gem 'rubocop'
   gem 'rubocop-performance'
