@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_15_134157) do
+ActiveRecord::Schema.define(version: 2022_01_29_140422) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -61,8 +61,8 @@ ActiveRecord::Schema.define(version: 2022_01_15_134157) do
   end
 
   create_table "results", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "task_id"
+    t.bigint "user_id", null: false
+    t.bigint "task_id", null: false
     t.float "score", default: 0.0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -72,8 +72,8 @@ ActiveRecord::Schema.define(version: 2022_01_15_134157) do
   end
 
   create_table "solutions", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "task_id"
+    t.bigint "user_id", null: false
+    t.bigint "task_id", null: false
     t.inet "ips", default: [], null: false, array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -87,14 +87,14 @@ ActiveRecord::Schema.define(version: 2022_01_15_134157) do
     t.string "display_name"
     t.string "file_names", default: [], null: false, array: true
     t.integer "upload_limit", default: 1, null: false
-    t.bigint "contest_id"
+    t.bigint "contest_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["contest_id"], name: "index_tasks_on_contest_id"
   end
 
   create_table "users", force: :cascade do |t|
-    t.bigint "contest_id"
+    t.bigint "contest_id", null: false
     t.citext "name"
     t.citext "email"
     t.string "region"
