@@ -7,8 +7,8 @@ class User < ApplicationRecord
   validate :registration_secret_must_be_valid, on: :create
 
   belongs_to :contest, inverse_of: :users
-  has_many :solutions, inverse_of: :user
-  has_many :results, inverse_of: :user
+  has_many :solutions, inverse_of: :user, dependent: :destroy
+  has_many :results, inverse_of: :user, dependent: :destroy
 
   before_create :assign_secret
   after_commit :send_email, on: :create

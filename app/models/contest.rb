@@ -12,8 +12,8 @@ class Contest < ApplicationRecord
   has_one_attached :final_results
   has_many_attached :additinal_content
 
-  has_many :tasks, inverse_of: :contest
-  has_many :users, inverse_of: :contest
+  has_many :tasks, inverse_of: :contest, dependent: :destroy
+  has_many :users, inverse_of: :contest, dependent: :destroy
   has_many :solutions, through: :users
 
   scope :available, -> { any_active? ? where(archived: false) : self }
