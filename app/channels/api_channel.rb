@@ -1,4 +1,6 @@
 class ApiChannel < ApplicationCable::Channel
+  rescue_from(ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound) { dispatch 'errors/push', _1 }
+
   def subscribed
     @task = Task.find params[:task]
     ensure_confirmation_sent
