@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_29_140422) do
+ActiveRecord::Schema.define(version: 2022_01_29_173742) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -60,6 +60,16 @@ ActiveRecord::Schema.define(version: 2022_01_29_140422) do
     t.boolean "archive_open", default: false, null: false
   end
 
+  create_table "criterions", force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.integer "position", null: false
+    t.float "limit", default: 0.0, null: false
+    t.bigint "task_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["task_id"], name: "index_criterions_on_task_id"
+  end
+
   create_table "results", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "task_id", null: false
@@ -90,6 +100,7 @@ ActiveRecord::Schema.define(version: 2022_01_29_140422) do
     t.bigint "contest_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "criterions_count", default: 0, null: false
     t.index ["contest_id"], name: "index_tasks_on_contest_id"
   end
 
@@ -112,6 +123,7 @@ ActiveRecord::Schema.define(version: 2022_01_29_140422) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "criterions", "tasks"
   add_foreign_key "results", "tasks"
   add_foreign_key "results", "users"
   add_foreign_key "solutions", "tasks"
