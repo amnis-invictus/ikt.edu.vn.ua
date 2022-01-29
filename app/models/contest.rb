@@ -1,7 +1,5 @@
 class Contest < ApplicationRecord
-  validates :display_name, presence: true
-  validates :cities, presence: true
-  validates :contest_sites, presence: true
+  validates :display_name, :cities, :contest_sites, :judge_password, :registration_secret, presence: true
 
   has_one_attached :all_archive
   has_one_attached :last_archive
