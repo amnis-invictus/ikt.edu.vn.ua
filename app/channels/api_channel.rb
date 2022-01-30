@@ -1,30 +1,31 @@
 class ApiChannel < ApplicationCable::Channel
-  rescue_from(ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound) { dispatch 'errors/push', _1 }
+  rescue_from(ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound) { dispatch_self 'errors/push', _1 }
 
   def subscribed
     ensure_confirmation_sent
-    dispatch 'app/start'
-    dispatch 'users/load', task.contest.users.order(:secret).pluck(:secret)
-    transmit_criterions
-    dispatch 'app/ready'
+    dispatch_self 'app/start'
+    dispatch_self 'users/load', task.contest.users.order(:secret).pluck(:secret)
+    dispatch_self 'criteria/load', task.criterions.order(:position)
+    dispatch_self 'app/ready'
+    stream_for task
   end
 
   def add_criterion
     criterion = task.criterions.create! position: task.criterions_count
-    dispatch 'criteria/add', criterion
+    dispatch_all 'criteria/add', criterion
   end
 
   def update_criterion data
     criterion = task.criterions.find data['id']
     criterion.update! data['params']
-    dispatch 'criteria/update', criterion
+    dispatch_all 'criteria/update', criterion
   end
 
   def delete_criterion data
     criterion = task.criterions.find data['id']
     criterion.destroy!
     task.criterions.where('position > ?', criterion.position).update_all('position = position - 1')
-    dispatch 'criteria/delete', data['id']
+    dispatch_all 'criteria/delete', data['id']
   end
 
   def drag_drop data
@@ -40,16 +41,16 @@ class ApiChannel < ApplicationCable::Channel
       other_criterions.where('position BETWEEN ? AND ?', from, to).update_all('position = position - 1')
     end
   ensure
-    transmit_criterions
+    dispatch_all 'criteria/load', task.criterions.order(:position)
   end
 
   private
 
-  def transmit_criterions
-    dispatch 'criteria/load', task.criterions.order(:position)
+  def dispatch_self action, payload = nil
+    transmit({ type: action, payload: })
   end
 
-  def dispatch action, payload = nil
-    transmit({ type: action, payload: })
+  def dispatch_all action, payload = nil
+    broadcast_to task, { type: action, payload: }
   end
 end
