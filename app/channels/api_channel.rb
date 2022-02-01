@@ -18,7 +18,7 @@ class ApiChannel < ApplicationCable::Channel
   def update_criterion data
     criterion = task.criterions.find data['id']
     criterion.update! data['params']
-    dispatch_all 'criteria/update', criterion
+    dispatch_all 'criteria/cleanUpdate', id: criterion.id, token: data['token'], value: criterion
   end
 
   def delete_criterion data
@@ -41,7 +41,7 @@ class ApiChannel < ApplicationCable::Channel
       other_criterions.where('position BETWEEN ? AND ?', from, to).update_all('position = position - 1')
     end
   ensure
-    dispatch_all 'criteria/load', task.criterions.order(:position)
+    dispatch_all 'criteria/loadPosition', task.criterions.order(:position).pluck(:id, :position).to_h
   end
 
   private
