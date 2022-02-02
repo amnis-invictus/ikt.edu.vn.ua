@@ -32,4 +32,10 @@ RSpec.feature 'User registration', type: :feature, ui: true do
     before { click_button 'commit' }
     scenario { expect(page).to have_content 'Заклад, у якому ви пишете олімпіаду не може бути порожнім' }
   end
+
+  context 'without grade' do
+    given(:params) { attributes_for :user, grade: nil }
+    before { click_button 'commit' }
+    scenario { expect(page).to have_content 'Клас не може бути порожнім' }
+  end
 end
