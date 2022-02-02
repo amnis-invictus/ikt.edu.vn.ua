@@ -38,4 +38,10 @@ RSpec.feature 'User registration', type: :feature, ui: true do
     before { click_button 'commit' }
     scenario { expect(page).to have_content 'Клас не може бути порожнім' }
   end
+
+  context 'without city' do
+    given(:params) { attributes_for :user, city: nil }
+    before { click_button 'commit' }
+    scenario { expect(page).to have_content 'Місто не може бути порожнім' }
+  end
 end
