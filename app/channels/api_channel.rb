@@ -13,6 +13,8 @@ class ApiChannel < ApplicationCable::Channel
   def add_criterion
     criterion = task_criterions.create! position: task_criterions.count
     dispatch_all 'criteria/add', criterion
+  rescue ActiveRecord::RecordNotUnique
+    retry
   end
 
   def update_criterion data
@@ -30,15 +32,12 @@ class ApiChannel < ApplicationCable::Channel
 
   def drag_drop data
     from, to = data.values_at 'from', 'to'
-
-    subject = task_criterions.find_by! position: from
-    subject.update! position: to
-
-    other_criterions = task_criterions.where.not id: subject.id
     if from > to
-      other_criterions.where('position BETWEEN ? AND ?', to, from).update_all('position = position + 1')
+      task_criterions.where('position BETWEEN ? AND ?', to, from)
+        .update_all(['position = (CASE WHEN position = ? THEN ? ELSE position + 1 END)', from, to])
     else
-      other_criterions.where('position BETWEEN ? AND ?', from, to).update_all('position = position - 1')
+      task_criterions.where('position BETWEEN ? AND ?', from, to)
+        .update_all(['position = (CASE WHEN position = ? THEN ? ELSE position - 1 END)', from, to])
     end
   ensure
     dispatch_all 'criteria/loadPosition', task_criterions.order(:position).pluck(:id, :position).to_h

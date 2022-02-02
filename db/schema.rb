@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_29_173742) do
+ActiveRecord::Schema.define(version: 2022_02_02_205558) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(version: 2022_01_29_173742) do
     t.bigint "task_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["position", "task_id"], name: "criterions_position_and_task_id_unique", unique: true
     t.index ["task_id"], name: "index_criterions_on_task_id"
   end
 
