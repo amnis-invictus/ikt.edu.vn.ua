@@ -58,4 +58,11 @@ RSpec.feature 'User registration', type: :feature, ui: true do
     scenario('should stay on registration page') { expect(page).to have_current_path(registration_path) }
     scenario { expect(page).to have_no_content 'Ваш навчальний заклад не може бути порожнім' }
   end
+
+  context 'without name' do
+    given(:params) { attributes_for :user, name: nil }
+    before { click_button 'commit' }
+    scenario('should stay on registration page') { expect(page).to have_current_path(registration_path) }
+    scenario { expect(page).to have_no_content 'Прізвище, Ім\'я, По батькові не може бути пустим' }
+  end
 end
