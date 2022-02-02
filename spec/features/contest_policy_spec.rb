@@ -22,4 +22,17 @@ RSpec.feature 'ContestPolicy', type: :feature, ui: true do
       scenario { expect(page).to have_button 'commit' }
     end
   end
+
+  # TODO: Add additional content upload / check
+  feature 'viewing content' do
+    before { visit "/contests/#{contest.id}/content" }
+
+    context 'when task closed' do
+      given(:contest) { create :contest, task_open: false }
+
+      scenario { expect(page).to have_content 'Перегляд завдання заборонено. Повідомте технічного працівника.' }
+      scenario { expect(page.html).to_not include contest.content }
+      scenario { expect(page).to have_no_content 'Додаткові матеріали' }
+    end
+  end
 end
