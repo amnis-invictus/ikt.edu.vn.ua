@@ -34,5 +34,13 @@ RSpec.feature 'ContestPolicy', type: :feature, ui: true do
       scenario { expect(page.html).to_not include contest.content }
       scenario { expect(page).to have_no_content 'Додаткові матеріали' }
     end
+
+    context 'when task open' do
+      given(:contest) { create :contest, task_open: true }
+
+      scenario { expect(page).to have_no_content 'Перегляд завдання заборонено. Повідомте технічного працівника.' }
+      scenario { expect(page.html).to include contest.content }
+      scenario { expect(page).to have_content 'Додаткові матеріали' }
+    end
   end
 end
