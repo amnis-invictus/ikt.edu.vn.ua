@@ -44,4 +44,11 @@ RSpec.feature 'User registration', type: :feature, ui: true do
     before { click_button 'commit' }
     scenario { expect(page).to have_content 'Місто не може бути порожнім' }
   end
+
+  context 'without email' do
+    given(:params) { attributes_for :user, email: nil }
+    before { click_button 'commit' }
+    scenario('should stay on registration page') { expect(page).to have_current_path(registration_path) }
+    scenario { expect(page).to have_no_content 'Ваш e-mail не може бути порожнім' }
+  end
 end
