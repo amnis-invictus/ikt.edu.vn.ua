@@ -12,5 +12,14 @@ RSpec.feature 'ContestPolicy', type: :feature, ui: true do
       scenario { expect(page).to have_no_css 'form#regform', visible: :all }
       scenario { expect(page).to have_no_button 'commit' }
     end
+
+    context 'when open' do
+      given(:contest) { create :contest, registration_open: true }
+
+      scenario { expect(page).to have_content 'РЕЄСТРАЦІЯ УЧАСНИКА' }
+      scenario { expect(page).to have_no_content 'Реєстрація заборонена. Повідомте технічного працівника.' }
+      scenario { expect(page).to have_css 'form#regform', visible: true }
+      scenario { expect(page).to have_button 'commit' }
+    end
   end
 end
