@@ -12,4 +12,12 @@ RSpec.feature 'User registration', type: :feature, ui: true do
     before { click_button 'commit' }
     scenario { expect(page).to have_content 'Ви успішно зареєстровані.' }
   end
+
+  context 'with duplicated name' do
+    before { create :user, contest: }
+    given(:params) { attributes_for :user }
+    before { click_button 'commit' }
+
+    scenario { expect(page).to have_content "Учасник на ім'я #{params[:name]} вже зареєстрований" }
+  end
 end
