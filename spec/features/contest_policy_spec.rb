@@ -55,5 +55,14 @@ RSpec.feature 'ContestPolicy', type: :feature, ui: true do
       scenario { expect(page).to have_no_css 'form', visible: :all }
       scenario { expect(page).to have_no_button 'commit' }
     end
+
+    context 'when open' do
+      given(:contest) { create :contest, upload_open: true }
+
+      scenario { expect(page).to have_content 'ВІДПРАВКА РОЗВ\'ЯЗКІВ' }
+      scenario { expect(page).to have_no_content 'Відправка розв\'язків заборонена. Повідомте технічного працівника.' }
+      scenario { expect(page).to have_css 'form', visible: true }
+      scenario { expect(page).to have_button 'commit' }
+    end
   end
 end
