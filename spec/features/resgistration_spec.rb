@@ -26,4 +26,10 @@ RSpec.feature 'User registration', type: :feature, ui: true do
     before { click_button 'commit' }
     scenario { expect(page).to have_content 'Код доступу помилковий' }
   end
+
+  context 'without contest site' do
+    given(:params) { attributes_for :user, contest_site: nil }
+    before { click_button 'commit' }
+    scenario { expect(page).to have_content 'Заклад, у якому ви пишете олімпіаду не може бути порожнім' }
+  end
 end
