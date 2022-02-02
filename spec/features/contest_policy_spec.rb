@@ -43,4 +43,17 @@ RSpec.feature 'ContestPolicy', type: :feature, ui: true do
       scenario { expect(page).to have_content 'Додаткові матеріали' }
     end
   end
+
+  feature 'upload' do
+    before { visit "/contests/#{contest.id}/upload/new" }
+
+    context 'when closed' do
+      given(:contest) { create :contest, upload_open: false }
+
+      scenario { expect(page).to have_content 'ВІДПРАВКА РОЗВ\'ЯЗКІВ' }
+      scenario { expect(page).to have_content 'Відправка розв\'язків заборонена. Повідомте технічного працівника.' }
+      scenario { expect(page).to have_no_css 'form', visible: :all }
+      scenario { expect(page).to have_no_button 'commit' }
+    end
+  end
 end
