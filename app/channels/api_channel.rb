@@ -7,6 +7,7 @@ class ApiChannel < ApplicationCable::Channel
     dispatch_self 'users/load', User.joins(contest: :tasks).where(tasks: { id: task_id }).order(:secret).pluck(:secret)
     dispatch_self 'criteria/load', task_criterions.order(:position)
     dispatch_self 'results/load', CriterionUserResult.includes(:user).where(criterion: task_criterions)
+    dispatch_self 'locks/load', RedisLockManager.all
     dispatch_self 'app/ready'
     stream_from task_id
   end

@@ -45,6 +45,12 @@ class RedisLockManager
       release key, token if do_release
     end
 
+    def all
+      keys = CONNECTION.keys 'locks:*'
+      values = CONNECTION.multi { |transaction| keys.each { transaction.get _1 } }
+      keys.map { _1[6..] }.zip(values).to_h
+    end
+
     private
 
     def with_namespace(key) = "locks:#{key}"
