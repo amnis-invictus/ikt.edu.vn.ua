@@ -52,14 +52,14 @@ class ApiChannel < ApplicationCable::Channel
       result.update! value: data['value']
       dispatch_all 'results/cleanUpdate', result.as_json.merge(token: data['token'])
     end
-    dispatch_self 'errors/push', 'Write failed: Lock was acquired by someone else' unless performed
+    dispatch_self 'errors/push', "Write failed: Lock #{lock_key data} was acquired by someone else" unless performed
   end
 
   def acquire_lock data
     if RedisLockManager.acquire lock_key(data), client_id
       dispatch_all 'locks/acquire', data.merge(client_id:)
     else
-      dispatch_self 'errors/push', 'Lock was acquired by someone else'
+      dispatch_self 'errors/push', "Lock #{lock_key data} was acquired by someone else"
     end
   end
 
@@ -67,7 +67,7 @@ class ApiChannel < ApplicationCable::Channel
     if RedisLockManager.release lock_key(data), client_id
       dispatch_all 'locks/release', data.merge(client_id:)
     else
-      dispatch_self 'errors/push', 'Lock was acquired by someone else'
+      dispatch_self 'errors/push', "Lock #{lock_key data} was acquired by someone else"
     end
   end
 
