@@ -38,6 +38,13 @@ class RedisLockManager
       end
     end
 
+    def with_lock key, token
+      do_release = acquire key, token
+      acquired?(key, token).tap { yield if _1 }
+    ensure
+      release key, token if do_release
+    end
+
     private
 
     def with_namespace(key) = "locks:#{key}"

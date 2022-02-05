@@ -45,15 +45,14 @@ class ApiChannel < ApplicationCable::Channel
   end
 
   def write_result data
-    if RedisLockManager.acquired? lock_key(data), client_id
+    performed = RedisLockManager.with_lock lock_key(data), client_id do
       user = User.find_by! secret: data['user']
       criterion = task_criterions.find data['criterion']
       result = CriterionUserResult.create_or_find_by!(user:, criterion:)
       result.update! value: data['value']
       dispatch_all 'results/cleanUpdate', result.as_json.merge(token: data['token'])
-    else
-      dispatch_self 'errors/push', 'Write failed: lock is not acquired'
     end
+    dispatch_self 'errors/push', 'Write failed: Lock was acquired by someone else' unless performed
   end
 
   def acquire_lock data
