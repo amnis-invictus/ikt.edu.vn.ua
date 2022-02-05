@@ -6,6 +6,7 @@ class ApiChannel < ApplicationCable::Channel
     dispatch_self 'app/start'
     dispatch_self 'users/load', User.joins(contest: :tasks).where(tasks: { id: task_id }).order(:secret).pluck(:secret)
     dispatch_self 'criteria/load', task_criterions.order(:position)
+    dispatch_self 'results/load', CriterionUserResult.includes(:user).where(criterion: task_criterions)
     dispatch_self 'app/ready'
     stream_from task_id
   end
@@ -41,6 +42,14 @@ class ApiChannel < ApplicationCable::Channel
     end
   ensure
     dispatch_all 'criteria/loadPosition', task_criterions.order(:position).pluck(:id, :position).to_h
+  end
+
+  def write_result data
+    user = User.find_by! secret: data['user']
+    criterion = task_criterions.find data['criterion']
+    result = CriterionUserResult.create_or_find_by!(user:, criterion:)
+    result.update! value: data['value']
+    dispatch_all 'results/cleanUpdate', result.as_json.merge(token: data['token'])
   end
 
   private

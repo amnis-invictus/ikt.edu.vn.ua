@@ -180,6 +180,39 @@ ALTER SEQUENCE public.contests_id_seq OWNED BY public.contests.id;
 
 
 --
+-- Name: criterion_user_results; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.criterion_user_results (
+    id bigint NOT NULL,
+    criterion_id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    value double precision DEFAULT 0.0 NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: criterion_user_results_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.criterion_user_results_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: criterion_user_results_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.criterion_user_results_id_seq OWNED BY public.criterion_user_results.id;
+
+
+--
 -- Name: criterions; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -393,6 +426,13 @@ ALTER TABLE ONLY public.contests ALTER COLUMN id SET DEFAULT nextval('public.con
 
 
 --
+-- Name: criterion_user_results id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.criterion_user_results ALTER COLUMN id SET DEFAULT nextval('public.criterion_user_results_id_seq'::regclass);
+
+
+--
 -- Name: criterions id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -465,6 +505,14 @@ ALTER TABLE ONLY public.ar_internal_metadata
 
 ALTER TABLE ONLY public.contests
     ADD CONSTRAINT contests_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: criterion_user_results criterion_user_results_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.criterion_user_results
+    ADD CONSTRAINT criterion_user_results_pkey PRIMARY KEY (id);
 
 
 --
@@ -549,6 +597,27 @@ CREATE UNIQUE INDEX index_active_storage_blobs_on_key ON public.active_storage_b
 --
 
 CREATE UNIQUE INDEX index_active_storage_variant_records_uniqueness ON public.active_storage_variant_records USING btree (blob_id, variation_digest);
+
+
+--
+-- Name: index_criterion_user_results_on_criterion_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_criterion_user_results_on_criterion_id ON public.criterion_user_results USING btree (criterion_id);
+
+
+--
+-- Name: index_criterion_user_results_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_criterion_user_results_on_user_id ON public.criterion_user_results USING btree (user_id);
+
+
+--
+-- Name: index_criterion_user_results_on_user_id_and_criterion_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_criterion_user_results_on_user_id_and_criterion_id ON public.criterion_user_results USING btree (user_id, criterion_id);
 
 
 --
@@ -670,11 +739,27 @@ ALTER TABLE ONLY public.active_storage_attachments
 
 
 --
+-- Name: criterion_user_results fk_rails_cd859372af; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.criterion_user_results
+    ADD CONSTRAINT fk_rails_cd859372af FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
 -- Name: criterions fk_rails_d96b0f1290; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.criterions
     ADD CONSTRAINT fk_rails_d96b0f1290 FOREIGN KEY (task_id) REFERENCES public.tasks(id);
+
+
+--
+-- Name: criterion_user_results fk_rails_ddb05f7bb3; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.criterion_user_results
+    ADD CONSTRAINT fk_rails_ddb05f7bb3 FOREIGN KEY (criterion_id) REFERENCES public.criterions(id);
 
 
 --
@@ -717,6 +802,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220129140422'),
 ('20220129165359'),
 ('20220129173742'),
-('20220202205558');
+('20220202205558'),
+('20220205113405'),
+('20220205114432');
 
 
