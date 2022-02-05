@@ -45,11 +45,31 @@ class ApiChannel < ApplicationCable::Channel
   end
 
   def write_result data
-    user = User.find_by! secret: data['user']
-    criterion = task_criterions.find data['criterion']
-    result = CriterionUserResult.create_or_find_by!(user:, criterion:)
-    result.update! value: data['value']
-    dispatch_all 'results/cleanUpdate', result.as_json.merge(token: data['token'])
+    if RedisLockManager.acquired? lock_key(data), client_id
+      user = User.find_by! secret: data['user']
+      criterion = task_criterions.find data['criterion']
+      result = CriterionUserResult.create_or_find_by!(user:, criterion:)
+      result.update! value: data['value']
+      dispatch_all 'results/cleanUpdate', result.as_json.merge(token: data['token'])
+    else
+      dispatch_self 'errors/push', 'Write failed: lock is not acquired'
+    end
+  end
+
+  def acquire_lock data
+    if RedisLockManager.acquire lock_key(data), client_id
+      dispatch_all 'locks/acquire', data.merge(client_id:)
+    else
+      dispatch_self 'errors/push', 'Lock was acquired by someone else'
+    end
+  end
+
+  def release_lock data
+    if RedisLockManager.release lock_key(data), client_id
+      dispatch_all 'locks/release', data.merge(client_id:)
+    else
+      dispatch_self 'errors/push', 'Lock was acquired by someone else'
+    end
   end
 
   private
@@ -65,4 +85,6 @@ class ApiChannel < ApplicationCable::Channel
   def task_criterions
     Criterion.where task_id:
   end
+
+  def lock_key(data) = data.values_at('user', 'criterion').join(':')
 end
