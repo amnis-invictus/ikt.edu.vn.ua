@@ -56,6 +56,12 @@ class ApiChannel < ApplicationCable::Channel
     dispatch_self 'errors/push', "Write failed: Lock #{lock_key data} was acquired by someone else" unless performed
   end
 
+  def reset_result data
+    user = User.find_by! secret: data['user']
+    criterion = task_criterions.find data['criterion']
+    dispatch_self 'results/reset', CriterionUserResult.create_or_find_by!(user:, criterion:)
+  end
+
   def acquire_lock data
     if RedisLockManager.acquire lock_key(data), client_id
       dispatch_all 'locks/acquire', data.merge(client_id:)
