@@ -7,6 +7,7 @@ class Task < ApplicationRecord
   has_many :solutions, inverse_of: :task, dependent: :destroy
   has_many :results, inverse_of: :task, dependent: :destroy
   has_many :criterions, inverse_of: :task, dependent: :destroy
+  has_many :comments, inverse_of: :task, dependent: :destroy
 
   def accepted_ext
     file_names.map(&File.method(:extname)).join(',') if file_names.present?
