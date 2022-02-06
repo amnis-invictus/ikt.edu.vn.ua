@@ -33,7 +33,7 @@ class Upload
         text = "#{name}: Помилка! Не вдалося завантажити файл на сервер!"
         result << { type: :error, text: text }
       else
-        solution.errors.full_messages.each { result << { type: :error, text: _1 } }
+        solution.errors.full_messages.each { result << { type: :error, text: "#{name}: Помилка! #{_1}" } }
       end
     end
     result
