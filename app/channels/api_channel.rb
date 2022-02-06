@@ -1,5 +1,5 @@
 class ApiChannel < ApplicationCable::Channel
-  rescue_from(ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound) { dispatch_self 'errors/push', _1 }
+  rescue_from(StandardError) { dispatch_self 'errors/push', _1 }
 
   def subscribed
     ensure_confirmation_sent
