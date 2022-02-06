@@ -139,6 +139,39 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: comments; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.comments (
+    id bigint NOT NULL,
+    task_id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    value text DEFAULT ''::text NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: comments_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.comments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: comments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.comments_id_seq OWNED BY public.comments.id;
+
+
+--
 -- Name: contests; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -419,6 +452,13 @@ ALTER TABLE ONLY public.active_storage_variant_records ALTER COLUMN id SET DEFAU
 
 
 --
+-- Name: comments id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.comments ALTER COLUMN id SET DEFAULT nextval('public.comments_id_seq'::regclass);
+
+
+--
 -- Name: contests id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -497,6 +537,14 @@ ALTER TABLE ONLY public.active_storage_variant_records
 
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: comments comments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.comments
+    ADD CONSTRAINT comments_pkey PRIMARY KEY (id);
 
 
 --
@@ -600,6 +648,27 @@ CREATE UNIQUE INDEX index_active_storage_variant_records_uniqueness ON public.ac
 
 
 --
+-- Name: index_comments_on_task_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_comments_on_task_id ON public.comments USING btree (task_id);
+
+
+--
+-- Name: index_comments_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_comments_on_user_id ON public.comments USING btree (user_id);
+
+
+--
+-- Name: index_comments_on_user_id_and_task_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_comments_on_user_id_and_task_id ON public.comments USING btree (user_id, task_id);
+
+
+--
 -- Name: index_criterion_user_results_on_criterion_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -691,11 +760,27 @@ CREATE INDEX index_users_on_contest_id_and_secret ON public.users USING btree (c
 
 
 --
+-- Name: comments fk_rails_03de2dc08c; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.comments
+    ADD CONSTRAINT fk_rails_03de2dc08c FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
 -- Name: users fk_rails_433e96af6f; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT fk_rails_433e96af6f FOREIGN KEY (contest_id) REFERENCES public.contests(id);
+
+
+--
+-- Name: comments fk_rails_6bd05453df; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.comments
+    ADD CONSTRAINT fk_rails_6bd05453df FOREIGN KEY (task_id) REFERENCES public.tasks(id);
 
 
 --
@@ -804,6 +889,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220129173742'),
 ('20220202205558'),
 ('20220205113405'),
-('20220205114432');
+('20220205114432'),
+('20220206140046'),
+('20220206140244');
 
 

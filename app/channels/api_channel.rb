@@ -7,6 +7,7 @@ class ApiChannel < ApplicationCable::Channel
     dispatch_self 'users/load', User.joins(contest: :tasks).where(tasks: { id: task_id }).order(:secret).pluck(:secret)
     dispatch_self 'criteria/load', task_criterions.order(:position)
     dispatch_self 'results/load', CriterionUserResult.includes(:user).where(criterion: task_criterions)
+    dispatch_self 'comments/load', Comment.includes(:user).where(task_id:)
     dispatch_self 'locks/load', RedisLockManager.all
     dispatch_self 'app/ready'
     stream_from task_id
@@ -61,6 +62,22 @@ class ApiChannel < ApplicationCable::Channel
     user = User.find_by! secret: data['user']
     criterion = task_criterions.find data['criterion']
     dispatch_self 'results/reset', CriterionUserResult.create_or_find_by!(user:, criterion:)
+  end
+
+  def write_comment data
+    lock = "#{data['user']}:comment"
+    performed = RedisLockManager.with_lock lock, client_id do
+      user = User.find_by! secret: data['user']
+      comment = Comment.create_or_find_by!(user:, task_id:)
+      comment.update! value: data['value']
+      dispatch_all 'comments/cleanUpdate', comment.as_json.merge(token: data['token'])
+    end
+    dispatch_self 'errors/push', "Write failed: Lock #{lock} was acquired by someone else" unless performed
+  end
+
+  def reset_comment data
+    user = User.find_by! secret: data['user']
+    dispatch_self 'comments/reset', Comment.create_or_find_by!(user:, task_id:)
   end
 
   def acquire_lock data
