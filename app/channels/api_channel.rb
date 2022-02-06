@@ -46,14 +46,15 @@ class ApiChannel < ApplicationCable::Channel
   end
 
   def write_result data
-    performed = RedisLockManager.with_lock lock_key(data), client_id do
+    lock = data.values_at('user', 'criterion').join(':')
+    performed = RedisLockManager.with_lock lock, client_id do
       user = User.find_by! secret: data['user']
       criterion = task_criterions.find data['criterion']
       result = CriterionUserResult.create_or_find_by!(user:, criterion:)
       result.update! value: data['value']
       dispatch_all 'results/cleanUpdate', result.as_json.merge(token: data['token'])
     end
-    dispatch_self 'errors/push', "Write failed: Lock #{lock_key data} was acquired by someone else" unless performed
+    dispatch_self 'errors/push', "Write failed: Lock #{lock} was acquired by someone else" unless performed
   end
 
   def reset_result data
@@ -63,18 +64,18 @@ class ApiChannel < ApplicationCable::Channel
   end
 
   def acquire_lock data
-    if RedisLockManager.acquire lock_key(data), client_id
+    if RedisLockManager.acquire data['lock'], client_id
       dispatch_all 'locks/acquire', data.merge(client_id:)
     else
-      dispatch_self 'errors/push', "Lock #{lock_key data} was acquired by someone else"
+      dispatch_self 'errors/push', "Lock #{data['lock']} was acquired by someone else"
     end
   end
 
   def release_lock data
-    if RedisLockManager.release lock_key(data), client_id
+    if RedisLockManager.release data['lock'], client_id
       dispatch_all 'locks/release', data.merge(client_id:)
     else
-      dispatch_self 'errors/push', "Lock #{lock_key data} was acquired by someone else"
+      dispatch_self 'errors/push', "Lock #{data['lock']} was acquired by someone else"
     end
   end
 
@@ -91,6 +92,4 @@ class ApiChannel < ApplicationCable::Channel
   def task_criterions
     Criterion.where task_id:
   end
-
-  def lock_key(data) = data.values_at('user', 'criterion').join(':')
 end
