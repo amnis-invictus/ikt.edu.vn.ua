@@ -79,6 +79,7 @@ RailsAdmin.config do |config|
 
   config.model 'Contest' do |_config|
     configure :cities, :pg_string_array
+    configure :institutions, :pg_string_array
     configure :contest_sites, :pg_string_array
   end
 end

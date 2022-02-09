@@ -16,7 +16,11 @@
     <% end %>
   </div>
   <div class="field">
-    <%= f.text_field :institution, required: true, placeholder: true %>
+    <% if contest.institutions.present? %>
+      <%= f.select :institution, contest.institutions, required: true, prompt: t('users.new.institution_prompt') %>
+    <% else %>
+      <%= f.text_field :institution, required: true, placeholder: true %>
+    <% end %>
   </div>
   <div class="field">
     <%= f.select :grade, [
