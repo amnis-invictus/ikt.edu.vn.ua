@@ -1,16 +1,16 @@
 module FormHelpers
-  USER_SELECT_ATTRS = %i[city grade contest_site].freeze
-
-  def fill_new_user_form params
+  def fill_inputs prefix, params
     within 'form' do
       params.each do |name, value|
-        next if value.blank?
+        fill_in "#{prefix}_#{name}", with: value if value.present?
+      end
+    end
+  end
 
-        if USER_SELECT_ATTRS.include? name
-          select value, from: "user_#{name}"
-        else
-          fill_in "user_#{name}", with: value
-        end
+  def fill_selects prefix, params
+    within 'form' do
+      params.each do |name, value|
+        select value, from: "#{prefix}_#{name}" if value.present?
       end
     end
   end

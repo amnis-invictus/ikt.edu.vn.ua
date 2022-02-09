@@ -5,7 +5,8 @@ RSpec.feature 'User registration', type: :feature, ui: true do
   given(:registration_path) { "/contests/#{contest.id}/users/new" }
 
   before { visit registration_path }
-  before { fill_new_user_form params }
+  before { fill_inputs 'user', params.slice(:name, :institution, :email, :registration_secret) }
+  before { fill_selects 'user', params.slice(:city, :contest_site, :grade) }
 
   context 'with everything valid' do
     given(:params) { attributes_for :user }
