@@ -31,6 +31,7 @@ group :development, :test do
   gem 'capybara'
   gem 'database_cleaner-active_record'
   gem 'factory_bot_rails'
+  gem 'letter_opener'
   gem 'rspec-rails'
   gem 'rubocop'
   gem 'rubocop-performance'
