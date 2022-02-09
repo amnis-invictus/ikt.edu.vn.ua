@@ -89,6 +89,26 @@ RSpec.feature 'User registration', type: :feature, ui: true do
     end
   end
 
+  context 'for contest without institution' do
+    given!(:contest) { create :contest, institutions: [] }
+
+    before { fill_inputs 'user', params.slice(:name, :institution, :email, :registration_secret) }
+    before { fill_selects 'user', params.slice(:contest_site, :city, :grade) }
+
+    context 'with everything valid' do
+      given(:params) { attributes_for :user }
+      before { click_button 'commit' }
+      scenario { expect(page).to have_content 'Ви успішно зареєстровані.' }
+    end
+
+    context 'without institution' do
+      given(:params) { attributes_for :user, institution: nil }
+      before { click_button 'commit' }
+      scenario('should stay on registration page') { expect(page).to have_current_path(registration_path) }
+      scenario { expect(page).to have_no_content 'Ваш навчальний заклад не може бути порожнім' }
+    end
+  end
+
   context 'for contest without city' do
     given!(:contest) { create :contest, cities: [] }
 
