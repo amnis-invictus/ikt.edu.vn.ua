@@ -2,6 +2,7 @@ uk:
   users:
     new:
       city_prompt: Виберіть місто (район)
+      institution_prompt: Виберіть ваш навчальний заклад
       grade_prompt: Виберіть клас
       contest_site_prompt: Виберіть заклад, у якому ви пишете олімпіаду
   activerecord:
