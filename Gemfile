@@ -5,6 +5,7 @@ ruby '3.1.2'
 
 gem 'bcrypt', '~> 3.1.18'
 gem 'bootsnap', '>= 1.4.4', require: false
+gem 'connection_pool'
 gem 'dotenv-rails'
 gem 'draper'
 gem 'hiredis'

@@ -1,28 +1,34 @@
 class RedisLockManager
-  CONNECTION = Redis.new
+  POOL = ConnectionPool.new(size: 10) { Redis.new }
 
-  SCRIPTS = %i[lock unlock].index_with { CONNECTION.script :load, File.read(Rails.root.join "lib/redis/#{_1}.lua") }.freeze
+  POOL.with do |redis|
+    self::SCRIPTS = %i[lock unlock].index_with do |script|
+      redis.script :load, Rails.root.join("lib/redis/#{script}.lua").read
+    end.freeze
+  end
 
   class << self
     def acquired? key, token
       key = with_namespace key
-      CONNECTION.get(key) == token
+      POOL.with { _1.get key } == token
     end
 
     def acquire key, token
       key = with_namespace key
-      CONNECTION.evalsha(SCRIPTS[:lock], keys: [key, token]) == 1
+      POOL.with { _1.evalsha SCRIPTS[:lock], keys: [key, token] } == 1
     end
 
     def release key, token
       key = with_namespace key
-      CONNECTION.evalsha(SCRIPTS[:unlock], keys: [key, token]) == 1
+      POOL.with { _1.evalsha SCRIPTS[:unlock], keys: [key, token] } == 1
     end
 
     def release_all token
-      keys = CONNECTION.smembers token
-      CONNECTION.multi do |transaction|
-        keys.each { |key| transaction.evalsha SCRIPTS[:unlock], keys: [key, token] }
+      POOL.with do |redis|
+        keys = redis.smembers token
+        redis.multi do |transaction|
+          keys.each { |key| transaction.evalsha SCRIPTS[:unlock], keys: [key, token] }
+        end
       end
     end
 
@@ -34,9 +40,11 @@ class RedisLockManager
     end
 
     def all
-      keys = CONNECTION.keys 'locks:*'
-      values = CONNECTION.multi { |transaction| keys.each { transaction.get _1 } }
-      keys.map { _1[6..] }.zip(values).to_h
+      POOL.with do |redis|
+        keys = redis.keys 'locks:*'
+        values = redis.multi { |transaction| keys.each { transaction.get _1 } }
+        keys.map { _1[6..] }.zip(values).to_h
+      end
     end
 
     private

@@ -100,6 +100,7 @@ GEM
     code-scanning-rubocop (0.6.1)
       rubocop (~> 1.0)
     concurrent-ruby (1.1.10)
+    connection_pool (2.2.5)
     crass (1.0.6)
     database_cleaner-active_record (2.0.1)
       activerecord (>= 5.a)
@@ -366,6 +367,7 @@ DEPENDENCIES
   capistrano-rails
   capybara
   code-scanning-rubocop
+  connection_pool
   database_cleaner-active_record
   dotenv-rails
   draper
