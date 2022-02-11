@@ -20,6 +20,8 @@ gem 'redis', '~> 4.6', require: %w[redis redis/connection/hiredis]
 gem 'redis-namespace'
 gem 'rubyzip', require: 'zip'
 gem 'sassc-rails'
+gem 'sentry-rails'
+gem 'sentry-ruby'
 gem 'uglifier'
 
 # Temporarily fix for ruby 3.1
