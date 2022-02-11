@@ -1,40 +1,28 @@
 class RedisLockManager
   CONNECTION = Redis.new
 
-  UNLOCK_SCRIPT = <<-LUA.freeze
-    if redis.call("get", KEYS[1]) == ARGV[1] then
-      return redis.call("del", KEYS[1])
-    else
-      return 0
-    end
-  LUA
-
-  UNLOCK_SCRIPT_SHA = CONNECTION.script(:load, UNLOCK_SCRIPT).freeze
+  SCRIPTS = %i[lock unlock].index_with { CONNECTION.script :load, File.read(Rails.root.join "lib/redis/#{_1}.lua") }.freeze
 
   class << self
     def acquired? key, token
-      CONNECTION.get(with_namespace key) == token
+      key = with_namespace key
+      CONNECTION.get(key) == token
     end
 
     def acquire key, token
       key = with_namespace key
-      acquired = CONNECTION.set key, token, nx: true
-      CONNECTION.sadd token, key if acquired
-      acquired
+      CONNECTION.evalsha(SCRIPTS[:lock], keys: [key, token]) == 1
     end
 
     def release key, token
       key = with_namespace key
-      released = CONNECTION.evalsha(UNLOCK_SCRIPT_SHA, keys: [key], argv: [token]) == 1
-      CONNECTION.srem token, key if released
-      released
+      CONNECTION.evalsha(SCRIPTS[:unlock], keys: [key, token]) == 1
     end
 
     def release_all token
       keys = CONNECTION.smembers token
       CONNECTION.multi do |transaction|
-        keys.each { transaction.evalsha UNLOCK_SCRIPT_SHA, keys: [_1], argv: [token] }
-        transaction.del token
+        keys.each { |key| transaction.evalsha SCRIPTS[:unlock], keys: [key, token] }
       end
     end
 
