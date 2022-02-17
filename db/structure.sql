@@ -190,7 +190,8 @@ CREATE TABLE public.contests (
     contest_sites character varying[] DEFAULT '{}'::character varying[] NOT NULL,
     judge_password character varying NOT NULL,
     archive_open boolean DEFAULT false NOT NULL,
-    institutions character varying[] DEFAULT '{}'::character varying[] NOT NULL
+    institutions character varying[] DEFAULT '{}'::character varying[] NOT NULL,
+    statistic_open boolean DEFAULT false NOT NULL
 );
 
 
@@ -893,6 +894,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220205114432'),
 ('20220206140046'),
 ('20220206140244'),
-('20220209182545');
+('20220209182545'),
+('20220217094714');
 
 
