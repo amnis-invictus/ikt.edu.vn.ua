@@ -8,7 +8,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem 'dotenv-rails'
 gem 'draper'
 gem 'hiredis'
-gem 'image_processing', '~> 1.2'
+gem 'image_processing', '~> 1.12'
 gem 'jbuilder', '~> 2.11'
 gem 'jquery-rails'
 gem 'pg', '~> 1.3'
