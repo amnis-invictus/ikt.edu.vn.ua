@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   IP_HEADERS = %w[HTTP_CLIENT_IP HTTP_X_FORWARDED_FOR REMOTE_ADDR X-Forwarded-For X-Real-IP].freeze
 
-  include Pundit
+  include Pundit::Authorization
 
   rescue_from Pundit::NotAuthorizedError do
     @status = :not_authorized

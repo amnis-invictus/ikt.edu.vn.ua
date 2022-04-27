@@ -8,8 +8,8 @@
   <h4><%= link_to 'Остаточні результати', contest.final_results %></h4>
 <% end %>
 
-<% if contest.criterias.attached? %>
-  <h4><%= link_to 'Критерії оцінювання', contest.criterias %></h4>
+<% if contest.criteria.attached? %>
+  <h4><%= link_to 'Критерії оцінювання', contest.criteria %></h4>
 <% end %>
 
 <% if contest.judge_solution.attached? %>
