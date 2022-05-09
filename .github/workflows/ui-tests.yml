@@ -51,5 +51,6 @@ jobs:
         run: bundle exec rspec --tag ui
         env:
           RAILS_ENV: test
+          SMTP_FROM: test@ikt.capybara
           DATABASE_URL: "postgresql://postgres:postgres@localhost/IKT_test"
           UI_TEST_ENGINE: ${{ matrix.ui_test_engine }}
