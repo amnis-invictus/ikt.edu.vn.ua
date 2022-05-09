@@ -15,7 +15,7 @@ class Upload
   end
 
   def save
-    solutions.each { _1.assign_attributes user: user, ips: ips }
+    solutions.each { _1.assign_attributes user:, ips: }
     @solutions = solutions.filter { _1.file.present? }
     solutions.each &:save if valid?
   end
@@ -28,10 +28,10 @@ class Upload
       if solution.errors.blank? && solution.persisted?
         text = "#{name}: успішно завантажений на сервер"
         text << " (#{solution.upload_number} разів із #{solution.task_upload_limit})" if solution.upload_number > 1
-        result << { type: :info, text: text }
+        result << { type: :info, text: }
       elsif solution.errors.blank?
         text = "#{name}: Помилка! Не вдалося завантажити файл на сервер!"
-        result << { type: :error, text: text }
+        result << { type: :error, text: }
       else
         solution.errors.full_messages.each { result << { type: :error, text: "#{name}: Помилка! #{_1}" } }
       end
