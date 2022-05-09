@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'User registration', type: :feature, ui: true do
+  given(:registration_email) { an_object_having_attributes subject: 'IKT - Реєстрація', to: [params[:email]] }
   given(:registration_path) { "/contests/#{contest.id}/users/new" }
   before { visit registration_path }
 
@@ -14,38 +15,43 @@ RSpec.feature 'User registration', type: :feature, ui: true do
       given(:params) { attributes_for :user }
       before { click_button 'commit' }
       scenario { expect(page).to have_content 'Ви успішно зареєстровані.' }
+      scenario('should deliver email') { expect(ActionMailer::Base.deliveries).to include(registration_email) }
     end
 
     context 'with duplicated name' do
       before { create :user, contest: }
-      given(:params) { attributes_for :user }
+      given(:params) { attributes_for :user, email: 'judy.doe@example.com' }
       before { click_button 'commit' }
-
       scenario { expect(page).to have_content "Учасник на ім'я #{params[:name]} вже зареєстрований" }
+      scenario('should not deliver email') { expect(ActionMailer::Base.deliveries).to_not include(registration_email) }
     end
 
     context 'with invalid registration secret' do
       given(:params) { attributes_for :user, registration_secret: SecureRandom.base36 }
       before { click_button 'commit' }
       scenario { expect(page).to have_content 'Код доступу помилковий' }
+      scenario('should not deliver email') { expect(ActionMailer::Base.deliveries).to_not include(registration_email) }
     end
 
     context 'without contest site' do
       given(:params) { attributes_for :user, contest_site: nil }
       before { click_button 'commit' }
       scenario { expect(page).to have_content 'Заклад, у якому ви пишете олімпіаду не може бути порожнім' }
+      scenario('should not deliver email') { expect(ActionMailer::Base.deliveries).to_not include(registration_email) }
     end
 
     context 'without grade' do
       given(:params) { attributes_for :user, grade: nil }
       before { click_button 'commit' }
       scenario { expect(page).to have_content 'Клас не може бути порожнім' }
+      scenario('should not deliver email') { expect(ActionMailer::Base.deliveries).to_not include(registration_email) }
     end
 
     context 'without city' do
       given(:params) { attributes_for :user, city: nil }
       before { click_button 'commit' }
       scenario { expect(page).to have_content 'Місто не може бути порожнім' }
+      scenario('should not deliver email') { expect(ActionMailer::Base.deliveries).to_not include(registration_email) }
     end
 
     context 'without email' do
@@ -53,12 +59,14 @@ RSpec.feature 'User registration', type: :feature, ui: true do
       before { click_button 'commit' }
       scenario('should stay on registration page') { expect(page).to have_current_path(registration_path) }
       scenario { expect(page).to have_no_content 'Ваш e-mail не може бути порожнім' }
+      scenario('should not deliver email') { expect(ActionMailer::Base.deliveries).to_not include(registration_email) }
     end
 
     context 'without institution' do
       given(:params) { attributes_for :user, institution: nil }
       before { click_button 'commit' }
       scenario { expect(page).to have_content 'Ваш навчальний заклад не може бути порожнім' }
+      scenario('should not deliver email') { expect(ActionMailer::Base.deliveries).to_not include(registration_email) }
     end
 
     context 'without name' do
@@ -66,6 +74,7 @@ RSpec.feature 'User registration', type: :feature, ui: true do
       before { click_button 'commit' }
       scenario('should stay on registration page') { expect(page).to have_current_path(registration_path) }
       scenario { expect(page).to have_no_content 'Прізвище, Ім\'я, По батькові не може бути пустим' }
+      scenario('should not deliver email') { expect(ActionMailer::Base.deliveries).to_not include(registration_email) }
     end
   end
 
@@ -79,6 +88,7 @@ RSpec.feature 'User registration', type: :feature, ui: true do
       given(:params) { attributes_for :user }
       before { click_button 'commit' }
       scenario { expect(page).to have_content 'Ви успішно зареєстровані.' }
+      scenario('should deliver email') { expect(ActionMailer::Base.deliveries).to include(registration_email) }
     end
 
     context 'without contest_site' do
@@ -86,6 +96,7 @@ RSpec.feature 'User registration', type: :feature, ui: true do
       before { click_button 'commit' }
       scenario('should stay on registration page') { expect(page).to have_current_path(registration_path) }
       scenario { expect(page).to have_no_content 'Заклад, у якому ви пишете олімпіаду не може бути порожнім' }
+      scenario('should not deliver email') { expect(ActionMailer::Base.deliveries).to_not include(registration_email) }
     end
   end
 
@@ -99,6 +110,7 @@ RSpec.feature 'User registration', type: :feature, ui: true do
       given(:params) { attributes_for :user }
       before { click_button 'commit' }
       scenario { expect(page).to have_content 'Ви успішно зареєстровані.' }
+      scenario('should deliver email') { expect(ActionMailer::Base.deliveries).to include(registration_email) }
     end
 
     context 'without institution' do
@@ -106,6 +118,7 @@ RSpec.feature 'User registration', type: :feature, ui: true do
       before { click_button 'commit' }
       scenario('should stay on registration page') { expect(page).to have_current_path(registration_path) }
       scenario { expect(page).to have_no_content 'Ваш навчальний заклад не може бути порожнім' }
+      scenario('should not deliver email') { expect(ActionMailer::Base.deliveries).to_not include(registration_email) }
     end
   end
 
@@ -119,6 +132,7 @@ RSpec.feature 'User registration', type: :feature, ui: true do
       given(:params) { attributes_for :user }
       before { click_button 'commit' }
       scenario { expect(page).to have_content 'Ви успішно зареєстровані.' }
+      scenario('should deliver email') { expect(ActionMailer::Base.deliveries).to include(registration_email) }
     end
 
     context 'without city' do
@@ -126,6 +140,7 @@ RSpec.feature 'User registration', type: :feature, ui: true do
       before { click_button 'commit' }
       scenario('should stay on registration page') { expect(page).to have_current_path(registration_path) }
       scenario { expect(page).to have_no_content 'Місто не може бути порожнім' }
+      scenario('should not deliver email') { expect(ActionMailer::Base.deliveries).to_not include(registration_email) }
     end
   end
 end
