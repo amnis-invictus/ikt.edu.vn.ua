@@ -10,8 +10,8 @@ development:
 test:
   <<: *default
   database: IKT_test
-  url: <%= ENV.fetch('DATABASE_URL') %>
+  url: <%= ENV.fetch('DATABASE_URL', nil) %>
 
 production:
   <<: *default
-  url: <%= ENV.fetch('DATABASE_URL') %>
+  url: <%= ENV.fetch('DATABASE_URL', nil) %>
