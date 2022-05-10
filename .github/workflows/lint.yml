@@ -1,6 +1,10 @@
 name: Ruby lint CI
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   lint:
@@ -12,5 +16,15 @@ jobs:
         with:
           ruby-version: 3.1.2
           bundler-cache: true
+
       - name: Run static code analysis using rubocop
-        run: bundle exec rubocop --parallel
+        run: |
+          bash -c "
+            bundle exec rubocop --require code_scanning --format CodeScanning::SarifFormatter -o rubocop.sarif
+            [[ $? -ne 2 ]]
+          "
+
+      - name: Upload Sarif output
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: rubocop.sarif

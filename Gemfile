@@ -30,6 +30,7 @@ gem 'net-smtp', require: false
 group :development, :test do
   gem 'brakeman'
   gem 'capybara'
+  gem 'code-scanning-rubocop'
   gem 'database_cleaner-active_record'
   gem 'factory_bot_rails'
   gem 'letter_opener'
