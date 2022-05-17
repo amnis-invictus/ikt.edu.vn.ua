@@ -69,7 +69,7 @@ GEM
     airbrussh (1.4.0)
       sshkit (>= 1.6.1, != 1.7.0)
     ast (2.4.2)
-    bcrypt (3.1.17)
+    bcrypt (3.1.18)
     bootsnap (1.11.1)
       msgpack (~> 1.2)
     brakeman (5.2.3)
@@ -362,7 +362,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  bcrypt (~> 3.1.17)
+  bcrypt (~> 3.1.18)
   bootsnap (>= 1.4.4)
   brakeman
   bullet
