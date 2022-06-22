@@ -88,6 +88,14 @@ Layout/SpaceInLambdaLiteral:
   EnforcedStyle: require_space
 Layout/FirstArrayElementIndentation:
   EnforcedStyle: consistent
+RSpec/NotToNot:
+  EnforcedStyle: to_not
+Rails/SkipsModelValidations:
+  Enabled: false
+Rails/LexicallyScopedActionFilter:
+  Enabled: false
+Rails/FilePath:
+  EnforcedStyle: arguments
 AllCops:
   TargetRubyVersion: 3.1.2
   NewCops: enable
