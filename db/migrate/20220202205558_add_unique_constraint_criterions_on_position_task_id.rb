@@ -1,6 +1,6 @@
 class AddUniqueConstraintCriterionsOnPositionTaskId < ActiveRecord::Migration[6.1]
   def up
-    execute <<-SQL
+    execute <<-SQL.squish
       ALTER TABLE criterions
       ADD CONSTRAINT criterions_position_and_task_id_unique
       UNIQUE (position, task_id) DEFERRABLE INITIALLY DEFERRED
