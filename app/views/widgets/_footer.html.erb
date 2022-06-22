@@ -7,16 +7,18 @@
       <i>&copy; Вінницький технічний ліцей 2015-<%= Time.zone.now.year %></i>
       <h6 style="margin: 5px;">kostyanf14{@}vtlin.onmicrosoft.com</h6>
     </address>
-    <div class="footer-hotlog-wrapper">
-      <span id="hotlog_counter"></span>
-      <span id="hotlog_dyn"></span>
-      <script async type="text/javascript">
-        var hot_s = document.createElement('script');
-        hot_s.type = 'text/javascript'; hot_s.async = true;
-        hot_s.src = 'https://js.hotlog.ru/dcounter/2506703.js';
-        hot_d = document.getElementById('hotlog_dyn');
-        hot_d.appendChild(hot_s);
-      </script>
-    </div>
+    <% if Rails.env.production? %>
+      <div class="footer-hotlog-wrapper">
+        <span id="hotlog_counter"></span>
+        <span id="hotlog_dyn"></span>
+        <script async type="text/javascript">
+          var hot_s = document.createElement('script');
+          hot_s.type = 'text/javascript'; hot_s.async = true;
+          hot_s.src = 'https://js.hotlog.ru/dcounter/2506703.js';
+          hot_d = document.getElementById('hotlog_dyn');
+          hot_d.appendChild(hot_s);
+        </script>
+      </div>
+    <% end %>
   </div>
 </footer>
