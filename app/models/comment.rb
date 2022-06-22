@@ -1,5 +1,5 @@
 class Comment < ApplicationRecord
-  validates :value, exclusion: { in: [nil], message: 'cannot be null' }
+  validates :value, exclusion: { in: [nil], message: :blank }
 
   belongs_to :task
   belongs_to :user

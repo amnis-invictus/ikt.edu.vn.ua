@@ -10,6 +10,6 @@ class Task < ApplicationRecord
   has_many :comments, inverse_of: :task, dependent: :destroy
 
   def accepted_ext
-    file_names.map(&File.method(:extname)).join(',') if file_names.present?
+    file_names.map { File.extname _1 }.join(',') if file_names.present?
   end
 end
