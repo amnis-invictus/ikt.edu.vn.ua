@@ -1,5 +1,5 @@
 class RedisLockManager
-  POOL = ConnectionPool.new(size: 10) { Redis.new }
+  POOL = ConnectionPool.new(size: ENV.fetch('RAILS_MAX_THREADS', 5)) { Redis.new }
 
   POOL.with do |redis|
     self::SCRIPTS = %i[lock unlock].index_with do |script|
