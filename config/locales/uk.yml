@@ -26,3 +26,9 @@ uk:
         institution: Ваш навчальний заклад
         grade: Клас
         contest_site: Заклад, у якому ви пишете олімпіаду
+  solution_mailer:
+    email:
+      subject: IKT - Розв'язок
+  user_mailer:
+    email:
+      subject: IKT - Реєстрація
