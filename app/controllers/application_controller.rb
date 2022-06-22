@@ -58,7 +58,7 @@ class ApplicationController < ActionController::Base
   end
 
   def handle_not_authorized
-    head 403
+    head :forbidden
   end
 
   def judge?

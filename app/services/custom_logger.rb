@@ -10,7 +10,7 @@ class CustomLogger
 
     def logger contest_id
       @logger ||= {}
-      @logger[contest_id] ||= Logger.new "#{Rails.root}/log/custom-#{contest_id}.log"
+      @logger[contest_id] ||= Logger.new Rails.root.join 'log', "custom-#{contest_id}.log"
     end
   end
 end
