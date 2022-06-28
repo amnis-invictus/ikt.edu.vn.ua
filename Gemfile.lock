@@ -267,7 +267,7 @@ GEM
     rb-fsevent (0.11.0)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
-    redis (4.6.0)
+    redis (4.7.0)
     redis-namespace (1.8.2)
       redis (>= 3.0.4)
     regexp_parser (2.5.0)
@@ -393,7 +393,7 @@ DEPENDENCIES
   rack-mini-profiler (~> 3.0)
   rails (~> 6.1.6)
   rails_admin (~> 2.0)
-  redis (~> 4.6)
+  redis (~> 4.7)
   redis-namespace
   rspec-rails
   rubocop
