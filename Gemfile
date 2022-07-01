@@ -16,7 +16,7 @@ gem 'puma', '~> 5.6'
 gem 'pundit'
 gem 'rails', '~> 6.1.6'
 gem 'rails_admin', '~> 2.0'
-gem 'redis', '~> 4.6', require: %w[redis redis/connection/hiredis]
+gem 'redis', '~> 4.7', require: %w[redis redis/connection/hiredis]
 gem 'redis-namespace'
 gem 'rubyzip', require: 'zip'
 gem 'sassc-rails'
