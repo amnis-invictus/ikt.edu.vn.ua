@@ -9,7 +9,8 @@
 <% if policy(resource).create? %>
   <%= form_with model: resource, url: [contest, :upload], class: 'default-form' do |f| %>
     <div class="field">
-      <%= f.password_field :secret, required: true, placeholder: 'Код доступу' %>
+      <%= f.password_field :secret, required: true, pattern: '[A-Z]{2}\d{4}', placeholder: 'Код доступу',
+        title: 'Код доступу повинен містити дві великі латинські літери та чотири цифри.' %>
     </div>
 
     <%= f.fields_for :solutions, include_id: false do |b| %>
