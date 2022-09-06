@@ -100,6 +100,7 @@ GEM
     code-scanning-rubocop (0.6.1)
       rubocop (~> 1.0)
     concurrent-ruby (1.1.10)
+    connection_pool (2.2.5)
     crass (1.0.6)
     database_cleaner-active_record (2.0.1)
       activerecord (>= 5.a)
@@ -268,7 +269,10 @@ GEM
     rb-fsevent (0.11.0)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
-    redis (4.7.1)
+    redis (5.0.3)
+      redis-client (>= 0.7.4)
+    redis-client (0.7.4)
+      connection_pool
     redis-namespace (1.8.2)
       redis (>= 3.0.4)
     regexp_parser (2.5.0)
@@ -395,7 +399,7 @@ DEPENDENCIES
   rack-mini-profiler (~> 3.0)
   rails (~> 6.1.6)
   rails_admin (~> 2.0)
-  redis (~> 4.7)
+  redis (~> 5.0)
   redis-namespace
   rspec-rails
   rubocop
