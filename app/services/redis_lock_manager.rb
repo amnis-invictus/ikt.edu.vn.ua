@@ -1,5 +1,5 @@
 class RedisLockManager
-  CONNECTION = Redis.new
+  CONNECTION = Redis.new driver: :hiredis
 
   UNLOCK_SCRIPT = <<-LUA.freeze
     if redis.call("get", KEYS[1]) == ARGV[1] then
