@@ -1,0 +1,24 @@
+name: Assets Precompile
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  assets:
+    env:
+      RAILS_ENV: test
+
+    name: Assets Precompile
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Ruby 3.1.2
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.1.2
+          bundler-cache: true
+
+      - name: Check ability to precompile current assets
+        run: bundle exec rails assets:precompile
