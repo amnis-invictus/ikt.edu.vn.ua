@@ -1,7 +1,7 @@
 class Upload
   include ActiveModel::Model
 
-  attr_accessor :secret, :solutions, :ips
+  attr_accessor :secret, :solutions, :ips, :device_id
 
   validates :user, presence: true
 
@@ -15,8 +15,8 @@ class Upload
   end
 
   def save
-    solutions.each { _1.assign_attributes user:, ips: }
-    @solutions = solutions.filter { _1.file.present? }
+    solutions.reject! { _1.file.blank? }
+    solutions.each { _1.assign_attributes user:, ips:, device_id: }
     solutions.each &:save if valid?
   end
 

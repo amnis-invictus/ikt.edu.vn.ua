@@ -334,7 +334,8 @@ CREATE TABLE public.solutions (
     ips inet[] DEFAULT '{}'::inet[] NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    upload_number integer DEFAULT 1 NOT NULL
+    upload_number integer DEFAULT 1 NOT NULL,
+    device_id uuid
 );
 
 
@@ -409,7 +410,8 @@ CREATE TABLE public.users (
     secret character varying,
     registration_ips inet[] DEFAULT '{}'::inet[] NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    device_id uuid
 );
 
 
@@ -895,6 +897,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220206140046'),
 ('20220206140244'),
 ('20220209182545'),
-('20220217094714');
+('20220217094714'),
+('20220622205515'),
+('20220622205527');
 
 

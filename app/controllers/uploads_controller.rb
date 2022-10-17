@@ -1,7 +1,7 @@
 class UploadsController < ApplicationController
   log_action only: %i[create update]
-  before_action :build_resource, only: %i[create update], prepend: true
-  skip_before_action :authorize_resource, only: :show
+  before_action :build_resource, only: %i[create update]
+  before_action :authorize_resource, except: %i[index show]
 
   def show
     redirect_to action: :new
@@ -27,7 +27,8 @@ class UploadsController < ApplicationController
   attr_reader :resource
 
   def resource_params
-    params.require(:upload).permit(:secret, solutions_attributes: %i[task_id file]).merge(ips: ip_addresses)
+    params.require(:upload).permit(:secret, solutions_attributes: %i[task_id file])
+      .merge(ips: ip_addresses, device_id: @device_id)
   end
 
   def initialize_resource
