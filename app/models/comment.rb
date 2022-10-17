@@ -4,5 +4,5 @@ class Comment < ApplicationRecord
   belongs_to :task
   belongs_to :user
 
-  def as_json(*) = { user: user.secret, value: }
+  def as_json(*) = { user: user.judge_secret, value: }
 end

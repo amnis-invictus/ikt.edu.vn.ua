@@ -4,5 +4,5 @@ class CriterionUserResult < ApplicationRecord
   belongs_to :criterion
   belongs_to :user
 
-  def as_json(*) = { user: user.secret, criterion: criterion_id, value: }
+  def as_json(*) = { user: user.judge_secret, criterion: criterion_id, value: }
 end
