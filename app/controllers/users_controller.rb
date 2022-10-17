@@ -39,6 +39,7 @@ class UsersController < ApplicationController
       ['ip', ip_addresses],
       ['name', params.dig(:user, :name)],
       ['usr secret', resource.secret],
+      ['jdg secret', resource.judge_secret],
       ['errors', resource.errors],
     ]
   end

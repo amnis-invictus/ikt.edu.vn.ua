@@ -12,7 +12,7 @@ class User < ApplicationRecord
   has_many :comments, inverse_of: :user, dependent: :destroy
   has_many :criterion_user_results, inverse_of: :user, dependent: :destroy
 
-  before_create :assign_secret
+  before_create :assign_secrets
   after_commit :send_email, on: :create
 
   private
@@ -29,8 +29,14 @@ class User < ApplicationRecord
     end
   end
 
-  def assign_secret
+  def assign_secrets
     self.secret = [
+      (SecureRandom.random_number(26) + 'A'.ord).chr,
+      (SecureRandom.random_number(26) + 'A'.ord).chr,
+      format('%04d', SecureRandom.random_number(10_000)),
+    ].join
+
+    self.judge_secret = [
       (SecureRandom.random_number(26) + 'A'.ord).chr,
       (SecureRandom.random_number(26) + 'A'.ord).chr,
       format('%04d', SecureRandom.random_number(10_000)),
