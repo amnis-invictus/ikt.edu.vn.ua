@@ -1,12 +1,12 @@
 class Upload
   include ActiveModel::Model
 
-  attr_accessor :secret, :solutions, :ips, :device_id
+  attr_accessor :secret, :solutions, :ips, :contest, :device_id
 
   validates :user, presence: true
 
   def user
-    @user ||= User.find_by secret: secret if secret.present?
+    @user ||= contest.users.find_by secret: secret if secret.present?
   end
 
   def solutions_attributes= attributes

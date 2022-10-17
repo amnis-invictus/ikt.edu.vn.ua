@@ -4,8 +4,7 @@ class ApiChannel < ApplicationCable::Channel
   def subscribed
     ensure_confirmation_sent
     dispatch_self 'app/start'
-    dispatch_self 'users/load',
-      User.joins(contest: :tasks).where(tasks: { id: task_id }).order(:judge_secret).pluck(:judge_secret)
+    dispatch_self 'users/load', task_users.order(:judge_secret).pluck(:judge_secret)
     dispatch_self 'criteria/load', task_criterions.order(:position)
     dispatch_self 'results/load', CriterionUserResult.includes(:user).where(criterion: task_criterions)
     dispatch_self 'comments/load', Comment.includes(:user).where(task_id:)
@@ -50,7 +49,7 @@ class ApiChannel < ApplicationCable::Channel
   def write_result data
     lock = data.values_at('user', 'criterion').join(':')
     performed = RedisLockManager.with_lock lock, client_id do
-      user = User.find_by! judge_secret: data['user']
+      user = task_users.find_by! judge_secret: data['user']
       criterion = task_criterions.find data['criterion']
       result = CriterionUserResult.create_or_find_by!(user:, criterion:)
       result.update! value: data['value']
@@ -60,7 +59,7 @@ class ApiChannel < ApplicationCable::Channel
   end
 
   def reset_result data
-    user = User.find_by! judge_secret: data['user']
+    user = task_users.find_by! judge_secret: data['user']
     criterion = task_criterions.find data['criterion']
     dispatch_self 'results/reset', CriterionUserResult.create_or_find_by!(user:, criterion:)
   end
@@ -68,7 +67,7 @@ class ApiChannel < ApplicationCable::Channel
   def write_comment data
     lock = "#{data['user']}:comment"
     performed = RedisLockManager.with_lock lock, client_id do
-      user = User.find_by! judge_secret: data['user']
+      user = task_users.find_by! judge_secret: data['user']
       comment = Comment.create_or_find_by!(user:, task_id:)
       comment.update! value: data['value']
       dispatch_all 'comments/cleanUpdate', comment.as_json.merge(token: data['token'])
@@ -77,7 +76,7 @@ class ApiChannel < ApplicationCable::Channel
   end
 
   def reset_comment data
-    user = User.find_by! judge_secret: data['user']
+    user = task_users.find_by! judge_secret: data['user']
     dispatch_self 'comments/reset', Comment.create_or_find_by!(user:, task_id:)
   end
 
@@ -109,5 +108,9 @@ class ApiChannel < ApplicationCable::Channel
 
   def task_criterions
     Criterion.where task_id:
+  end
+
+  def task_users
+    User.joins(contest: :tasks).where(tasks: { id: task_id })
   end
 end
