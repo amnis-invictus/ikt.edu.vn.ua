@@ -2,7 +2,7 @@ class User < ApplicationRecord
   attr_accessor :registration_secret
 
   validates :name, :email, :city, :institution, :contest_site, :grade, presence: true
-  validates :name, uniqueness: { scope: :contest }
+  validates :name, :secret, uniqueness: { scope: :contest }
   validates :registration_secret, presence: true, on: :create
   validate :registration_secret_must_be_valid, on: :create
 
@@ -12,7 +12,7 @@ class User < ApplicationRecord
   has_many :comments, inverse_of: :user, dependent: :destroy
   has_many :criterion_user_results, inverse_of: :user, dependent: :destroy
 
-  before_create :assign_secrets
+  before_validation :assign_secrets, on: :create
   after_commit :send_email, on: :create
 
   private
