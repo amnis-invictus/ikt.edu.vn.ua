@@ -1,7 +1,7 @@
 module RailsAdmin
   module Config
     module Actions
-      class ArchiveLast < Base
+      class ArchiveJudgeLast < Base
         register_instance_option(:member) { true }
 
         register_instance_option(:only) { Contest }
@@ -12,7 +12,7 @@ module RailsAdmin
 
         register_instance_option(:pjax?) { false }
 
-        register_instance_option(:controller) { -> (_) { send_file Archive.new(@object, true).build } }
+        register_instance_option(:controller) { -> (_) { send_file Archive.new(@object, false, true).build } }
       end
     end
   end

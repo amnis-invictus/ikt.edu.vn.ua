@@ -5,7 +5,8 @@ RailsAdmin::Config::Fields::Types.register :pg_string_array, RailsAdmin::Config:
 RailsAdmin::Config::Fields::Types.register :pg_inet_array, RailsAdmin::Config::Fields::Types::PgInetArray
 
 RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::ArchiveAll
-RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::ArchiveLast
+RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::ArchiveJudgeAll
+RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::ArchiveJudgeLast
 RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::ChecksumDuplicates
 RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::IpsMismatch
 RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::DeviceIdsMismatch
@@ -45,7 +46,8 @@ RailsAdmin.config do |config|
     delete
 
     archive_all
-    archive_last
+    archive_judge_all
+    archive_judge_last
     checksum_duplicates
     ips_mismatch
     device_ids_mismatch

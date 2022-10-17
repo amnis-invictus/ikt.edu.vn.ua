@@ -35,13 +35,17 @@ en:
   admin:
     actions:
       archive_all:
-        title: Archive all solutions for '%{object_label}'
-        menu: Archive All
-        breadcrumb: Archive All
-      archive_last:
-        title: Archive last solutions per task for '%{object_label}'
-        menu: Archive Last
-        breadcrumb: Archive Last
+        title: Archive all solutions for '%{object_label} (User secret)'
+        menu: Archive All Users
+        breadcrumb: Archive All Users
+      archive_judge_all:
+        title: Archive all solutions for '%{object_label} (Judge secret)'
+        menu: Archive All Judge
+        breadcrumb: Archive All Judge
+      archive_judge_last:
+        title: Archive last solutions per task for '%{object_label} (Judge secret)'
+        menu: Archive Last Judge
+        breadcrumb: Archive Last Judge
       checksum_duplicates:
         title: Check duplicate files in solutions for '%{object_label}'
         menu: Check Duplicates
