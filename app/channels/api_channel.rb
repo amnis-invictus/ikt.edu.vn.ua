@@ -47,7 +47,7 @@ class ApiChannel < ApplicationCable::Channel
   end
 
   def write_result data
-    lock = data.values_at('user', 'criterion').join(':')
+    lock = [task_id, data['user'], data['criterion']].join ':'
     performed = RedisLockManager.with_lock lock, client_id do
       user = task_users.find_by! judge_secret: data['user']
       criterion = task_criterions.find data['criterion']
@@ -65,7 +65,7 @@ class ApiChannel < ApplicationCable::Channel
   end
 
   def write_comment data
-    lock = "#{data['user']}:comment"
+    lock = [task_id, data['user'], 'comment'].join ':'
     performed = RedisLockManager.with_lock lock, client_id do
       user = task_users.find_by! judge_secret: data['user']
       comment = Comment.create_or_find_by!(user:, task_id:)
