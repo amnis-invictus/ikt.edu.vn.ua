@@ -1,0 +1,23 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Device IDs</th>
+      <th>Task</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @collection.each do |device_id, secret, solutions| %>
+      <tr><td colspan="2"></td></tr>
+      <tr>
+        <th><%= device_id %></th>
+        <th><%= secret %></th>
+      </tr>
+      <% solutions.each do |solution| %>
+        <tr>
+          <td><%= solution.device_id %></td>
+          <td><%= solution.task.display_name %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

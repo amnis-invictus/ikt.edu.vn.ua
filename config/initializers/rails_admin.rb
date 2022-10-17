@@ -8,6 +8,7 @@ RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::ArchiveAll
 RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::ArchiveLast
 RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::ChecksumDuplicates
 RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::IpsMismatch
+RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::DeviceIdsMismatch
 
 RailsAdmin.config do |config|
   ### Popular gems integration
@@ -47,6 +48,7 @@ RailsAdmin.config do |config|
     archive_last
     checksum_duplicates
     ips_mismatch
+    device_ids_mismatch
 
     ## With an audit adapter, you can add:
     # history_index

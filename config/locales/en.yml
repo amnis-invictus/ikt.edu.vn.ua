@@ -50,3 +50,7 @@ en:
         title: Check mismatched IPs for user solutions & registration for '%{object_label}'
         menu: Check IPs
         breadcrumb: Check IPs
+      device_ids_mismatch:
+        title: Check mismatched device IDs for user solutions & registration for '%{object_label}'
+        menu: Check device IDs
+        breadcrumb: Check device IDs
