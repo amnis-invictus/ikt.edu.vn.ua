@@ -3,6 +3,8 @@ class Contest < ApplicationRecord
 
   has_one_attached :all_archive
   has_one_attached :last_archive
+  has_one_attached :all_judge_archive
+  has_one_attached :last_judge_archive
   has_one_attached :author_solution
   has_one_attached :judge_solution
   has_one_attached :criteria

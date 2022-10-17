@@ -1,14 +1,14 @@
 <p>
-  <% if contest.all_archive.attached? %>
-    <%= link_to 'Усі розв\'язки', contest.all_archive %>
+  <% if contest.all_judge_archive.attached? %>
+    <%= link_to 'Усі розв\'язки', contest.all_judge_archive %>
   <% else %>
     Архів з усіма розв'язками відсутній. Повідомте адміністратора.
   <% end %>
 </p>
 
 <p>
-  <% if contest.last_archive.attached? %>
-    <%= link_to 'Останні розв\'язки', contest.last_archive %>
+  <% if contest.last_judge_archive.attached? %>
+    <%= link_to 'Останні розв\'язки', contest.last_judge_archive %>
   <% else %>
     Архів з останніми розв'язками відсутній. Повідомте адміністратора.
   <% end %>
