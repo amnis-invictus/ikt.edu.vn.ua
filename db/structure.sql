@@ -411,7 +411,8 @@ CREATE TABLE public.users (
     registration_ips inet[] DEFAULT '{}'::inet[] NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    device_id uuid
+    device_id uuid,
+    judge_secret character varying NOT NULL
 );
 
 
@@ -899,6 +900,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220209182545'),
 ('20220217094714'),
 ('20220622205515'),
-('20220622205527');
+('20220622205527'),
+('20221017111524');
 
 
