@@ -131,8 +131,7 @@ GEM
     haml (5.2.2)
       temple (>= 0.8.0)
       tilt
-    hiredis-client (0.10.0)
-      redis-client (= 0.10.0)
+    hiredis (0.6.3)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     image_processing (1.12.2)
@@ -375,7 +374,7 @@ DEPENDENCIES
   dotenv-rails
   draper
   factory_bot_rails
-  hiredis-client
+  hiredis
   image_processing (~> 1.12)
   jbuilder (~> 2.11)
   jquery-rails
