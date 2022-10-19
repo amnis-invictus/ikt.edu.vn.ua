@@ -8,6 +8,6 @@ module Archive
 
     def fetch_secret(user) = user.secret
 
-    def fetch_solutions(user) = @contest.tasks.map { user.solutions.where(task: _1).order(:id).last }
+    def fetch_solutions(user) = user.solutions.group_by(&:task_id).map { |_, solutions| solutions.max_by(&:id) }
   end
 end
