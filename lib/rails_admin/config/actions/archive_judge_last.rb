@@ -12,7 +12,7 @@ module RailsAdmin
 
         register_instance_option(:pjax?) { false }
 
-        register_instance_option(:controller) { -> (_) { send_file Archive.new(@object, false, true).build } }
+        register_instance_option(:controller) { -> (_) { send_file Archive::JudgeLast.new(@object).build } }
       end
     end
   end
