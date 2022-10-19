@@ -2,7 +2,7 @@ class User < ApplicationRecord
   attr_accessor :registration_secret
 
   validates :name, :email, :city, :institution, :contest_site, :grade, presence: true
-  validates :name, :secret, uniqueness: { scope: :contest }
+  validates :name, :secret, :judge_secret, uniqueness: { scope: :contest }
   validates :registration_secret, presence: true, on: :create
   validate :registration_secret_must_be_valid, on: :create
 

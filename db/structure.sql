@@ -758,6 +758,13 @@ CREATE INDEX index_users_on_contest_id ON public.users USING btree (contest_id);
 
 
 --
+-- Name: index_users_on_contest_id_and_judge_secret; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_users_on_contest_id_and_judge_secret ON public.users USING btree (contest_id, judge_secret);
+
+
+--
 -- Name: index_users_on_contest_id_and_secret; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -902,4 +909,5 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220622205515'),
 ('20220622205527'),
 ('20221017055914'),
-('20221017111524');
+('20221017111524'),
+('20221019173456');
