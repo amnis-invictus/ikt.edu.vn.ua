@@ -10,7 +10,7 @@ append :linked_files, '.env', 'config/master.key'
 
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system', 'storage'
 
-set :deploy_to, '/home/arch-user/ikt'
+set :deploy_to, '/opt/ai/application'
 
 namespace :deploy do
   after :finishing, 'application:restart'
