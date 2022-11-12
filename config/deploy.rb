@@ -1,6 +1,6 @@
 set :application, 'IKT'
 
-set :repo_url, 'https://github.com/kostyanf14/ikt.edu.vn.ua.git'
+set :repo_url, 'https://github.com/amnis-invictus/ikt.edu.vn.ua.git'
 
 set :rails_env, :production
 
