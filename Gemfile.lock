@@ -188,7 +188,7 @@ GEM
       timeout
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
-    net-smtp (0.3.2)
+    net-smtp (0.3.3)
       net-protocol
     net-ssh (7.0.1)
     nio4r (2.5.8)
