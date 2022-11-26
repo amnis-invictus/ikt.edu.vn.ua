@@ -43,7 +43,7 @@ class RedisLockManager
       POOL.with do |redis|
         keys = redis.keys 'locks:*'
         values = redis.multi { |transaction| keys.each { transaction.get _1 } }
-        keys.map { _1[6..] }.zip(values).to_h
+        keys.pluck(6..).zip(values).to_h
       end
     end
 
