@@ -80,6 +80,19 @@ class ApiChannel < ApplicationCable::Channel
     dispatch_self 'comments/reset', Comment.create_or_find_by!(user:, task_id:)
   end
 
+  def zero_results data
+    user = task_users.find_by! judge_secret: data['user']
+    task_criterions.each do |criterion|
+      lock = [task_id, data['user'], criterion.id].join ':'
+      performed = RedisLockManager.with_lock lock, client_id do
+        result = CriterionUserResult.create! user:, criterion:, value: 0
+        dispatch_all 'results/cleanUpdate', result.as_json
+      rescue ActiveRecord::RecordNotUnique # don't overwrite existing values
+      end
+      dispatch_self 'errors/push', "Zero failed: Lock #{lock} was acquired by someone else" unless performed
+    end
+  end
+
   def acquire_lock data
     if RedisLockManager.acquire data['lock'], client_id
       dispatch_all 'locks/acquire', data.merge(client_id:)
