@@ -12,6 +12,8 @@ Rails.application.routes.draw do
 
     resources :statistics, :results, only: :index
 
+    resource :scoring, only: :show
+
     resource :judge, only: %i[show destroy] do
       get :users_csv
     end
