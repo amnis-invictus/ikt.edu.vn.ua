@@ -9,7 +9,7 @@ class ApiChannel < ApplicationCable::Channel
     dispatch_self 'results/load', CriterionUserResult.includes(:user).where(criterion: task_criterions)
     dispatch_self 'comments/load', Comment.includes(:user).where(task_id:)
     dispatch_self 'locks/load', RedisLockManager.all
-    dispatch_self 'app/ready'
+    dispatch_self 'app/ready', ready_info
     stream_from task_id
   end
 
@@ -125,5 +125,10 @@ class ApiChannel < ApplicationCable::Channel
 
   def task_users
     User.joins(contest: :tasks).where(tasks: { id: task_id })
+  end
+
+  def ready_info
+    task = Task.find task_id
+    { contest_name: task.contest.display_name, task_name: task.display_name }
   end
 end
