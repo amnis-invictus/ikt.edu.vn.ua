@@ -173,6 +173,6 @@ class ApiChannel < ApplicationCable::Channel
 
   def ready_info
     task = Task.find task_id
-    { contest_name: task.contest.display_name, task_name: task.display_name }
+    { contest_name: task.contest.display_name, task_name: task.display_name, read_only: !task.scoring_open }
   end
 end
