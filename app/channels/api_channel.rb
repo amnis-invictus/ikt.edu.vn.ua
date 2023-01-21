@@ -14,6 +14,11 @@ class ApiChannel < ApplicationCable::Channel
   end
 
   def add_criterion
+    unless Task.find(task_id).scoring_open
+      dispatch_self 'errors/push', 'Add criterion failed: Scoring is closed'
+      return
+    end
+
     criterion = task_criterions.create! position: task_criterions.count
     dispatch_all 'criteria/add', criterion
   rescue ActiveRecord::RecordNotUnique
@@ -21,12 +26,22 @@ class ApiChannel < ApplicationCable::Channel
   end
 
   def update_criterion data
+    unless Task.find(task_id).scoring_open
+      dispatch_self 'errors/push', 'Update criterion failed: Scoring is closed'
+      return
+    end
+
     criterion = task_criterions.find data['id']
     criterion.update! data['params']
     dispatch_all 'criteria/cleanUpdate', id: criterion.id, token: data['token'], value: criterion
   end
 
   def delete_criterion data
+    unless Task.find(task_id).scoring_open
+      dispatch_self 'errors/push', 'Delete criterion failed: Scoring is closed'
+      return
+    end
+
     criterion = task_criterions.find data['id']
     criterion.destroy!
     task_criterions.where('position > ?', criterion.position).update_all('position = position - 1')
@@ -34,6 +49,10 @@ class ApiChannel < ApplicationCable::Channel
   end
 
   def drag_drop data
+    unless Task.find(task_id).scoring_open
+      dispatch_self 'errors/push', 'Change criterions order failed: Scoring is closed'
+      return
+    end
     from, to = data.values_at 'from', 'to'
     if from > to
       task_criterions.where('position BETWEEN ? AND ?', to, from)
@@ -47,6 +66,11 @@ class ApiChannel < ApplicationCable::Channel
   end
 
   def write_result data
+    unless Task.find(task_id).scoring_open
+      dispatch_self 'errors/push', 'Write result failed: Scoring is closed'
+      return
+    end
+
     lock = [task_id, data['user'], data['criterion']].join ':'
     performed = RedisLockManager.with_lock lock, client_id do
       user = task_users.find_by! judge_secret: data['user']
@@ -59,12 +83,22 @@ class ApiChannel < ApplicationCable::Channel
   end
 
   def reset_result data
+    unless Task.find(task_id).scoring_open
+      dispatch_self 'errors/push', 'Reset result failed: Scoring is closed'
+      return
+    end
+
     user = task_users.find_by! judge_secret: data['user']
     criterion = task_criterions.find data['criterion']
     dispatch_self 'results/reset', CriterionUserResult.create_or_find_by!(user:, criterion:)
   end
 
   def write_comment data
+    unless Task.find(task_id).scoring_open
+      dispatch_self 'errors/push', 'Write comment failed: Scoring is closed'
+      return
+    end
+
     lock = [task_id, data['user'], 'comment'].join ':'
     performed = RedisLockManager.with_lock lock, client_id do
       user = task_users.find_by! judge_secret: data['user']
@@ -76,11 +110,21 @@ class ApiChannel < ApplicationCable::Channel
   end
 
   def reset_comment data
+    unless Task.find(task_id).scoring_open
+      dispatch_self 'errors/push', 'Reset comment failed: Scoring is closed'
+      return
+    end
+
     user = task_users.find_by! judge_secret: data['user']
     dispatch_self 'comments/reset', Comment.create_or_find_by!(user:, task_id:)
   end
 
   def zero_results data
+    unless Task.find(task_id).scoring_open
+      dispatch_self 'errors/push', 'Zero result failed: Scoring is closed'
+      return
+    end
+
     user = task_users.find_by! judge_secret: data['user']
     task_criterions.each do |criterion|
       lock = [task_id, data['user'], criterion.id].join ':'
