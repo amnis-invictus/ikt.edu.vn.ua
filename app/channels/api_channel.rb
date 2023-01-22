@@ -137,6 +137,27 @@ class ApiChannel < ApplicationCable::Channel
     end
   end
 
+  def finish
+    task = Task.find task_id
+    unless task.scoring_open
+      dispatch_self 'errors/push', 'Finish failed: Scoring is closed'
+      return
+    end
+
+    ActiveRecord::Base.transaction do
+      task.update! scoring_open: false
+
+      task.contest.users.find_each do |u|
+        score = CriterionUserResult.where(user: u, criterion: task.criterions).sum(:value)
+        Result.create_or_find_by!(user: u, task:).update!(score:)
+      end
+    end
+  rescue StandardError => e
+    dispatch_self 'errors/push', "Finish failed: #{e}"
+  else
+    dispatch_all 'app/finish'
+  end
+
   def acquire_lock data
     if RedisLockManager.acquire data['lock'], client_id
       dispatch_all 'locks/acquire', data.merge(client_id:)
