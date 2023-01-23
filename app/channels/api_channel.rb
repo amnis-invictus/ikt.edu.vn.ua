@@ -124,9 +124,7 @@ class ApiChannel < ApplicationCable::Channel
         Result.create_or_find_by!(user: u, task:).update!(score:)
       end
     end
-  rescue StandardError => e
-    dispatch_self 'errors/push', "Finish failed: #{e}"
-  else
+
     dispatch_all 'app/finish'
   end
 
