@@ -116,13 +116,18 @@ class ApiChannel < ApplicationCable::Channel
 
     task = Task.find task_id
 
+    users_without_result = []
     ActiveRecord::Base.transaction do
       task.update! scoring_open: false
 
-      task.contest.users.find_each do |u|
-        score = CriterionUserResult.where(user: u, criterion: task.criterions).sum(:value)
-        Result.create_or_find_by!(user: u, task:).update!(score:)
+      task.contest.users.find_each do |user|
+        user_result = CriterionUserResult.where user:, criterion: task.criterions
+        users_without_result << user.judge_secret unless user_result.count == task.criterions_count
+        score = user_result.sum :value
+        Result.create_or_find_by!(user:, task:).update!(score:)
       end
+
+      raise "Users that missing some result: #{users_without_result}" if users_without_result.length.positive?
     end
 
     dispatch_all 'app/finish'
