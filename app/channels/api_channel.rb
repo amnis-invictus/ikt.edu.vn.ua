@@ -69,8 +69,6 @@ class ApiChannel < ApplicationCable::Channel
   end
 
   def reset_result data
-    return unless scoring_open data
-
     user = task_users.find_by! judge_secret: data['user']
     criterion = task_criterions.find data['criterion']
     dispatch_self 'results/reset', CriterionUserResult.create_or_find_by!(user:, criterion:)
@@ -90,8 +88,6 @@ class ApiChannel < ApplicationCable::Channel
   end
 
   def reset_comment data
-    return unless scoring_open data
-
     user = task_users.find_by! judge_secret: data['user']
     dispatch_self 'comments/reset', Comment.create_or_find_by!(user:, task_id:)
   end
