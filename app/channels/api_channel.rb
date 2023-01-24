@@ -124,6 +124,11 @@ class ApiChannel < ApplicationCable::Channel
       end
 
       raise "Users that missing some result: #{users_without_result}" if users_without_result.length.positive?
+
+      RedisLockManager.release_all client_id
+      dispatch_all 'results/load', CriterionUserResult.includes(:user).where(criterion: task_criterions)
+      dispatch_all 'comments/load', Comment.includes(:user).where(task_id:)
+      dispatch_all 'locks/load', RedisLockManager.all
     end
 
     dispatch_all 'app/finish'
