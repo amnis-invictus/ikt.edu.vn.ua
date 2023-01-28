@@ -23,7 +23,7 @@ class RedisLockManager
       POOL.with { _1.evalsha SCRIPTS[:unlock], keys: [key, token] } == 1
     end
 
-    def release_all token
+    def release_all_by_client token
       POOL.with do |redis|
         keys = redis.smembers token
         redis.multi do |transaction|
