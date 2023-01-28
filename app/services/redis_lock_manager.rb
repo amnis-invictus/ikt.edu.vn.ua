@@ -32,6 +32,18 @@ class RedisLockManager
       end
     end
 
+    def release_all
+      POOL.with do |redis|
+        keys = redis.keys 'locks:*'
+        values = redis.multi { |transaction| keys.each { transaction.get _1 } }
+
+        redis.multi do |transaction|
+          transaction.del *keys
+          transaction.del *values
+        end
+      end
+    end
+
     def with_lock key, token
       do_release = acquire key, token
       acquired?(key, token).tap { yield if _1 }
