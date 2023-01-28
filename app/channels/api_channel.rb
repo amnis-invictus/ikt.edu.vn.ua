@@ -112,26 +112,30 @@ class ApiChannel < ApplicationCable::Channel
 
     task = Task.find task_id
 
-    users_without_result = []
-    ActiveRecord::Base.transaction do
-      task.update! scoring_open: false
-
-      task.contest.users.find_each do |user|
-        user_result = CriterionUserResult.where user:, criterion: task.criterions
-        users_without_result << user.judge_secret unless user_result.count == task.criterions_count
-        score = user_result.sum :value
-        Result.create_or_find_by!(user:, task:).update!(score:)
-      end
-
-      raise "Users that missing some result: #{users_without_result.to_sentence}" unless users_without_result.empty?
-
-      RedisLockManager.release_all client_id
-      dispatch_all 'results/load', CriterionUserResult.includes(:user).where(criterion: task_criterions)
-      dispatch_all 'comments/load', Comment.includes(:user).where(task_id:)
-      dispatch_all 'locks/load', RedisLockManager.all
-    end
-
+    task.update_column :scoring_open, false
+    RedisLockManager.release_all
+    dispatch_all 'locks/load', RedisLockManager.all
+    dispatch_all 'results/load', CriterionUserResult.includes(:user).where(criterion: task_criterions)
+    dispatch_all 'comments/load', Comment.includes(:user).where(task_id:)
     dispatch_all 'app/finish'
+
+    users_without_result = []
+    begin
+      ActiveRecord::Base.transaction do
+        task.contest.users.find_each do |user|
+          user_result = CriterionUserResult.where user:, criterion: task.criterions
+          users_without_result << user.judge_secret unless user_result.count == task.criterions_count
+          score = user_result.sum :value
+          Result.create_or_find_by!(user:, task:).update!(score:)
+        end
+
+        raise "Users that missing some result: #{users_without_result.to_sentence}" unless users_without_result.empty?
+      end
+    rescue StandardError => e
+      task.update_column :scoring_open, true
+      dispatch_self 'app/ready', ready_info
+      raise e
+    end
   end
 
   def acquire_lock data
