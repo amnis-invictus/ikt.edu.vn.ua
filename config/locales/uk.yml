@@ -17,6 +17,10 @@ uk:
               format: '%{message}'
               blank: Прізвище, Ім'я, По батькові не може бути пустим
               taken: Учасник на ім'я %{value} вже зареєстрований
+        solution:
+          attributes:
+            file:
+              blank: не може бути порожнім (0 байт). Можливо, файл відкрито у програмі MS Office.
     attributes:
       user:
         registration_secret: Код доступу
@@ -26,6 +30,8 @@ uk:
         institution: Ваш навчальний заклад
         grade: Клас
         contest_site: Заклад, у якому ви пишете олімпіаду
+      solution:
+        file: Файл
   solution_mailer:
     email:
       subject: IKT - Розв'язок

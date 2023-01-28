@@ -31,7 +31,7 @@ class Solution < ApplicationRecord
   end
 
   def file_must_be_attached
-    errors.add :file, :blank unless file.attached?
+    errors.add :file, :blank unless file.attached? && file.byte_size.positive?
   end
 
   def file_name_must_match_task_file_names
