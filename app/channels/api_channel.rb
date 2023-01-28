@@ -123,7 +123,7 @@ class ApiChannel < ApplicationCable::Channel
         Result.create_or_find_by!(user:, task:).update!(score:)
       end
 
-      raise "Users that missing some result: #{users_without_result}" if users_without_result.length.positive?
+      raise "Users that missing some result: #{users_without_result.to_sentence}" unless users_without_result.empty?
 
       RedisLockManager.release_all client_id
       dispatch_all 'results/load', CriterionUserResult.includes(:user).where(criterion: task_criterions)
