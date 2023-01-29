@@ -10,6 +10,8 @@ RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::ArchiveJudgeLa
 RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::ChecksumDuplicates
 RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::IpsMismatch
 RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::DeviceIdsMismatch
+RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::SpreadsheetJudge
+RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::SpreadsheetPublic
 
 RailsAdmin.config do |config|
   ### Popular gems integration
@@ -51,6 +53,8 @@ RailsAdmin.config do |config|
     checksum_duplicates
     ips_mismatch
     device_ids_mismatch
+    spreadsheet_judge
+    spreadsheet_public
 
     ## With an audit adapter, you can add:
     # history_index

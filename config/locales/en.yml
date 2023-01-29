@@ -58,3 +58,11 @@ en:
         title: Check mismatched device IDs for user solutions & registration for '%{object_label}'
         menu: Check device IDs
         breadcrumb: Check device IDs
+      spreadsheet_judge:
+        title: Generate spreadsheet results for judge '%{object_label}'
+        menu: Generate spreadsheet results for judge
+        breadcrumb: Generate spreadsheet results for judge
+      spreadsheet_public:
+        title: Generate spreadsheet results for public show '%{object_label}'
+        menu: Generate spreadsheet results for public show
+        breadcrumb: Generate spreadsheet results for public show
