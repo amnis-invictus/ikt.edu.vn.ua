@@ -4,10 +4,13 @@ module Spreadsheet
 
     def build
       row_1_arr = ['№ п/п', 'Код перевірки', 'Клас', 'Практичний'] +
-                  Array.new(@tasks.count - 1) { '' } + ['∑', 'Місце']
+                  Array.new(@tasks.size - 1) { '' } + ['∑', 'Місце']
       row_2_arr = ['', '', ''] + @tasks.map(&:display_name) + ['', '']
       # #,secret,grade,tasks...,sum,place
-      column_widths = [5, 11, 10] + Array.new(@tasks.count) { 9 } + [10, 10]
+      column_widths = [5, 11, 10] + Array.new(@tasks.size) { 9 } + [10, 10]
+      last_task_column = ('D'.ord + @tasks.size - 1).chr
+      sum_column = last_task_column.next
+      place_column = sum_column.next
 
       package = Axlsx::Package.new
       package.workbook do |workbook|
@@ -18,10 +21,6 @@ module Spreadsheet
           Rails.logger.debug { "Processing #{grade} grade of contest ##{@contest.id}..." }
 
           workbook.add_worksheet name: "#{grade} клас" do |sheet|
-            last_task_column = ('D'.ord + @tasks.length - 1).chr
-            sum_column = (last_task_column.ord + 1).chr
-            place_column = (sum_column.ord + 1).chr
-
             sheet.add_row row_1_arr, style: header_style
             sheet.add_row row_2_arr, style: header_style
 
@@ -47,33 +46,8 @@ module Spreadsheet
 
     private
 
-    def generate_data_rows grade
-      @data[grade].map.with_index 1 do |dt, index|
-        row = [index, dt[:user].judge_secret, grade]
-        @tasks.each do |task|
-          r = dt[:results].where(task:).first
-          s = dt[:solutions].where(task:)
-
-          if_map = (r.nil? ? 0 : 2) + (s.present? ? 1 : 0)
-          case if_map
-          when 0 # no solution, no result
-            row << '---'
-          when 1 # yes solution, no result
-            row << 'XXX'
-          when 2 # no solution, yes result
-            row << if r.score.positive? # MAGIC
-                     "?: #{r.score}"
-                   else # result = 0 (OK)
-                     '--'
-                   end
-          when 3 # yes solution, yes result
-            row << r.score
-          end
-        end
-        row << dt[:final_score]
-        row << ''
-        row
-      end
+    def user_data_row user
+      [user.judge_secret]
     end
   end
 end
