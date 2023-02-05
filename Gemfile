@@ -48,7 +48,7 @@ group :development do
   gem 'bullet'
   gem 'capistrano'
   gem 'capistrano-rails'
-  gem 'listen', '~> 3.7'
+  gem 'listen', '~> 3.8'
   gem 'rack-mini-profiler', '~> 3.0'
   gem 'spring'
 end
