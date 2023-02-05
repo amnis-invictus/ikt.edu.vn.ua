@@ -6,11 +6,11 @@
     </tr>
   </thead>
   <tbody>
-    <% @collection.each do |ips, secret, solutions| %>
+    <% @collection.each do |ips, judge_secret, solutions| %>
       <tr><td colspan="2"></td></tr>
       <tr>
         <th><%= ips.join(', ') %></th>
-        <th><%= secret %></th>
+        <th><%= judge_secret %></th>
       </tr>
       <% solutions.each do |solution| %>
         <tr>

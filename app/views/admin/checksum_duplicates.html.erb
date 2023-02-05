@@ -15,7 +15,7 @@
       </tr>
       <% solutions.each do |solution| %>
         <tr>
-          <td><%= solution.user.secret %></td>
+          <td><%= solution.user.judge_secret %></td>
           <td><%= solution.task.display_name %></td>
           <td><%= number_to_human_size solution.file.byte_size %></td>
           <td>
