@@ -24,18 +24,22 @@ module Spreadsheet
     private
 
     def generate_data
-      @contest.users
-        .left_joins(:results, :solutions)
-        .group(:id)
-        .select(USERS_SELECT_SQL)
-        .group_by(&:grade)
-        .transform_values! do |users|
+      score_and_results = @contest.users.left_joins(:results).group(:id).pluck(
+        'users.id',
+        'sum(results.score) as final_score',
+        Arel.sql('json_agg(json_build_array(results.task_id, results.score)) as task_to_result'),
+      ).index_by(&:first)
+      solutions = @contest.users.left_joins(:solutions).group(:id).pluck(
+        'users.id',
+        Arel.sql('array_agg(distinct solutions.task_id) as tasks_with_solutions'),
+      ).to_h.transform_values! { Set.new _1 }
+      @contest.users.group_by(&:grade).transform_values! do |users|
         users.map! do |user|
           {
             user:,
-            results: user.task_to_result.to_h,
-            solutions: Set.new(user.tasks_with_solutions.compact),
-            final_score: user.final_score,
+            results: score_and_results[user.id][2].to_h,
+            solutions: solutions[user.id],
+            final_score: score_and_results[user.id][1],
           }
         end
         users.sort! { |a, b| b[:final_score] <=> a[:final_score] }
