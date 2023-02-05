@@ -6,11 +6,11 @@
     </tr>
   </thead>
   <tbody>
-    <% @collection.each do |device_id, secret, solutions| %>
+    <% @collection.each do |device_id, judge_secret, solutions| %>
       <tr><td colspan="2"></td></tr>
       <tr>
         <th><%= device_id %></th>
-        <th><%= secret %></th>
+        <th><%= judge_secret %></th>
       </tr>
       <% solutions.each do |solution| %>
         <tr>
