@@ -16,8 +16,8 @@ module RailsAdmin
               .where('solutions.ips != users.registration_ips')
               .group('users.id')
               .pluck('users.registration_ips', 'users.judge_secret', 'array_agg(solutions.id)')
-              .map do |ips, judge_secret, solution_ids|
-              [ips, judge_secret,
+              .map do |registration_ips, judge_secret, solution_ids|
+              [registration_ips, judge_secret,
                 Solution.includes(:task).where(id: solution_ids)]
             end
           end
