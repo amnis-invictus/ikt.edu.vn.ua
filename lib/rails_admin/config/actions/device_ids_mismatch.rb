@@ -16,8 +16,8 @@ module RailsAdmin
               .where('solutions.device_id != users.device_id')
               .group('users.id')
               .pluck('users.device_id', 'users.judge_secret', 'array_agg(solutions.id)')
-              .map do |did, judge_secret, solution_ids|
-              [did, judge_secret,
+              .map do |device_id, judge_secret, solution_ids|
+              [device_id, judge_secret,
                 Solution.includes(:task).where(id: solution_ids)]
             end
           end
