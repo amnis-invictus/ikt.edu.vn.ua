@@ -220,7 +220,7 @@ GEM
       activesupport (>= 3.0.0)
     racc (1.6.2)
     rack (2.2.6.4)
-    rack-mini-profiler (3.0.0)
+    rack-mini-profiler (3.1.0)
       rack (>= 1.2.0)
     rack-pjax (1.1.0)
       nokogiri (~> 1.5)
@@ -397,7 +397,7 @@ DEPENDENCIES
   pg (~> 1.4)
   puma (~> 6.0)
   pundit
-  rack-mini-profiler (~> 3.0)
+  rack-mini-profiler (~> 3.1)
   rails (~> 6.1.7)
   rails_admin (~> 2.0)
   redis (~> 4.8)
