@@ -371,7 +371,8 @@ CREATE TABLE public.tasks (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     criterions_count integer DEFAULT 0 NOT NULL,
-    scoring_open boolean DEFAULT true NOT NULL
+    scoring_open boolean DEFAULT true NOT NULL,
+    judges character varying[] DEFAULT '{}'::character varying[] NOT NULL
 );
 
 
@@ -912,6 +913,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20221017055914'),
 ('20221017111524'),
 ('20221019173456'),
-('20230121191926');
+('20230121191926'),
+('20230630170753');
 
 

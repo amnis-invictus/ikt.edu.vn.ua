@@ -75,6 +75,7 @@ RailsAdmin.config do |config|
 
   config.model 'Task' do |_config|
     configure :file_names, :pg_string_array
+    configure :judges, :pg_string_array
   end
 
   config.model 'User' do |_config|
