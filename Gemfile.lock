@@ -214,7 +214,7 @@ GEM
     parser (3.2.2.3)
       ast (~> 2.4.1)
       racc
-    pg (1.4.6)
+    pg (1.5.3)
     public_suffix (5.0.1)
     puma (6.0.2)
       nio4r (~> 2.0)
@@ -401,7 +401,7 @@ DEPENDENCIES
   net-imap
   net-pop
   net-smtp
-  pg (~> 1.4)
+  pg (~> 1.5)
   puma (~> 6.0)
   pundit
   rack-mini-profiler (~> 3.1)
