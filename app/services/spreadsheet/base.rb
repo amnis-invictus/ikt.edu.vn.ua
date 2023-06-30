@@ -4,6 +4,7 @@ module Spreadsheet
     BORDER_HEADER = { style: :medium, color: '000000', edges: %i[right top left bottom] }.freeze
     BORDER_DATA = BORDER_HEADER.merge({ style: :thin })
     HEADER_STYLE_OPTIONS = { sz: 12, b: true, alignment: ALIGNMENT, border: BORDER_HEADER }.freeze
+    JUDGES_STYLE_OPTIONS = { sz: 12 }.freeze
     DATA_STYLE_OPTIONS = { sz: 11, alignment: ALIGNMENT, border: BORDER_DATA }.freeze
     TITLE_STYLE_OPTIONS = { sz: 14, alignment: ALIGNMENT }.freeze
     USERS_SELECT_SQL = <<-SQL.squish.freeze

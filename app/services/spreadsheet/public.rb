@@ -9,7 +9,7 @@ module Spreadsheet
                   Array.new(@tasks.size - 1) { '' } + ['∑', 'Місце']
       row_3_arr = ['', '',  '',  '', '', ''] + @tasks.map(&:display_name) + ['', '']
       # #,secret,secret,Name,institution,grade,tasks...,sum,place
-      column_widths = [5, 11, 11, 45, 45, 10] + Array.new(@tasks.size) { 9 } + [10, 10]
+      column_widths = [5, 13, 13, 45, 45, 10] + Array.new(@tasks.size) { 9 } + [10, 10]
       last_task_column = ('G'.ord + @tasks.size - 1).chr
       sum_column = last_task_column.next
       place_column = sum_column.next
@@ -18,7 +18,10 @@ module Spreadsheet
       package.workbook do |workbook|
         title_style = workbook.styles.add_style TITLE_STYLE_OPTIONS.deep_dup
         header_style = workbook.styles.add_style HEADER_STYLE_OPTIONS.deep_dup
+        judges_style = workbook.styles.add_style JUDGES_STYLE_OPTIONS.deep_dup
         data_style = workbook.styles.add_style DATA_STYLE_OPTIONS.deep_dup
+
+        first_judge, *judges = @tasks.sum(&:judges)
 
         @grades.each do |grade|
           Rails.logger.debug { "Processing #{grade} grade of contest ##{@contest.id}..." }
@@ -44,6 +47,11 @@ module Spreadsheet
             sheet.merge_cells "#{place_column}3:#{place_column}4"
 
             generate_data_rows(grade).each { |row| sheet.add_row row, style: data_style }
+
+            sheet.add_row []
+            sheet.add_row ['', 'Голова журі', '___________', @contest.main_judge], style: judges_style
+            sheet.add_row ['', 'Члени журі', '___________', first_judge], style: judges_style
+            judges.each { sheet.add_row ['', '', '___________', _1], style: judges_style }
 
             # Set only after all data, otherwise will be ignored
             sheet.column_widths *column_widths
