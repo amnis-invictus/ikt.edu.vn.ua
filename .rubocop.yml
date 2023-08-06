@@ -58,6 +58,9 @@ Style/MethodCallWithArgsParentheses:
   Enabled: true
   EnforcedStyle: omit_parentheses
   AllowParenthesesInChaining: true
+FactoryBot/ConsistentParenthesesStyle:
+  Enabled: false
+  # Use the same style as in other sources
 Style/MethodDefParentheses:
   EnforcedStyle: require_no_parentheses
 Style/TrailingCommaInHashLiteral:
