@@ -47,9 +47,11 @@ group :development, :test do
 end
 
 group :development do
+  gem 'bcrypt_pbkdf'
   gem 'bullet'
   gem 'capistrano'
   gem 'capistrano-rails'
+  gem 'ed25519'
   gem 'listen', '~> 3.8'
   gem 'rack-mini-profiler', '~> 3.1'
   gem 'spring'
