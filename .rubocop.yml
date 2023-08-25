@@ -101,6 +101,8 @@ Rails/LexicallyScopedActionFilter:
   Enabled: false
 Rails/FilePath:
   EnforcedStyle: arguments
+RSpec/ImplicitExpect:
+  EnforcedStyle: should
 AllCops:
   TargetRubyVersion: 3.1.2
   NewCops: enable
