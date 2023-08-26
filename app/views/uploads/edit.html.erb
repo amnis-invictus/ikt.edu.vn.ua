@@ -7,9 +7,13 @@
     <%= b.hidden_field :task_id %>
 
     <div class="field">
-      <%= b.label :file, b.object.task_display_name %>
-      <%= b.file_field :file, direct_upload: true, accept: b.object.task_accepted_ext,
-        data: { accept_names: b.object.task_file_names&.to_json } %>
+      <% if b.object.upload_number <= b.object.task_upload_limit %>
+        <%= b.label :file, "#{b.object.task_display_name} (#{b.object.task_upload_limit - b.object.upload_number + 1} відправки залишилося)" %>
+        <%= b.file_field :file, direct_upload: true, accept: b.object.task_accepted_ext,
+          data: { accept_names: b.object.task_file_names&.to_json } %>
+      <% else %>
+        <%= b.label :file, "#{b.object.task_display_name}: Розв'язок завантажено максимальну кількість разів" %>
+      <% end %>
     </div>
   <% end %>
 
