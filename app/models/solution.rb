@@ -6,7 +6,7 @@ class Solution < ApplicationRecord
   belongs_to :task, inverse_of: :solutions
   has_one_attached :file
 
-  before_validation :assign_upload_number, on: :create
+  after_initialize :assign_upload_number, if: -> { new_record? && user && task }
   after_commit :send_email, on: :create
 
   delegate :display_name, :upload_limit, :accepted_ext, :file_names, to: :task, prefix: true, allow_nil: true
@@ -18,8 +18,6 @@ class Solution < ApplicationRecord
   end
 
   def assign_upload_number
-    return unless user && task
-
     # TODO: fix possible race condition
     self.upload_number = Solution.where(user:, task:).count + 1
   end
