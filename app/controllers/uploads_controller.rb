@@ -28,12 +28,12 @@ class UploadsController < ApplicationController
 
   def resource_params
     params.require(:upload).permit(:secret, solutions_attributes: %i[task_id file])
-      .merge(ips: ip_addresses, device_id: @device_id, contest:)
+      .reverse_merge(ips: ip_addresses, device_id: @device_id, contest:)
   end
 
   def initialize_resource
     solutions_attributes = contest.tasks.order(:id).pluck(:id).map { { task_id: _1 } }
-    @resource = Upload.new solutions_attributes:, contest:
+    @resource = Upload.new contest:, solutions_attributes:
   end
 
   def build_resource

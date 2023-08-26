@@ -11,12 +11,11 @@ class Upload
 
   def solutions_attributes= attributes
     attributes = attributes.values if attributes.is_a? Hash
-    @solutions = attributes.map { Solution.new _1 }
+    @solutions = attributes.map { Solution.new **_1, user:, ips:, device_id: }
   end
 
   def save
     solutions.reject! { _1.file.blank? }
-    solutions.each { _1.assign_attributes user:, ips:, device_id: }
     solutions.each &:save if valid?
   end
 
