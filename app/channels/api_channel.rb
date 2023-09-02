@@ -6,6 +6,7 @@ class ApiChannel < ApplicationCable::Channel
     dispatch_self 'app/start'
     dispatch_self 'users/load', task_users.order(:judge_secret).pluck(:judge_secret)
     dispatch_self 'criteria/load', task_criterions.order(:position)
+    dispatch_self 'judges/load', Task.find(task_id).judges
     dispatch_self 'results/load', CriterionUserResult.includes(:user).where(criterion: task_criterions)
     dispatch_self 'comments/load', Comment.includes(:user).where(task_id:)
     dispatch_self 'locks/load', RedisLockManager.all
@@ -37,6 +38,28 @@ class ApiChannel < ApplicationCable::Channel
     criterion.destroy!
     task_criterions.where('position > ?', criterion.position).update_all('position = position - 1')
     dispatch_all 'criteria/delete', data['id']
+  end
+
+  def add_judge data
+    return unless scoring_open data
+
+    task = Task.find task_id
+    task.judges << data['value']
+    task.save!
+    dispatch_all 'judges/load', task.judges
+  end
+
+  def delete_judge data
+    return unless scoring_open data
+
+    task = Task.find task_id
+    if task.judges[data['index']] == data['value']
+      task.judges.delete_at data['index']
+      task.save!
+      dispatch_all 'judges/load', task.judges
+    else
+      dispatch_self 'errors/push', "Delete failed: Judge #{data['index']} has changed"
+    end
   end
 
   def drag_drop data
