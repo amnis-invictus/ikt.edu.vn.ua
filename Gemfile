@@ -22,7 +22,7 @@ gem 'redis', '~> 4.8', require: %w[redis redis/connection/hiredis]
 gem 'redis-namespace'
 gem 'rubyzip', require: 'zip'
 gem 'sassc-rails'
-gem 'uglifier'
+gem 'terser'
 
 # Temporarily fix for ruby 3.1
 gem 'net-imap', require: false
