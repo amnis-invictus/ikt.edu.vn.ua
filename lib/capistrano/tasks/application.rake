@@ -3,7 +3,7 @@ namespace :application do
   task :start do
     on roles(:app), in: :sequence, wait: 5 do
       within current_path do
-        execute 'sudo systemctl start application'
+        execute 'sudo systemctl start ikt.codelabs.site'
       end
     end
   end
@@ -12,7 +12,7 @@ namespace :application do
   task :stop do
     on roles(:app), in: :sequence, wait: 5 do
       within current_path do
-        execute 'sudo systemctl stop application'
+        execute 'sudo systemctl stop ikt.codelabs.site'
       end
     end
   end
@@ -21,7 +21,7 @@ namespace :application do
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
       within current_path do
-        execute 'sudo systemctl restart application'
+        execute 'sudo systemctl restart ikt.codelabs.site'
       end
     end
   end
