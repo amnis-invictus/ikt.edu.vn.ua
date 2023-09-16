@@ -1,6 +1,6 @@
 Rails.application.configure do
   case Rails.env
-  when 'production'
+  when 'production', 'staging'
     host = ENV.fetch 'APPLICATION_HOST'
     config.action_mailer.smtp_settings = Rails.application.credentials.smtp_settings
     config.action_mailer.raise_delivery_errors = true

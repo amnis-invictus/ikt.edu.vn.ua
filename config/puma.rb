@@ -12,7 +12,7 @@ rails_env = ENV.fetch 'RAILS_ENV', 'development'
 worker_timeout 3600 if rails_env == 'development'
 environment rails_env
 
-if rails_env == 'production'
+if %w[production staging].include? rails_env
   bind ENV.fetch 'SOCKET'
 else
   port ENV.fetch 'PORT', 3000
@@ -20,7 +20,7 @@ end
 
 pidfile ENV.fetch 'PIDFILE', 'tmp/pids/server.pid'
 
-if rails_env == 'production'
+if %w[production staging].include? rails_env
   # Specifies the number of `workers` to boot in clustered mode.
   # Workers are forked web server processes. If using threads and workers together
   # the concurrency of the application would be max `threads` * `workers`.
