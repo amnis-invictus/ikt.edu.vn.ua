@@ -15,3 +15,7 @@ test:
 production:
   <<: *default
   url: <%= ENV.fetch('DATABASE_URL', nil) %>
+
+staging:
+  <<: *default
+  url: <%= ENV.fetch('DATABASE_URL', nil) %>

@@ -1,9 +1,11 @@
+def service_name = fetch(:rails_env) == :staging ? 'stage-ikt.codelabs.site' : 'ikt.codelabs.site'
+
 namespace :application do
   desc 'Start application'
   task :start do
     on roles(:app), in: :sequence, wait: 5 do
       within current_path do
-        execute 'sudo systemctl start ikt.codelabs.site'
+        execute :sudo, :systemctl, :start, service_name
       end
     end
   end
@@ -12,7 +14,7 @@ namespace :application do
   task :stop do
     on roles(:app), in: :sequence, wait: 5 do
       within current_path do
-        execute 'sudo systemctl stop ikt.codelabs.site'
+        execute :sudo, :systemctl, :stop, service_name
       end
     end
   end
@@ -21,7 +23,7 @@ namespace :application do
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
       within current_path do
-        execute 'sudo systemctl restart ikt.codelabs.site'
+        execute :sudo, :systemctl, :restart, service_name
       end
     end
   end
