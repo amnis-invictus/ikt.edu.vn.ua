@@ -1,0 +1,17 @@
+[Unit]
+  Description = IKT Application
+  After = network.service
+
+[Service]
+  User = arch-user
+  Group = arch-user
+  WorkingDirectory = /opt/ai/ikt.codelabs.site/current
+  Environment = 'RAILS_ENV=production'
+  Environment = 'SOCKET=unix:///opt/ai/ikt.codelabs.site/current/tmp/sockets/server.sock'
+  Environment = 'PIDFILE=/opt/ai/ikt.codelabs.site/current/tmp/pids/server.pid'
+  Environment = 'PATH=/home/arch-user/.rbenv/shims:/usr/local/sbin:/usr/local/bin:/usr/bin'
+  ExecStart = /usr/bin/env bundle exec puma --config /opt/ai/ikt.codelabs.site/current/config/puma.rb
+  Restart = always
+
+[Install]
+  WantedBy = multi-user.target
