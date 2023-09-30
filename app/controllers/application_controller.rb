@@ -66,8 +66,8 @@ class ApplicationController < ActionController::Base
   end
 
   class << self
-    def log_action **params
-      around_action **params do |_, action|
+    def log_action(**)
+      around_action(**) do |_, action|
         action.call
       rescue StandardError => e
         CustomLogger.write **logger_params, exception: e

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'ContestPolicy', ui: true do
+RSpec.describe 'ContestPolicy', :ui do
   describe 'registration' do
     before { visit "/contests/#{contest.id}/users/new" }
 

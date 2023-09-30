@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Registration', ui: true do
+RSpec.describe 'Registration', :ui do
   let(:registration_email) { an_object_having_attributes subject: 'IKT - Реєстрація', to: [params[:email]] }
   let(:registration_path) { "/contests/#{contest.id}/users/new" }
 
