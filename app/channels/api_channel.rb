@@ -155,11 +155,13 @@ class ApiChannel < ApplicationCable::Channel
 
     users_without_result = []
     begin
+      result_multiplier = Rational task.result_multiplier
+
       ActiveRecord::Base.transaction do
         task.contest.users.find_each do |user|
           user_result = CriterionUserResult.where user:, criterion: task.criterions
           users_without_result << user.judge_secret unless user_result.count == task.criterions_count
-          score = user_result.sum :value
+          score = user_result.sum(:value) * result_multiplier
           Result.create_or_find_by!(user:, task:).update!(score:)
         end
 
