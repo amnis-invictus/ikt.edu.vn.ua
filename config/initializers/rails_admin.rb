@@ -78,10 +78,18 @@ RailsAdmin.config do |config|
   config.model 'Task' do |_config|
     configure :file_names, :pg_string_array
     configure :judges, :pg_string_array
+    configure(:solutions) { hide }
+    configure(:results) { hide }
+    configure(:criterions) { hide }
+    configure(:comments) { hide }
   end
 
   config.model 'User' do |_config|
     configure :registration_ips, :pg_inet_array
+    configure(:solutions) { hide }
+    configure(:results) { hide }
+    configure(:comments) { hide }
+    configure(:criterion_user_results) { hide }
   end
 
   config.model 'Solution' do |_config|
@@ -92,5 +100,12 @@ RailsAdmin.config do |config|
     configure :cities, :pg_string_array
     configure :institutions, :pg_string_array
     configure :contest_sites, :pg_string_array
+    configure(:tasks) { hide }
+    configure(:users) { hide }
+    configure(:solutions) { hide }
+  end
+
+  config.model 'Criterion' do |_config|
+    configure(:criterion_user_results) { hide }
   end
 end
