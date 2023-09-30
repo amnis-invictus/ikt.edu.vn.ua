@@ -3,10 +3,12 @@ class ApiChannel < ApplicationCable::Channel
 
   def subscribed
     ensure_confirmation_sent
+    task = Task.find task_id
     dispatch_self 'app/start'
     dispatch_self 'users/load', task_users.order(:judge_secret).pluck(:judge_secret)
     dispatch_self 'criteria/load', task_criterions.order(:position)
-    dispatch_self 'judges/load', Task.find(task_id).judges
+    dispatch_self 'judges/load', task.judges
+    dispatch_self 'resultMultiplier/load', task.result_multiplier
     dispatch_self 'results/load', CriterionUserResult.includes(:user).where(criterion: task_criterions)
     dispatch_self 'comments/load', Comment.includes(:user).where(task_id:)
     dispatch_self 'locks/load', RedisLockManager.all
@@ -60,6 +62,15 @@ class ApiChannel < ApplicationCable::Channel
     else
       dispatch_self 'errors/push', "Delete failed: Judge #{data['index']} has changed"
     end
+  end
+
+  def write_result_multiplier data
+    return unless scoring_open data
+
+    task = Task.find task_id
+    task.result_multiplier = data['value']
+    task.save!
+    dispatch_all 'resultMultiplier/load', task.result_multiplier
   end
 
   def drag_drop data
