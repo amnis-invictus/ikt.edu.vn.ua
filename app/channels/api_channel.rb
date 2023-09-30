@@ -153,6 +153,8 @@ class ApiChannel < ApplicationCable::Channel
     dispatch_all 'comments/load', Comment.includes(:user).where(task_id:)
     dispatch_all 'app/finish'
 
+    dispatch_self 'notifications/push', kind: 'info', message: 'Calculating results …'
+
     users_without_result = []
     begin
       result_multiplier = Rational task.result_multiplier
@@ -171,6 +173,8 @@ class ApiChannel < ApplicationCable::Channel
       task.update_column :scoring_open, true
       dispatch_self 'app/ready', ready_info
       raise e
+    else
+      dispatch_self 'notifications/push', kind: 'success', message: 'Results calculated'
     end
   end
 
