@@ -22,7 +22,8 @@ class UsersController < ApplicationController
   end
 
   def resource_params
-    params.require(:user).permit(PERMITTED_PARAMS).merge(registration_ips: ip_addresses, device_id: @device_id)
+    params.require(:user).permit(PERMITTED_PARAMS)
+      .merge(registration_ips: ip_addresses, device_id: @device_id, registration_secret_required: true)
   end
 
   def initialize_resource

@@ -1,10 +1,13 @@
 class User < ApplicationRecord
-  attr_accessor :registration_secret
+  attr_accessor :registration_secret, :registration_secret_required
 
   validates :name, :email, :city, :institution, :contest_site, :grade, presence: true
   validates :name, :secret, :judge_secret, uniqueness: { scope: :contest }
-  validates :registration_secret, presence: true, on: :create
-  validate :registration_secret_must_be_valid, on: :create
+
+  with_options if: :registration_secret_required, on: :create do
+    validates :registration_secret, presence: true
+    validate :registration_secret_must_be_valid
+  end
 
   belongs_to :contest, inverse_of: :users
   has_many :solutions, inverse_of: :user, dependent: :destroy
