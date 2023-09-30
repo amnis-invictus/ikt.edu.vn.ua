@@ -220,7 +220,7 @@ GEM
       racc
     pg (1.5.4)
     public_suffix (5.0.3)
-    puma (6.3.1)
+    puma (6.4.0)
       nio4r (~> 2.0)
     pundit (2.3.1)
       activesupport (>= 3.0.0)
@@ -406,7 +406,7 @@ DEPENDENCIES
   net-pop
   net-smtp
   pg (~> 1.5)
-  puma (~> 6.3)
+  puma (~> 6.4)
   pundit
   rack-mini-profiler (~> 3.1)
   rails (~> 7.0.8)
