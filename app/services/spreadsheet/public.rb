@@ -21,7 +21,7 @@ module Spreadsheet
         judges_style = workbook.styles.add_style JUDGES_STYLE_OPTIONS.deep_dup
         data_style = workbook.styles.add_style DATA_STYLE_OPTIONS.deep_dup
 
-        first_judge, *judges = @tasks.sum([], &:judges)
+        first_judge, *judges = @tasks.sum([], &:judges).uniq
 
         @grades.each do |grade|
           Rails.logger.debug { "Processing #{grade} grade of contest ##{@contest.id}..." }
