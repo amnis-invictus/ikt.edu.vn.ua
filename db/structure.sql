@@ -192,7 +192,9 @@ CREATE TABLE public.contests (
     archive_open boolean DEFAULT false NOT NULL,
     institutions character varying[] DEFAULT '{}'::character varying[] NOT NULL,
     statistic_open boolean DEFAULT false NOT NULL,
-    main_judge character varying DEFAULT ''::character varying NOT NULL
+    main_judge character varying DEFAULT ''::character varying NOT NULL,
+    head_of_organizing_committee character varying DEFAULT ''::character varying NOT NULL,
+    secretary_of_organizing_committee character varying DEFAULT ''::character varying NOT NULL
 );
 
 
@@ -921,6 +923,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230902145307'),
 ('20230902145308'),
 ('20230902145309'),
-('20230930203405');
+('20230930203405'),
+('20231110173126');
 
 
