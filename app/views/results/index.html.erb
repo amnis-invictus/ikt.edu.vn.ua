@@ -1,5 +1,9 @@
 <h3>Результати олімпіади</h3>
 
+<% if judge? %>
+  <p><%= link_to 'Таблиця результатів для журі', [:judge_xlsx, contest, :judge] %></p>
+<% end %>
+
 <% if contest.preliminary_results.attached? %>
   <h4><%= link_to 'Попередні результати', contest.preliminary_results %></h4>
 <% end %>
