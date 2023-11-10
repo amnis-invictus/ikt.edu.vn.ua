@@ -3,6 +3,10 @@ class JudgesController < ApplicationController
     send_data UsersList.new(contest, params[:separator]).build_csv, filename: 'users-list.csv'
   end
 
+  def judge_xlsx
+    send_file Spreadsheet::Judge.new(contest).build
+  end
+
   def destroy
     session.clear
     redirect_to :root

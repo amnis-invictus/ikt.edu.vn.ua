@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
     resource :judge, only: %i[show destroy] do
       get :users_csv
+      get :judge_xlsx
     end
   end
 
