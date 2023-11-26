@@ -1,6 +1,12 @@
 module Spreadsheet
   class Public < Spreadsheet::Base
     FILENAME_SUFFIX = :public
+    SIGNATURE = '___________'.freeze
+
+    def initialize contest, config
+      super contest
+      @config = config
+    end
 
     def build
       row_1_arr = []
@@ -21,13 +27,14 @@ module Spreadsheet
         judges_style = workbook.styles.add_style JUDGES_STYLE_OPTIONS.deep_dup
         data_style = workbook.styles.add_style DATA_STYLE_OPTIONS.deep_dup
 
-        first_judge, *judges = @tasks.sum([], &:judges).uniq
+        judges = @tasks.sum([], &:judges).uniq
 
         @grades.each do |grade|
           Rails.logger.debug { "Processing #{grade} grade of contest ##{@contest.id}..." }
 
           workbook.add_worksheet name: "#{grade} клас" do |sheet|
-            sheet.add_row ["#{@contest.display_name}          #{grade} клас"], style: title_style
+            add_header_if_required sheet, style: title_style
+
             # Merge only after all data, otherwise will be ignored
             sheet.merge_cells "A1:#{place_column}1"
 
@@ -46,15 +53,17 @@ module Spreadsheet
             sheet.merge_cells "#{sum_column}3:#{sum_column}4"
             sheet.merge_cells "#{place_column}3:#{place_column}4"
 
-            generate_data_rows(grade).each { |row| sheet.add_row row, style: data_style }
+            add_result_table_if_required sheet, grade, style: data_style
 
             sheet.add_row []
-            sheet.add_row ['', 'Голова журі', '___________', @contest.main_judge], style: judges_style
-            sheet.add_row ['', 'Члени журі', '___________', first_judge], style: judges_style
-            judges.each { sheet.add_row ['', '', '___________', _1], style: judges_style }
+
+            add_main_judge_if_required sheet, style: judges_style
+            add_judge_list_if_required sheet, judges, style: judges_style
+            add_orgcom_head_if_required sheet, style: judges_style
+            add_orgcom_secretary_if_required sheet, style: judges_style
 
             # Set only after all data, otherwise will be ignored
-            sheet.column_widths *column_widths
+            sheet.column_widths(*column_widths)
           end
         end
       end
@@ -67,6 +76,42 @@ module Spreadsheet
 
     def user_data_row user
       [user.secret, user.judge_secret, user.name, user.institution]
+    end
+
+    def add_header_if_required(sheet, **)
+      sheet.add_row([@config.header], **) if @config.header.present?
+    end
+
+    def add_result_table_if_required(sheet, grade, **)
+      return unless @config.result_table
+
+      generate_data_rows(grade).each { |row| sheet.add_row row, ** }
+    end
+
+    def add_main_judge_if_required(sheet, **)
+      return unless @config.main_judge
+
+      sheet.add_row ['', 'Голова журі', SIGNATURE, @contest.main_judge], **
+    end
+
+    def add_judge_list_if_required(sheet, judges, **)
+      return unless @config.judge_list
+
+      first_judge, *judges = judges
+      sheet.add_row ['', 'Члени журі', SIGNATURE, first_judge], **
+      judges.each { sheet.add_row ['', '', SIGNATURE, _1], ** }
+    end
+
+    def add_orgcom_head_if_required(sheet, **)
+      return unless @config.orgcom_head
+
+      sheet.add_row ['', 'Голова оргкомітету', SIGNATURE, @contest.head_of_organizing_committee], **
+    end
+
+    def add_orgcom_secretary_if_required(sheet, **)
+      return unless @config.orgcom_secretary
+
+      sheet.add_row ['', 'Секретар оргкомітету', SIGNATURE, @contest.secretary_of_organizing_committee], **
     end
   end
 end
