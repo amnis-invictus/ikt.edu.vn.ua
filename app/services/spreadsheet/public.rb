@@ -78,40 +78,40 @@ module Spreadsheet
       [user.secret, user.judge_secret, user.name, user.institution]
     end
 
-    def add_header_if_required(sheet, **)
-      sheet.add_row([@config.header], **) if @config.header.present?
+    def add_header_if_required sheet, **options
+      sheet.add_row [@config.header], options if @config.header.present?
     end
 
-    def add_result_table_if_required(sheet, grade, **)
+    def add_result_table_if_required sheet, grade, **options
       return unless @config.result_table
 
-      generate_data_rows(grade).each { |row| sheet.add_row row, ** }
+      generate_data_rows(grade).each { |row| sheet.add_row row, options }
     end
 
-    def add_main_judge_if_required(sheet, **)
+    def add_main_judge_if_required sheet, **options
       return unless @config.main_judge
 
-      sheet.add_row ['', 'Голова журі', SIGNATURE, @contest.main_judge], **
+      sheet.add_row ['', 'Голова журі', SIGNATURE, @contest.main_judge], options
     end
 
-    def add_judge_list_if_required(sheet, judges, **)
+    def add_judge_list_if_required sheet, judges, **options
       return unless @config.judge_list
 
       first_judge, *judges = judges
-      sheet.add_row ['', 'Члени журі', SIGNATURE, first_judge], **
-      judges.each { sheet.add_row ['', '', SIGNATURE, _1], ** }
+      sheet.add_row ['', 'Члени журі', SIGNATURE, first_judge], options
+      judges.each { sheet.add_row ['', '', SIGNATURE, _1], options }
     end
 
-    def add_orgcom_head_if_required(sheet, **)
+    def add_orgcom_head_if_required sheet, **options
       return unless @config.orgcom_head
 
-      sheet.add_row ['', 'Голова оргкомітету', SIGNATURE, @contest.head_of_organizing_committee], **
+      sheet.add_row ['', 'Голова оргкомітету', SIGNATURE, @contest.head_of_organizing_committee], options
     end
 
-    def add_orgcom_secretary_if_required(sheet, **)
+    def add_orgcom_secretary_if_required sheet, **options
       return unless @config.orgcom_secretary
 
-      sheet.add_row ['', 'Секретар оргкомітету', SIGNATURE, @contest.secretary_of_organizing_committee], **
+      sheet.add_row ['', 'Секретар оргкомітету', SIGNATURE, @contest.secretary_of_organizing_committee], options
     end
   end
 end
