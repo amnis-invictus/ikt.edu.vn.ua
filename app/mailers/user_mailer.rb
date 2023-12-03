@@ -1,6 +1,6 @@
 class UserMailer < ApplicationMailer
   def email user
     @user = user
-    mail subject: t('.subject'), to: user.email
+    I18n.with_locale(:uk) { mail subject: t('.subject'), to: user.email }
   end
 end
