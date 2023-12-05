@@ -33,7 +33,7 @@ module Spreadsheet
           Rails.logger.debug { "Processing #{grade} grade of contest ##{@contest.id}..." }
 
           workbook.add_worksheet name: "#{grade} клас" do |sheet|
-            add_header_if_required sheet, style: title_style
+            add_header_if_required sheet, title_style
 
             # Merge only after all data, otherwise will be ignored
             sheet.merge_cells "A1:#{place_column}1"
