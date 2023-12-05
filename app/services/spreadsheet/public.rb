@@ -53,14 +53,14 @@ module Spreadsheet
             sheet.merge_cells "#{sum_column}3:#{sum_column}4"
             sheet.merge_cells "#{place_column}3:#{place_column}4"
 
-            add_result_table_if_required sheet, grade, style: data_style
+            add_result_table_if_required sheet, grade, data_style
 
             sheet.add_row []
 
-            add_main_judge_if_required sheet, style: judges_style
-            add_judge_list_if_required sheet, judges, style: judges_style
-            add_orgcom_head_if_required sheet, style: judges_style
-            add_orgcom_secretary_if_required sheet, style: judges_style
+            add_main_judge_if_required sheet, judges_style
+            add_judge_list_if_required sheet, judges, judges_style
+            add_orgcom_head_if_required sheet, judges_style
+            add_orgcom_secretary_if_required sheet, judges_style
 
             # Set only after all data, otherwise will be ignored
             sheet.column_widths(*column_widths)
@@ -78,40 +78,40 @@ module Spreadsheet
       [user.secret, user.judge_secret, user.name, user.institution]
     end
 
-    def add_header_if_required sheet, **options
-      sheet.add_row [@config.header], options if @config.header.present?
+    def add_header_if_required sheet, style_options
+      sheet.add_row [@config.header], style: style_options if @config.header.present?
     end
 
-    def add_result_table_if_required sheet, grade, **options
+    def add_result_table_if_required sheet, grade, style_options
       return unless @config.result_table
 
-      generate_data_rows(grade).each { |row| sheet.add_row row, options }
+      generate_data_rows(grade).each { |row| sheet.add_row row, style: style_options }
     end
 
-    def add_main_judge_if_required sheet, **options
+    def add_main_judge_if_required sheet, style_options
       return unless @config.main_judge
 
-      sheet.add_row ['', 'Голова журі', SIGNATURE, @contest.main_judge], options
+      sheet.add_row ['', 'Голова журі', SIGNATURE, @contest.main_judge], style: style_options
     end
 
-    def add_judge_list_if_required sheet, judges, **options
+    def add_judge_list_if_required sheet, judges, style_options
       return unless @config.judge_list
 
       first_judge, *judges = judges
-      sheet.add_row ['', 'Члени журі', SIGNATURE, first_judge], options
-      judges.each { sheet.add_row ['', '', SIGNATURE, _1], options }
+      sheet.add_row ['', 'Члени журі', SIGNATURE, first_judge], style: style_options
+      judges.each { sheet.add_row ['', '', SIGNATURE, _1], style: style_options }
     end
 
-    def add_orgcom_head_if_required sheet, **options
+    def add_orgcom_head_if_required sheet, style_options
       return unless @config.orgcom_head
 
-      sheet.add_row ['', 'Голова оргкомітету', SIGNATURE, @contest.head_of_organizing_committee], options
+      sheet.add_row ['', 'Голова оргкомітету', SIGNATURE, @contest.head_of_organizing_committee], style: style_options
     end
 
-    def add_orgcom_secretary_if_required sheet, **options
+    def add_orgcom_secretary_if_required sheet, style_options
       return unless @config.orgcom_secretary
 
-      sheet.add_row ['', 'Секретар оргкомітету', SIGNATURE, @contest.secretary_of_organizing_committee], options
+      sheet.add_row ['', 'Секретар оргкомітету', SIGNATURE, @contest.secretary_of_organizing_committee], style: style_options
     end
   end
 end
