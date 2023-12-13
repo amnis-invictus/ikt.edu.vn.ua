@@ -16,7 +16,7 @@ gem 'jquery-rails'
 gem 'pg', '~> 1.5'
 gem 'puma', '~> 6.4'
 gem 'pundit'
-gem 'rails', '~> 7.0.8'
+gem 'rails', '~> 7.1.2'
 gem 'rails_admin', '~> 3.1'
 gem 'redis', '~> 4.8', require: %w[redis redis/connection/hiredis]
 gem 'redis-namespace'
