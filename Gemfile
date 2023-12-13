@@ -54,7 +54,7 @@ group :development do
   gem 'capistrano-rails'
   gem 'ed25519'
   gem 'listen', '~> 3.8'
-  gem 'rack-mini-profiler', '~> 3.1'
+  gem 'rack-mini-profiler', '~> 3.3'
   gem 'spring'
 end
 
