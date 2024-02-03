@@ -61,6 +61,7 @@ module Spreadsheet
             add_judge_list_if_required sheet, judges, judges_style
             add_orgcom_head_if_required sheet, judges_style
             add_orgcom_secretary_if_required sheet, judges_style
+            add_appeal_head_if_required sheet, judges_style
 
             # Set only after all data, otherwise will be ignored
             sheet.column_widths(*column_widths)
@@ -112,6 +113,12 @@ module Spreadsheet
       return unless @config.orgcom_secretary
 
       sheet.add_row ['', 'Секретар оргкомітету', SIGNATURE, @contest.secretary_of_organizing_committee], style: style_options
+    end
+
+    def add_appeal_head_if_required sheet, style_options
+      return unless @config.appeal_head
+
+      sheet.add_row ['', 'Голова апеляційної комісії', SIGNATURE, @contest.head_of_appeal_commission], style: style_options
     end
   end
 end

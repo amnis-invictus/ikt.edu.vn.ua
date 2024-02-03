@@ -9,5 +9,6 @@ module Spreadsheet
     attribute :judge_list, :boolean
     attribute :orgcom_head, :boolean
     attribute :orgcom_secretary, :boolean
+    attribute :appeal_head, :boolean
   end
 end
