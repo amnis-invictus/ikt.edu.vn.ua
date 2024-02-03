@@ -4,7 +4,7 @@ module Spreadsheet
     SIGNATURE = '___________'.freeze
 
     def initialize contest, config
-      super contest
+      super(contest)
       @config = config
     end
 
