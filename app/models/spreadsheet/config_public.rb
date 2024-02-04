@@ -10,5 +10,6 @@ module Spreadsheet
     attribute :orgcom_head, :boolean
     attribute :orgcom_secretary, :boolean
     attribute :appeal_head, :boolean
+    attribute :grade_groups, :json, default: -> { [] }
   end
 end
