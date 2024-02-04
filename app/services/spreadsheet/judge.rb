@@ -17,10 +17,10 @@ module Spreadsheet
         header_style = workbook.styles.add_style HEADER_STYLE_OPTIONS.deep_dup
         data_style = workbook.styles.add_style DATA_STYLE_OPTIONS.deep_dup
 
-        @grades.each do |grade|
+        Grade.find_each do |grade|
           Rails.logger.debug { "Processing #{grade} grade of contest ##{@contest.id}..." }
 
-          workbook.add_worksheet name: "#{grade} клас" do |sheet|
+          workbook.add_worksheet name: grade.name do |sheet|
             sheet.add_row row_1_arr, style: header_style
             sheet.add_row row_2_arr, style: header_style
 
@@ -47,7 +47,7 @@ module Spreadsheet
     private
 
     def user_data_row user
-      [user.judge_secret]
+      [user.judge_secret, user.grade]
     end
   end
 end

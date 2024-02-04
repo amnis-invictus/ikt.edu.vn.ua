@@ -18,7 +18,6 @@ module Spreadsheet
       @contest = contest
       @path = "/tmp/result_#{contest.id}_#{self.class::FILENAME_SUFFIX}.xlsx"
       @tasks = contest.tasks.load
-      @grades = contest.users.distinct.pluck :grade
       @data = generate_data
     end
 
@@ -34,24 +33,21 @@ module Spreadsheet
         'users.id',
         Arel.sql('array_agg(distinct solutions.task_id) as tasks_with_solutions'),
       ).to_h.transform_values! { Set.new _1 }
-      @contest.users.group_by(&:grade).transform_values! do |users|
-        users.map! do |user|
-          {
-            user:,
-            results: score_and_results[user.id][2].to_h,
-            solutions: solutions[user.id],
-            final_score: score_and_results[user.id][1],
-          }
-        end
-        users.sort! { |a, b| b[:final_score] <=> a[:final_score] }
+      data = @contest.users.map do |user|
+        {
+          user:,
+          results: score_and_results[user.id][2].to_h,
+          solutions: solutions[user.id],
+          final_score: score_and_results[user.id][1],
+        }
       end
+      data.sort! { |a, b| b[:final_score] <=> a[:final_score] }
     end
 
-    def generate_data_rows grade
-      @data[grade].map.with_index 1 do |dt, index|
+    def generate_data_rows *grades
+      @data.filter { grades.include? _1[:user].grade }.map.with_index 1 do |dt, index|
         row = [index]
         row.concat user_data_row dt[:user]
-        row << grade
         row.concat tasks_data_row dt[:results], dt[:solutions]
         row << dt[:final_score]
         row << ''

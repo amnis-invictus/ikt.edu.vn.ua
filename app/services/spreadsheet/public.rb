@@ -29,10 +29,10 @@ module Spreadsheet
 
         judges = @tasks.sum([], &:judges).uniq
 
-        @grades.each do |grade|
-          Rails.logger.debug { "Processing #{grade} grade of contest ##{@contest.id}..." }
+        @config.grade_groups.each do |grades|
+          Rails.logger.debug { "Processing #{grades.join ','} grade of contest ##{@contest.id}..." }
 
-          workbook.add_worksheet name: "#{grade} клас" do |sheet|
+          workbook.add_worksheet name: grades.join(', ') do |sheet|
             add_header_if_required sheet, title_style
 
             # Merge only after all data, otherwise will be ignored
@@ -53,7 +53,7 @@ module Spreadsheet
             sheet.merge_cells "#{sum_column}3:#{sum_column}4"
             sheet.merge_cells "#{place_column}3:#{place_column}4"
 
-            add_result_table_if_required sheet, grade, data_style
+            add_result_table_if_required sheet, grades, data_style
 
             sheet.add_row []
 
@@ -76,17 +76,17 @@ module Spreadsheet
     private
 
     def user_data_row user
-      [user.secret, user.judge_secret, user.name, user.institution]
+      [user.secret, user.judge_secret, user.name, user.institution, user.grade]
     end
 
     def add_header_if_required sheet, style_options
       sheet.add_row [@config.header], style: style_options if @config.header.present?
     end
 
-    def add_result_table_if_required sheet, grade, style_options
+    def add_result_table_if_required sheet, grades, style_options
       return unless @config.result_table
 
-      generate_data_rows(grade).each { |row| sheet.add_row row, style: style_options }
+      generate_data_rows(*grades).each { |row| sheet.add_row row, style: style_options }
     end
 
     def add_main_judge_if_required sheet, style_options
