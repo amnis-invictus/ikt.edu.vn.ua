@@ -23,13 +23,7 @@
     <% end %>
   </div>
   <div class="field">
-    <%= f.select :grade, [
-          ['11 клас', 11],
-          ['10 клас', 10],
-          ['9 клас', 9],
-          ['8 клас', 8],
-          ['7 клас і нижче', 7],
-      ], required: true, prompt: t('users.new.grade_prompt') %>
+    <%= f.select :grade, Grade.all.map { [_1.name, _1.id] }, required: true, prompt: t('users.new.grade_prompt') %>
   </div>
   <div class="field">
     <% if contest.contest_sites.present? %>
