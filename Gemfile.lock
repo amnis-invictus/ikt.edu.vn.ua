@@ -195,7 +195,7 @@ GEM
     minitest (5.22.0)
     msgpack (1.7.2)
     nested_form (0.3.2)
-    net-imap (0.4.8)
+    net-imap (0.4.10)
       date
       net-protocol
     net-pop (0.1.2)
