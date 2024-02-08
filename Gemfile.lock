@@ -80,7 +80,7 @@ GEM
     bcrypt_pbkdf (1.1.0)
     bootsnap (1.18.3)
       msgpack (~> 1.2)
-    brakeman (6.1.1)
+    brakeman (6.1.2)
       racc
     builder (3.2.4)
     bullet (7.1.6)
