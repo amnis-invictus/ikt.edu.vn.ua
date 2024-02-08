@@ -141,18 +141,34 @@ class ApiChannel < ApplicationCable::Channel
     end
   end
 
+  def zero_no_solution data
+    return unless scoring_open data
+
+    task = Task.find task_id
+    force_close_and_finish! task
+    dispatch_self 'notifications/push', kind: 'info', message: 'Zeroing results for users without solutions …'
+
+    users_without_any_solution = Set.new task_users.where.missing(:solutions).pluck(:id)
+    begin
+      ActiveRecord::Base.transaction do
+        task.contest.users.find_each do |user|
+          next if user.solutions.exists?(task_id:)
+
+          task.criterions.each { CriterionUserResult.create_or_find_by!(user:, criterion: _1).update!(value: 0) }
+          comment = users_without_any_solution.include?(user.id) ? 'папка відсутня' : 'файл відсутній'
+          Comment.create_or_find_by!(user:, task_id:).update!(value: comment)
+        end
+      end
+    ensure
+      reopen! task
+    end
+  end
+
   def finish data
     return unless scoring_open data
 
     task = Task.find task_id
-
-    task.update_column :scoring_open, false
-    RedisLockManager.release_all
-    dispatch_all 'locks/load', RedisLockManager.all
-    dispatch_all 'results/load', CriterionUserResult.includes(:user).where(criterion: task_criterions)
-    dispatch_all 'comments/load', Comment.includes(:user).where(task_id:)
-    dispatch_all 'app/finish'
-
+    force_close_and_finish! task
     dispatch_self 'notifications/push', kind: 'info', message: 'Calculating results …'
 
     users_without_result = []
@@ -170,8 +186,7 @@ class ApiChannel < ApplicationCable::Channel
         raise "Users that missing some result: #{users_without_result.to_sentence}" unless users_without_result.empty?
       end
     rescue StandardError => e
-      task.update_column :scoring_open, true
-      dispatch_self 'app/ready', ready_info
+      reopen! task
       raise e
     else
       dispatch_self 'notifications/push', kind: 'success', message: 'Results calculated'
@@ -222,5 +237,21 @@ class ApiChannel < ApplicationCable::Channel
 
     dispatch_self 'errors/push', "#{data['action']} failed: Scoring is closed"
     false
+  end
+
+  def force_close_and_finish! task
+    task.update_column :scoring_open, false
+    RedisLockManager.release_all
+    dispatch_all 'locks/load', RedisLockManager.all
+    dispatch_all 'results/load', CriterionUserResult.includes(:user).where(criterion: task_criterions)
+    dispatch_all 'comments/load', Comment.includes(:user).where(task_id:)
+    dispatch_all 'app/finish'
+  end
+
+  def reopen! task
+    task.update_column :scoring_open, true
+    dispatch_all 'results/load', CriterionUserResult.includes(:user).where(criterion: task_criterions)
+    dispatch_all 'comments/load', Comment.includes(:user).where(task_id:)
+    dispatch_all 'app/ready', ready_info
   end
 end
