@@ -195,7 +195,8 @@ CREATE TABLE public.contests (
     main_judge character varying DEFAULT ''::character varying NOT NULL,
     head_of_organizing_committee character varying DEFAULT ''::character varying NOT NULL,
     secretary_of_organizing_committee character varying DEFAULT ''::character varying NOT NULL,
-    head_of_appeal_commission character varying DEFAULT ''::character varying NOT NULL
+    head_of_appeal_commission character varying DEFAULT ''::character varying NOT NULL,
+    info text DEFAULT ''::text NOT NULL
 );
 
 
@@ -926,6 +927,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230902145309'),
 ('20230930203405'),
 ('20231110173126'),
-('20240203172343');
+('20240203172343'),
+('20240211194031');
 
 
