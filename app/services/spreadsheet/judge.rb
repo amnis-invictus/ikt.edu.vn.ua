@@ -32,7 +32,7 @@ module Spreadsheet
             sheet.merge_cells "#{sum_column}1:#{sum_column}2"
             sheet.merge_cells "#{place_column}1:#{place_column}2"
 
-            generate_data_rows(grade).each { |row| sheet.add_row row, style: data_style }
+            generate_data_rows(grade.id).each { |row| sheet.add_row row, style: data_style }
 
             # Set only after all data, otherwise will be ignored
             sheet.column_widths *column_widths
