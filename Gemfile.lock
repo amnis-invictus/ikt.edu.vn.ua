@@ -141,7 +141,7 @@ GEM
     factory_bot_rails (6.4.3)
       factory_bot (~> 6.4)
       railties (>= 5.0.0)
-    ffi (1.15.5)
+    ffi (1.16.3)
     globalid (1.2.1)
       activesupport (>= 6.1)
     hiredis (0.6.3)
@@ -177,7 +177,7 @@ GEM
       childprocess (~> 5.0)
     letter_opener (1.10.0)
       launchy (>= 2.2, < 4)
-    listen (3.8.0)
+    listen (3.9.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     loofah (2.22.0)
@@ -407,7 +407,7 @@ DEPENDENCIES
   jbuilder (~> 2.11)
   jquery-rails
   letter_opener
-  listen (~> 3.8)
+  listen (~> 3.9)
   net-imap
   net-pop
   net-smtp
