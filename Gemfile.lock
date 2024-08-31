@@ -440,9 +440,6 @@ DEPENDENCIES
   jquery-rails
   letter_opener
   listen (~> 3.9)
-  net-imap
-  net-pop
-  net-smtp
   pg (~> 1.5)
   puma (~> 6.4)
   pundit
@@ -467,7 +464,7 @@ DEPENDENCIES
   tzinfo-data
 
 RUBY VERSION
-   ruby 3.2.2p53
+   ruby 3.3.4p94
 
 BUNDLED WITH
-   2.4.20
+   2.5.18

@@ -104,7 +104,7 @@ Rails/FilePath:
 RSpec/ImplicitExpect:
   EnforcedStyle: should
 AllCops:
-  TargetRubyVersion: 3.2.2
+  TargetRubyVersion: 3.3.4
   NewCops: enable
   Exclude:
     - 'node_modules/**/*'

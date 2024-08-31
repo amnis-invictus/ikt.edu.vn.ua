@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.2.2'
+ruby file: '.ruby-version'
 
 gem 'bcrypt', '~> 3.1.20'
 gem 'bootsnap', '>= 1.4.4', require: false
@@ -23,11 +23,6 @@ gem 'redis-namespace'
 gem 'rubyzip', require: 'zip'
 gem 'sassc-rails'
 gem 'terser'
-
-# Temporarily fix for ruby 3.1
-gem 'net-imap', require: false
-gem 'net-pop', require: false
-gem 'net-smtp', require: false
 
 group :development, :test do
   gem 'brakeman'
