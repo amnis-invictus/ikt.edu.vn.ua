@@ -20,7 +20,11 @@ RSpec.describe 'Registration', :ui do
       before { click_button 'commit' }
 
       it { expect(page).to have_content 'Ви успішно зареєстровані.' }
-      it('delivers email') { expect(ActionMailer::Base.deliveries).to include(registration_email) }
+
+      it 'delivers email' do
+        perform_enqueued_jobs
+        expect(ActionMailer::Base.deliveries).to include(registration_email)
+      end
     end
 
     context 'with duplicated name' do
@@ -32,7 +36,11 @@ RSpec.describe 'Registration', :ui do
       end
 
       it { expect(page).to have_content "Учасник на ім'я #{params[:name]} вже зареєстрований" }
-      it('does not deliver email') { expect(ActionMailer::Base.deliveries).to_not include(registration_email) }
+
+      it 'does not deliver email' do
+        perform_enqueued_jobs
+        expect(ActionMailer::Base.deliveries).to_not include(registration_email)
+      end
     end
 
     context 'with invalid registration secret' do
@@ -41,7 +49,11 @@ RSpec.describe 'Registration', :ui do
       before { click_button 'commit' }
 
       it { expect(page).to have_content 'Код доступу помилковий' }
-      it('does not deliver email') { expect(ActionMailer::Base.deliveries).to_not include(registration_email) }
+
+      it 'does not deliver email' do
+        perform_enqueued_jobs
+        expect(ActionMailer::Base.deliveries).to_not include(registration_email)
+      end
     end
 
     context 'without contest site' do
@@ -50,7 +62,11 @@ RSpec.describe 'Registration', :ui do
       before { click_button 'commit' }
 
       it { expect(page).to have_content 'Заклад, у якому ви пишете олімпіаду не може бути порожнім' }
-      it('does not deliver email') { expect(ActionMailer::Base.deliveries).to_not include(registration_email) }
+
+      it 'does not deliver email' do
+        perform_enqueued_jobs
+        expect(ActionMailer::Base.deliveries).to_not include(registration_email)
+      end
     end
 
     context 'without grade' do
@@ -59,7 +75,11 @@ RSpec.describe 'Registration', :ui do
       before { click_button 'commit' }
 
       it { expect(page).to have_content 'Клас не може бути порожнім' }
-      it('does not deliver email') { expect(ActionMailer::Base.deliveries).to_not include(registration_email) }
+
+      it 'does not deliver email' do
+        perform_enqueued_jobs
+        expect(ActionMailer::Base.deliveries).to_not include(registration_email)
+      end
     end
 
     context 'without city' do
@@ -68,7 +88,11 @@ RSpec.describe 'Registration', :ui do
       before { click_button 'commit' }
 
       it { expect(page).to have_content 'Місто не може бути порожнім' }
-      it('does not deliver email') { expect(ActionMailer::Base.deliveries).to_not include(registration_email) }
+
+      it 'does not deliver email' do
+        perform_enqueued_jobs
+        expect(ActionMailer::Base.deliveries).to_not include(registration_email)
+      end
     end
 
     context 'without email' do
@@ -78,7 +102,11 @@ RSpec.describe 'Registration', :ui do
 
       it('stays on registration page') { expect(page).to have_current_path(registration_path) }
       it { expect(page).to_not have_content 'Ваш e-mail не може бути порожнім' }
-      it('does not deliver email') { expect(ActionMailer::Base.deliveries).to_not include(registration_email) }
+
+      it 'does not deliver email' do
+        perform_enqueued_jobs
+        expect(ActionMailer::Base.deliveries).to_not include(registration_email)
+      end
     end
 
     context 'without institution' do
@@ -87,7 +115,11 @@ RSpec.describe 'Registration', :ui do
       before { click_button 'commit' }
 
       it { expect(page).to have_content 'Ваш навчальний заклад не може бути порожнім' }
-      it('does not deliver email') { expect(ActionMailer::Base.deliveries).to_not include(registration_email) }
+
+      it 'does not deliver email' do
+        perform_enqueued_jobs
+        expect(ActionMailer::Base.deliveries).to_not include(registration_email)
+      end
     end
 
     context 'without name' do
@@ -97,7 +129,11 @@ RSpec.describe 'Registration', :ui do
 
       it('stays on registration page') { expect(page).to have_current_path(registration_path) }
       it { expect(page).to_not have_content 'Прізвище, Ім\'я, По батькові не може бути пустим' }
-      it('does not deliver email') { expect(ActionMailer::Base.deliveries).to_not include(registration_email) }
+
+      it 'does not deliver email' do
+        perform_enqueued_jobs
+        expect(ActionMailer::Base.deliveries).to_not include(registration_email)
+      end
     end
   end
 
@@ -115,7 +151,11 @@ RSpec.describe 'Registration', :ui do
       before { click_button 'commit' }
 
       it { expect(page).to have_content 'Ви успішно зареєстровані.' }
-      it('delivers email') { expect(ActionMailer::Base.deliveries).to include(registration_email) }
+
+      it 'delivers email' do
+        perform_enqueued_jobs
+        expect(ActionMailer::Base.deliveries).to include(registration_email)
+      end
     end
 
     context 'without contest_site' do
@@ -125,7 +165,11 @@ RSpec.describe 'Registration', :ui do
 
       it('stays on registration page') { expect(page).to have_current_path(registration_path) }
       it { expect(page).to_not have_content 'Заклад, у якому ви пишете олімпіаду не може бути порожнім' }
-      it('does not deliver email') { expect(ActionMailer::Base.deliveries).to_not include(registration_email) }
+
+      it 'does not deliver email' do
+        perform_enqueued_jobs
+        expect(ActionMailer::Base.deliveries).to_not include(registration_email)
+      end
     end
   end
 
@@ -143,7 +187,11 @@ RSpec.describe 'Registration', :ui do
       before { click_button 'commit' }
 
       it { expect(page).to have_content 'Ви успішно зареєстровані.' }
-      it('delivers email') { expect(ActionMailer::Base.deliveries).to include(registration_email) }
+
+      it 'delivers email' do
+        perform_enqueued_jobs
+        expect(ActionMailer::Base.deliveries).to include(registration_email)
+      end
     end
 
     context 'without institution' do
@@ -153,7 +201,11 @@ RSpec.describe 'Registration', :ui do
 
       it('stays on registration page') { expect(page).to have_current_path(registration_path) }
       it { expect(page).to_not have_content 'Ваш навчальний заклад не може бути порожнім' }
-      it('does not deliver email') { expect(ActionMailer::Base.deliveries).to_not include(registration_email) }
+
+      it 'does not deliver email' do
+        perform_enqueued_jobs
+        expect(ActionMailer::Base.deliveries).to_not include(registration_email)
+      end
     end
   end
 
@@ -171,7 +223,11 @@ RSpec.describe 'Registration', :ui do
       before { click_button 'commit' }
 
       it { expect(page).to have_content 'Ви успішно зареєстровані.' }
-      it('delivers email') { expect(ActionMailer::Base.deliveries).to include(registration_email) }
+
+      it 'delivers email' do
+        perform_enqueued_jobs
+        expect(ActionMailer::Base.deliveries).to include(registration_email)
+      end
     end
 
     context 'without city' do
@@ -181,7 +237,11 @@ RSpec.describe 'Registration', :ui do
 
       it('stays on registration page') { expect(page).to have_current_path(registration_path) }
       it { expect(page).to_not have_content 'Місто не може бути порожнім' }
-      it('does not deliver email') { expect(ActionMailer::Base.deliveries).to_not include(registration_email) }
+
+      it 'does not deliver email' do
+        perform_enqueued_jobs
+        expect(ActionMailer::Base.deliveries).to_not include(registration_email)
+      end
     end
   end
 end
