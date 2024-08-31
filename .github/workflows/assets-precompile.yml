@@ -8,6 +8,7 @@ jobs:
   assets:
     env:
       RAILS_ENV: test
+      BUNDLE_WITHOUT: development
 
     name: Assets Precompile
     runs-on: ubuntu-latest

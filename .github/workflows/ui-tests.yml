@@ -30,6 +30,11 @@ jobs:
           --health-timeout 5s
           --health-retries 5
 
+    env:
+      BUNDLE_WITHOUT: development
+      RAILS_ENV: test
+      DATABASE_URL: "postgresql://postgres:postgres@localhost/IKT_test"
+
     steps:
       - uses: actions/checkout@v4
 
@@ -43,14 +48,9 @@ jobs:
         run: |
           bundle exec rails db:create
           bundle exec rails db:schema:load
-        env:
-          RAILS_ENV: test
-          DATABASE_URL: "postgresql://postgres:postgres@localhost/IKT_test"
 
       - name: Run RSpec tests (UI group)
         run: bundle exec rspec --tag ui
         env:
-          RAILS_ENV: test
           SMTP_FROM: test@ikt.capybara
-          DATABASE_URL: "postgresql://postgres:postgres@localhost/IKT_test"
           UI_TEST_ENGINE: ${{ matrix.ui_test_engine }}

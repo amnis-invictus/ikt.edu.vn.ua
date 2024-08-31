@@ -9,6 +9,8 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-latest
+    env:
+      BUNDLE_WITHOUT: development
     steps:
       - uses: actions/checkout@v4
       - name: Set up Ruby 3.2.2
