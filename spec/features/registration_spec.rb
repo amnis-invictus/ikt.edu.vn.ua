@@ -61,7 +61,7 @@ RSpec.describe 'Registration', :ui do
 
       before { click_button 'commit' }
 
-      it { expect(page).to have_content 'Заклад, у якому ви пишете олімпіаду не може бути порожнім' }
+      it { expect(find_by_id('user_contest_site').native.attribute('validationMessage')).to be_present }
 
       it 'does not deliver email' do
         perform_enqueued_jobs
@@ -74,7 +74,7 @@ RSpec.describe 'Registration', :ui do
 
       before { click_button 'commit' }
 
-      it { expect(page).to have_content 'Клас не може бути порожнім' }
+      it { expect(find_by_id('user_grade').native.attribute('validationMessage')).to be_present }
 
       it 'does not deliver email' do
         perform_enqueued_jobs
@@ -87,7 +87,7 @@ RSpec.describe 'Registration', :ui do
 
       before { click_button 'commit' }
 
-      it { expect(page).to have_content 'Місто не може бути порожнім' }
+      it { expect(find_by_id('user_city').native.attribute('validationMessage')).to be_present }
 
       it 'does not deliver email' do
         perform_enqueued_jobs
@@ -114,7 +114,7 @@ RSpec.describe 'Registration', :ui do
 
       before { click_button 'commit' }
 
-      it { expect(page).to have_content 'Ваш навчальний заклад не може бути порожнім' }
+      it { expect(find_by_id('user_institution').native.attribute('validationMessage')).to be_present }
 
       it 'does not deliver email' do
         perform_enqueued_jobs
