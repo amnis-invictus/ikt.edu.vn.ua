@@ -155,7 +155,7 @@ GEM
       activesupport (>= 6.1)
     hiredis (0.6.3)
     htmlentities (4.3.4)
-    i18n (1.14.5)
+    i18n (1.14.6)
       concurrent-ruby (~> 1.0)
     image_processing (1.13.0)
       mini_magick (>= 4.9.5, < 5)
@@ -164,7 +164,7 @@ GEM
     irb (1.14.0)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
-    jbuilder (2.12.0)
+    jbuilder (2.13.0)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
     jquery-rails (4.6.0)
@@ -193,7 +193,7 @@ GEM
     listen (3.9.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
-    logger (1.6.0)
+    logger (1.6.1)
     loofah (2.22.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -436,7 +436,7 @@ DEPENDENCIES
   factory_bot_rails
   hiredis
   image_processing (~> 1.13)
-  jbuilder (~> 2.12)
+  jbuilder (~> 2.13)
   jquery-rails
   letter_opener
   listen (~> 3.9)
