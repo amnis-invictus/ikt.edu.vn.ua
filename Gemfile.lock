@@ -245,7 +245,7 @@ GEM
       date
       stringio
     public_suffix (5.0.5)
-    puma (6.4.2)
+    puma (6.5.0)
       nio4r (~> 2.0)
     pundit (2.3.1)
       activesupport (>= 3.0.0)
@@ -446,7 +446,7 @@ DEPENDENCIES
   letter_opener
   listen (~> 3.9)
   pg (~> 1.5)
-  puma (~> 6.4)
+  puma (~> 6.5)
   pundit
   rack-mini-profiler (~> 3.3)
   rails (~> 7.2.2)
