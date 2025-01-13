@@ -17,7 +17,7 @@ gem 'pg', '~> 1.5'
 gem 'puma', '~> 6.4'
 gem 'pundit'
 gem 'rails', '~> 7.2.1'
-gem 'rails_admin', '~> 3.1.4'
+gem 'rails_admin', '~> 3.2.1'
 gem 'redis', '~> 4.8', require: %w[redis redis/connection/hiredis]
 gem 'redis-namespace'
 gem 'rubyzip', require: 'zip'
