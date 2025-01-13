@@ -183,7 +183,7 @@ CREATE TABLE public.contests (
     task_open boolean DEFAULT false NOT NULL,
     upload_open boolean DEFAULT false NOT NULL,
     archived boolean DEFAULT false NOT NULL,
-    registration_secret character varying,
+    registration_secret public.citext,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     cities character varying[] DEFAULT '{}'::character varying[] NOT NULL,
@@ -415,7 +415,7 @@ CREATE TABLE public.users (
     institution character varying,
     contest_site character varying,
     grade integer,
-    secret character varying,
+    secret public.citext,
     registration_ips inet[] DEFAULT '{}'::inet[] NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
@@ -890,6 +890,7 @@ ALTER TABLE ONLY public.solutions
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20250113065202'),
 ('20240211194031'),
 ('20240203172343'),
 ('20231110173126'),
