@@ -27,9 +27,9 @@ class User < ApplicationRecord
   def registration_secret_must_be_valid
     return unless contest && registration_secret.present?
 
-    unless ActiveSupport::SecurityUtils.secure_compare registration_secret, contest.registration_secret
-      errors.add :registration_secret, :invalid
-    end
+    provided = registration_secret.downcase
+    expected = contest.registration_secret.downcase
+    errors.add :registration_secret, :invalid unless ActiveSupport::SecurityUtils.secure_compare provided, expected
   end
 
   def assign_secrets
