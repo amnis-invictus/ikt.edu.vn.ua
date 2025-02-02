@@ -8,8 +8,10 @@
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag 'font', media: 'all' %>
     <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= stylesheet_link_tag 'orgcom', media: 'all' if orgcom? %>
     <%= yield :stylesheets %>
     <%= javascript_include_tag :application %>
+    <%= javascript_include_tag :orgcom if orgcom? %>
   </head>
   <body>
     <div id="container">
