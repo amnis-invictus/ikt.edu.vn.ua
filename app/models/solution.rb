@@ -7,7 +7,7 @@ class Solution < ApplicationRecord
   has_one_attached :file
 
   after_initialize :assign_upload_number, if: -> { new_record? && user && task }
-  after_commit :send_email, on: :create
+  after_commit :send_email, on: :create, if: -> { user.email? }
 
   delegate :display_name, :upload_limit, :accepted_ext, :file_names, to: :task, prefix: true, allow_nil: true
 

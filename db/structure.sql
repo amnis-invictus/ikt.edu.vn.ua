@@ -421,7 +421,8 @@ CREATE TABLE public.users (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     device_id uuid,
-    judge_secret character varying NOT NULL
+    judge_secret character varying NOT NULL,
+    absent boolean DEFAULT false NOT NULL
 );
 
 
@@ -892,6 +893,7 @@ SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
 ('20250119185329'),
+('20250119125736'),
 ('20250113065202'),
 ('20240211194031'),
 ('20240203172343'),

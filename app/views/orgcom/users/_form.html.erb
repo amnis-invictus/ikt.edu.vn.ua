@@ -1,0 +1,33 @@
+<% if resource.errors.any? %>
+  <p class="alert alert__error">Технічна помилка!</p>
+<% end %>
+
+<%= form_with model: [contest, :orgcom, resource], class: 'default-form', html: { autocomplete: 'off' } do |f| %>
+  <div class="field">
+    <%= f.text_field :name, required: true, placeholder: true %>
+  </div>
+
+  <div class="field">
+    <% if contest.cities.present? %>
+      <%= f.select :city, contest.cities, required: true, prompt: t('users.new.city_prompt') %>
+    <% else %>
+      <%= f.text_field :city, required: true, placeholder: true %>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <% if contest.institutions.present? %>
+      <%= f.select :institution, contest.institutions, required: true, prompt: t('users.new.institution_prompt') %>
+    <% else %>
+      <%= f.text_field :institution, required: true, placeholder: true %>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <%= f.select :grade, Grade.all.map { [_1.name, _1.id] }, required: true, prompt: t('users.new.grade_prompt') %>
+  </div>
+
+  <div class="field" align="right">
+    <%= f.submit 'Зареєструватись', class: 'btn' %>
+  </div>
+<% end %>

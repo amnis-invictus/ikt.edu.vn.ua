@@ -1,8 +1,9 @@
 class User < ApplicationRecord
   attr_accessor :registration_secret, :registration_secret_required
 
-  validates :name, :email, :city, :institution, :contest_site, :grade, presence: true
+  validates :name, :city, :institution, :grade, presence: true
   validates :name, :secret, :judge_secret, uniqueness: { scope: :contest }
+  validates :email, :contest_site, presence: true, unless: :absent?
 
   with_options if: :registration_secret_required, on: :create do
     validates :registration_secret, presence: true
@@ -16,7 +17,9 @@ class User < ApplicationRecord
   has_many :criterion_user_results, inverse_of: :user, dependent: :destroy
 
   before_validation :assign_secrets, on: :create
-  after_commit :send_email, on: :create
+  after_commit :send_email, on: :create, if: :email?
+
+  scope :attending, -> { where absent: false }
 
   private
 
