@@ -1,17 +1,18 @@
-<% unless contest.archived? %>
-  <li><%= link_to 'Реєстрація', [:new, contest, :user] %></li>
-<% end %>
-<li><%= link_to 'Зареєстровані', [contest, :users] %></li>
-<li><%= link_to 'Завдання', [:content, contest] %></li>
-<% unless contest.archived? %>
-  <li><%= link_to 'Відправлення розв\'язків', [:new, contest, :upload] %></li>
-<% end %>
-<% if contest.statistic_open? %>
-  <li><%= link_to 'Статистика олімпіади', [contest, :statistics] %></li>
-<% end %>
-<li><%= link_to 'Результати олімпіади', [contest, :results] %></li>
-<% if contest.archived? %>
-  <li><%= link_to 'Архів', [:contests, archived: true] %></li>
-<% end %>
-<li><%= link_to 'Головна', :root %></li>
-<li></li>
+<ul class="nav">
+  <% unless contest.archived? %>
+    <li><%= link_to 'Реєстрація', [:new, contest, :user] %></li>
+  <% end %>
+  <li><%= link_to 'Зареєстровані', [contest, :users] %></li>
+  <li><%= link_to 'Завдання', [:content, contest] %></li>
+  <% unless contest.archived? %>
+    <li><%= link_to 'Відправлення розв\'язків', [:new, contest, :upload] %></li>
+  <% end %>
+  <% if contest.statistic_open? %>
+    <li><%= link_to 'Статистика олімпіади', [contest, :statistics] %></li>
+  <% end %>
+  <li><%= link_to 'Результати олімпіади', [contest, :results] %></li>
+  <% if contest.archived? %>
+    <li><%= link_to 'Архів', [:contests, archived: true] %></li>
+  <% end %>
+  <li><%= link_to 'Головна', :root %></li>
+</ul>

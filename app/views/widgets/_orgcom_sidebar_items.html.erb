@@ -1,0 +1,7 @@
+<p class="nav-title">Оргкомітет</p>
+<ul class="nav">
+  <li><%= link_to 'Реєстрація відсутніх учасників', [:new, contest, :orgcom, :user] %></li>
+  <li><%= link_to 'Редагування учасників', [contest, :orgcom, :users] %></li>
+  <li><%= link_to 'Редагування олімпіади', [:edit, contest, :orgcom, :contest] %></li>
+  <li><%= link_to 'Вихід', [contest, :orgcom], method: :delete %></li>
+</ul>

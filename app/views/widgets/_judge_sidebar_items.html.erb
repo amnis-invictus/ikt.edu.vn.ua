@@ -1,9 +1,6 @@
-<li><%= link_to 'Файли для журі', [contest, :judge] %></li>
-<li><%= link_to 'Зареєстровані', [contest, :users] %></li>
-<li><%= link_to 'Завдання', [:content, contest] %></li>
-<li><%= link_to 'Статистика олімпіади', [contest, :statistics] %></li>
-<li><%= link_to 'Система оцінювання', [contest, :scoring] %></li>
-<li><%= link_to 'Результати олімпіади', [contest, :results] %></li>
-<li><%= link_to 'Головна', :root %></li>
-<li><%= link_to 'Вихід', [contest, :judge], method: :delete %></li>
-<li></li>
+<p class="nav-title">Журі</p>
+<ul class="nav">
+  <li><%= link_to 'Файли для журі', [contest, :judge] %></li>
+  <li><%= link_to 'Система оцінювання', [contest, :scoring] %></li>
+  <li><%= link_to 'Вихід', [contest, :judge], method: :delete %></li>
+</ul>

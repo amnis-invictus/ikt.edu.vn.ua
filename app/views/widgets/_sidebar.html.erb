@@ -1,8 +1,8 @@
 <% return if sidebar_hidden? %>
 
 <div id="sidebar">
-  <ul class="nav">
-    <%= render judge? ? 'widgets/judge_sidebar_items' : 'widgets/sidebar_items' %>
-  </ul>
+  <%= render 'widgets/sidebar_items' %>
+  <%= render 'widgets/judge_sidebar_items' if judge? %>
+  <%= render 'widgets/orgcom_sidebar_items' if orgcom? %>
   <div id="time">--:--:--</div>
 </div>
