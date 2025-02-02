@@ -26,7 +26,7 @@ module Spreadsheet
     def generate_data
       score_and_results = @contest.users.left_joins(:results).group(:id).pluck(
         'users.id',
-        'sum(results.score) as final_score',
+        Arel.sql('coalesce(sum(results.score), 0) as final_score'),
         Arel.sql('json_agg(json_build_array(results.task_id, results.score)) as task_to_result'),
       ).index_by(&:first)
       solutions = @contest.users.left_joins(:solutions).group(:id).pluck(

@@ -151,7 +151,7 @@ class ApiChannel < ApplicationCable::Channel
     users_without_any_solution = Set.new task_users.where.missing(:solutions).pluck(:id)
     begin
       ActiveRecord::Base.transaction do
-        task.contest.users.find_each do |user|
+        task_users.find_each do |user|
           next if user.solutions.exists?(task_id:)
 
           task.criterions.each { CriterionUserResult.create_or_find_by!(user:, criterion: _1).update!(value: 0) }
@@ -176,7 +176,7 @@ class ApiChannel < ApplicationCable::Channel
       result_multiplier = Rational task.result_multiplier
 
       ActiveRecord::Base.transaction do
-        task.contest.users.find_each do |user|
+        task_users.find_each do |user|
           user_result = CriterionUserResult.where user:, criterion: task.criterions
           users_without_result << user.judge_secret unless user_result.count == task.criterions_count
           score = user_result.sum(:value) * result_multiplier
@@ -224,7 +224,7 @@ class ApiChannel < ApplicationCable::Channel
   end
 
   def task_users
-    User.joins(contest: :tasks).where(tasks: { id: task_id })
+    User.joins(contest: :tasks).where(tasks: { id: task_id }).attending
   end
 
   def ready_info
