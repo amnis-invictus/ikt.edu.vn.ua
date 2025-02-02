@@ -32,6 +32,10 @@ uk:
         contest_site: Заклад, у якому ви пишете олімпіаду
       solution:
         file: Файл
+      contest:
+        cities: Міста (райони)
+        institutions: Навчальні заклади
+        contest_sites: Заклади проведення олімпіади
   solution_mailer:
     email:
       subject: IKT - Розв'язок
@@ -39,6 +43,9 @@ uk:
     email:
       subject: IKT - Реєстрація
   orgcom:
+    contests:
+      update:
+        success: Оновлено успішно
     users:
       update:
         success: Оновлено успішно

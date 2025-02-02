@@ -3,6 +3,10 @@ form.default-form {
   background-color: #fff;
 }
 
+form.wide-form {
+  width: 100%;
+}
+
 h3.for-form {
   color: #222426;
   font-size: 1.5em;
@@ -23,7 +27,8 @@ form.default-form div.field label {
 }
 
 form.default-form div.field input,
-form.default-form div.field select {
+form.default-form div.field select,
+form.default-form div.field textarea {
   color: #333333;
   margin-bottom: 10px;
   width: 100%;

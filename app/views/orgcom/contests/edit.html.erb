@@ -1,0 +1,36 @@
+<h3 class="for-form">Редагування олімпіади</h3>
+
+<% if flash.notice %>
+  <p class="alert alert__success"><%= flash.notice %></p>
+<% end %>
+
+<% if contest.errors.any? %>
+  <p class="alert alert__error">Технічна помилка!</p>
+<% end %>
+
+<%= form_with model: contest, url: [contest, :orgcom, :contest], class: 'default-form wide-form', html: { autocomplete: 'off' } do |f| %>
+  <div class="field">
+    <%= f.label :cities %>
+    <%= f.text_area :cities, value: contest.cities.join("\n"), rows: 5 %>
+    <% if contest.errors[:cities].any? %>
+      <p class="error"><%= contest.errors[:cities].join(', ') %></p>
+    <% end %>
+  </div>
+  <div class="field">
+    <%= f.label :institutions %>
+    <%= f.text_area :institutions, value: contest.institutions.join("\n"), rows: 5 %>
+    <% if contest.errors[:institutions].any? %>
+      <p class="error"><%= contest.errors[:institutions].join(', ') %></p>
+    <% end %>
+  </div>
+  <div class="field">
+    <%= f.label :contest_sites %>
+    <%= f.text_area :contest_sites, value: contest.contest_sites.join("\n"), rows: 5 %>
+    <% if contest.errors[:contest_sites].any? %>
+      <p class="error"><%= contest.errors[:contest_sites].join(', ') %></p>
+    <% end %>
+  </div>
+  <div class="field" align="right">
+    <%= f.submit 'Зберегти', class: 'btn' %>
+  </div>
+<% end %>
