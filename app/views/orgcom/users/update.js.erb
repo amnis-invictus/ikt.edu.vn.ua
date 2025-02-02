@@ -1,0 +1,8 @@
+(function () {
+  showCustomAlert('<%= t '.success' %>', 'success');
+  const row = document.querySelector('#<%= dom_id(resource, :table_form) %>');
+  row.classList.remove('error', 'changed');
+  const button = row.querySelector('input[type=button]');
+  button.disabled = false;
+  button.value = '✅';
+})();

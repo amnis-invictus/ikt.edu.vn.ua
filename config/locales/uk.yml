@@ -38,3 +38,7 @@ uk:
   user_mailer:
     email:
       subject: IKT - Реєстрація
+  orgcom:
+    users:
+      update:
+        success: Оновлено успішно

@@ -8,7 +8,19 @@ module Orgcom
       end
     end
 
+    def update
+      if resource.update resource_params
+        render :update
+      else
+        render :edit
+      end
+    end
+
     private
+
+    def collection
+      @collection ||= contest.users.order :id
+    end
 
     def resource
       @resource ||= contest.users.find params[:id]
