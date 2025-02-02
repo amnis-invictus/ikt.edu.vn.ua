@@ -1,13 +1,7 @@
 class ApplicationController < ActionController::Base
   IP_HEADERS = %w[HTTP_CLIENT_IP HTTP_X_FORWARDED_FOR REMOTE_ADDR X-Forwarded-For X-Real-IP].freeze
 
-  include Pundit::Authorization
-
-  rescue_from Pundit::NotAuthorizedError do
-    @status = :not_authorized
-    CustomLogger.write **logger_params
-    handle_not_authorized
-  end
+  include ContestAuthentication::Helpers
 
   before_action { I18n.locale = :uk }
 
@@ -21,11 +15,7 @@ class ApplicationController < ActionController::Base
 
   before_action :build_resource, only: :create
 
-  before_action :authorize_resource, except: :index
-
-  before_action :authorize_collection, only: :index
-
-  helper_method :judge?, :parent, :collection, :resource, :contest
+  helper_method :parent, :collection, :resource, :contest
 
   private
 
@@ -33,19 +23,9 @@ class ApplicationController < ActionController::Base
     IP_HEADERS.filter_map { request.headers[_1].presence }.map { _1.split(',').map(&:strip) }.flatten.uniq
   end
 
-  def authorize_resource
-    authorize resource
-  end
-
-  def authorize_collection
-    authorize collection.is_a?(Draper::CollectionDecorator) ? collection.object : collection
-  end
-
   def contest
     @contest ||= Contest.available.find params[:contest_id]
   end
-
-  alias pundit_user contest
 
   def logger_params
     {
@@ -55,14 +35,6 @@ class ApplicationController < ActionController::Base
       status: @status,
       values: logger_values,
     }
-  end
-
-  def handle_not_authorized
-    head :forbidden
-  end
-
-  def judge?
-    session[:judge_contest] == contest.id
   end
 
   class << self

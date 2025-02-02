@@ -1,11 +1,7 @@
 class UploadsController < ApplicationController
-  log_action only: %i[create update]
-  before_action :build_resource, only: %i[create update]
-  before_action :authorize_resource, except: %i[index show]
+  include ResourceAuthorization
 
-  def show
-    redirect_to action: :new
-  end
+  log_action only: %i[create update]
 
   def create
     if resource.valid?
@@ -24,7 +20,9 @@ class UploadsController < ApplicationController
 
   private
 
-  attr_reader :resource
+  def resource
+    @resource ||= build_resource
+  end
 
   def resource_params
     params.require(:upload).permit(:secret, solutions_attributes: %i[task_id file])

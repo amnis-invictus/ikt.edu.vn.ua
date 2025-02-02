@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  include ResourceAuthorization
+
   PERMITTED_PARAMS = %i[name email region city institution contest_site grade registration_secret].freeze
 
   log_action only: :create
