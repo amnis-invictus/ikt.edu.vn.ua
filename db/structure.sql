@@ -196,7 +196,8 @@ CREATE TABLE public.contests (
     head_of_organizing_committee character varying DEFAULT ''::character varying NOT NULL,
     secretary_of_organizing_committee character varying DEFAULT ''::character varying NOT NULL,
     head_of_appeal_commission character varying DEFAULT ''::character varying NOT NULL,
-    info text DEFAULT ''::text NOT NULL
+    info text DEFAULT ''::text NOT NULL,
+    orgcom_password character varying NOT NULL
 );
 
 
@@ -890,6 +891,7 @@ ALTER TABLE ONLY public.solutions
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20250119185329'),
 ('20250113065202'),
 ('20240211194031'),
 ('20240203172343'),
@@ -930,4 +932,3 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20211009104015'),
 ('20211009102612'),
 ('20211009102503');
-

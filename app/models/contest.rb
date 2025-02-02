@@ -1,5 +1,5 @@
 class Contest < ApplicationRecord
-  validates :display_name, :judge_password, :registration_secret, presence: true
+  validates :display_name, :judge_password, :orgcom_password, :registration_secret, presence: true
 
   has_one_attached :all_archive
   has_one_attached :last_archive

@@ -9,6 +9,7 @@ FactoryBot.define do
     task_open { true }
     upload_open { true }
     judge_password { 'password' }
+    orgcom_password { 'password' }
     content { '<h2>What is Lorem Ipsum?</h2><p>Lorem <b>Ipsum</b> is simply dummy text of the industry.</p>' }
   end
 end
