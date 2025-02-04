@@ -27,19 +27,17 @@ RSpec.describe ContestsController do
     end
 
     context 'without active contest' do
-      let(:contest) { create :contest, archived: true }
+      let(:archived_contests) { create_list :contest, 2, :archived }
 
-      before do
-        create :contest, archived: false, upload_open: false, registration_open: false
-      end
+      before { create :contest, :future }
 
-      its(:collection) { should eq [contest] }
+      its(:collection) { should eq archived_contests }
     end
 
     context 'with active contest' do
       before do
-        create :contest, archived: true
-        create :contest, archived: false, upload_open: true, registration_open: true
+        create :contest, :archived
+        create :contest, :active
       end
 
       its(:collection) { should be_empty }
