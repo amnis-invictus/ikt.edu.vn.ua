@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img">
+  <defs>
+    <style>
+      .primary { fill: #123E66; }
+    </style>
+  </defs>
+
+  <!-- Circular border -->
+  <circle cx="128" cy="128" r="123" fill="none" stroke="#123E66" stroke-width="10"/>
+
+  <!-- PC monitor icon -->
+  <g transform="translate(128,120) scale(2)">
+    <!-- Screen bezel -->
+    <rect x="-46" y="-30" width="92" height="56" rx="8" class="primary"/>
+    <!-- Screen area (white) -->
+    <rect x="-38" y="-24" width="76" height="40" rx="4" fill="#ffffff"/>
+    <!-- Stand -->
+    <rect x="-14" y="28" width="28" height="6" rx="3" class="primary"/>
+    <rect x="-8" y="16" width="16" height="12" rx="3" class="primary"/>
+    <!-- Base -->
+    <rect x="-32" y="36" width="64" height="12" rx="6" class="primary"/>
+    <circle cx="27" cy="42" r="2.5" fill="#ffffff"/>
+  </g>
+</svg>
