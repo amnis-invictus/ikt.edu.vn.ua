@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Олімпіада з ІКТ</title>
-    <meta name="keywords" content="Олімпіада з ІКТ, олімпіада з інформаційних технологій, олімпіада, ікт, ІКТ">
+    <title>Олімпіада з ІТ</title>
+    <meta name="keywords" content="Олімпіада з ІТ, Олімпіада з ІКТ, олімпіада з інформаційних технологій, олімпіада, ікт, ІКТ, ІТ">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -10,23 +10,56 @@
     <%= stylesheet_link_tag 'home', media: 'all' %>
     <%= javascript_include_tag :application %>
   </head>
-  <body>
-    <div id="container">
-      <h1>Інформаційні технології</h1>
-      <div align="center">
-        <p><span>Вітаємо вас на офіційному сайті олімпіади</span></p>
-        <% Contest.where(archived: false).find_each do |contest| %>
-          <%= link_to contest.display_name, contest, class: 'btn btn-4 btn-4c' %>
-        <% end %>
-        <%= link_to 'Архів', [:contests], class: 'btn btn-4 btn-4c' unless Contest.any_active? %>
-        <p>
-          <span>
-            <a href="/system/ikt_2022.docx" style="text-decoration: underline; color: #09ffea;">
+<body>
+  <div class="strokes" aria-hidden="true">
+    <div class="stroke s1"></div>
+    <div class="stroke s2"></div>
+    <div class="stroke s3"></div>
+    <div class="stroke s4"></div>
+  </div>
+
+  <div class="wrap">
+    <div class="grid">
+      <div class="title">
+        Олімпіада з інформаційних технологій
+      </div>
+
+      <div class="monitor-wrap">
+        <div class="monitor">
+          <div class="screen"></div>
+          <div class="bar"></div>
+          <i class="dot d1"></i>
+          <i class="dot d2 small"></i>
+          <i class="dot d3 small"></i>
+          <i class="line l1"></i>
+          <i class="line l2"></i>
+          <div class="contest-container">
+            <% Contest.where(archived: false).find_each do |contest| %>
+              <div><%= link_to "#{contest.display_name}", contest %></div>
+            <% end %>
+            <div><%= link_to 'Архів', [:contests] unless Contest.any_active? %></div>
+          </div>
+          <div class="memo">
+            <a href="/system/ikt_2022.docx">
               Пам'ятка учасника олімпіади (оновлено 08.02.2022)
             </a>
-          </span>
-        </p>
+          </div>
+          <div class="base"></div>
+          <div class="stand"></div>
+        </div>
+      </div>
+
+      <div class="tiles-wrap">
+        <div class="tiles">
+          <div class="tile t-w" title="Word">W</div>
+          <div class="tile t-x" title="Excel">X</div>
+          <div class="tile t-a" title="Access">A</div>
+          <div class="tile t-p" title="PowerPoint">P</div>
+          <div class="t-html" title="HTML5"></div>
+        </div>
+        <div class="caption">Завдання: Word, Excel, Access, PowerPoint, HTML (веб-сайт)</div>
       </div>
     </div>
-  </body>
+  </div>
+</body>
 </html>
