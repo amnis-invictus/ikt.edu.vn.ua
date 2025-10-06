@@ -1,0 +1,18 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>User Judge Secret</th>
+      <th>Task</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @collection.each do |user_judge_secret, task_name, status| %>
+      <tr>
+        <th><%= user_judge_secret %></th>
+        <th><%= task_name %></th>
+        <th><%= status.to_s.humanize %></th>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
