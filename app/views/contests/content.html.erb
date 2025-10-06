@@ -8,6 +8,36 @@
       <% contest.additional_content.each do |f| %>
         <li><%= link_to f.filename, f %></li>
       <% end %>
+
+      <% if current_user %>
+        <% contest.customizable_attachments.each do |attachment| %>
+          <li>
+            <%= link_to attachment.file.filename,
+              contest_customizable_attachment_path(contest, id: attachment.id, user_secret: current_user.secret) %>
+          </li>
+        <% end %>
+      <% elsif judge? || contest.archived? %>
+        <% contest.customizable_attachments.each do |attachment| %>
+          <li><%= link_to attachment.file.filename, attachment.file %></li>
+        <% end %>
+      <% elsif contest.customizable_attachments.any? %>
+        <% if params[:user_secret].present? %>
+          <div class="error mb-2">
+            Технічна помилка! Ви ввели помилковий код =(
+          </div>
+        <% end %>
+
+        <%= form_with method: :post, url: [:content, contest], class: 'default-form' do |f| %>
+          <div class="field">
+            <%= f.password_field :user_secret, required: true, pattern: '[A-Za-z]{2}\d{4}', placeholder: 'Код доступу учасника',
+              title: 'Код доступу повинен містити дві великі латинські літери та чотири цифри.' %>
+          </div>
+
+          <div class="field" align="right">
+            <%= f.submit 'Підтвердити', class: 'btn' %>
+          </div>
+        <% end %>
+      <% end %>
     </ul>
   </div>
 <% else %>
