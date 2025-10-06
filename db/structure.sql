@@ -288,6 +288,39 @@ ALTER SEQUENCE public.criterions_id_seq OWNED BY public.criterions.id;
 
 
 --
+-- Name: customizable_attachments; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.customizable_attachments (
+    id bigint NOT NULL,
+    contest_id bigint NOT NULL,
+    action integer DEFAULT 0 NOT NULL,
+    options jsonb DEFAULT '{}'::jsonb NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: customizable_attachments_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.customizable_attachments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: customizable_attachments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.customizable_attachments_id_seq OWNED BY public.customizable_attachments.id;
+
+
+--
 -- Name: results; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -496,6 +529,13 @@ ALTER TABLE ONLY public.criterions ALTER COLUMN id SET DEFAULT nextval('public.c
 
 
 --
+-- Name: customizable_attachments id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.customizable_attachments ALTER COLUMN id SET DEFAULT nextval('public.customizable_attachments_id_seq'::regclass);
+
+
+--
 -- Name: results id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -593,6 +633,14 @@ ALTER TABLE ONLY public.criterions
 
 ALTER TABLE ONLY public.criterions
     ADD CONSTRAINT criterions_position_and_task_id_unique UNIQUE ("position", task_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: customizable_attachments customizable_attachments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.customizable_attachments
+    ADD CONSTRAINT customizable_attachments_pkey PRIMARY KEY (id);
 
 
 --
@@ -710,6 +758,13 @@ CREATE UNIQUE INDEX index_criterion_user_results_on_user_id_and_criterion_id ON 
 --
 
 CREATE INDEX index_criterions_on_task_id ON public.criterions USING btree (task_id);
+
+
+--
+-- Name: index_customizable_attachments_on_contest_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_customizable_attachments_on_contest_id ON public.customizable_attachments USING btree (contest_id);
 
 
 --
@@ -855,6 +910,14 @@ ALTER TABLE ONLY public.criterion_user_results
 
 
 --
+-- Name: customizable_attachments fk_rails_d9251ac73c; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.customizable_attachments
+    ADD CONSTRAINT fk_rails_d9251ac73c FOREIGN KEY (contest_id) REFERENCES public.contests(id);
+
+
+--
 -- Name: criterions fk_rails_d96b0f1290; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -893,6 +956,7 @@ ALTER TABLE ONLY public.solutions
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20251003175723'),
 ('20250928153540'),
 ('20250119185329'),
 ('20250119125736'),
