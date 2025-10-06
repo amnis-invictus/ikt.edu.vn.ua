@@ -47,5 +47,19 @@ class User < ApplicationRecord
       (SecureRandom.random_number(26) + 'A'.ord).chr,
       format('%04d', SecureRandom.random_number(10_000)),
     ].join
+
+    # 16 characters that start with #$
+    self.metadata_secret = [
+      '#',
+      '$',
+      (SecureRandom.random_number(26) + 'A'.ord).chr,
+      (SecureRandom.random_number(26) + 'A'.ord).chr,
+      format('%04d', SecureRandom.random_number(10_000)),
+      (SecureRandom.random_number(26) + 'A'.ord).chr,
+      (SecureRandom.random_number(26) + 'A'.ord).chr,
+      (SecureRandom.random_number(26) + 'A'.ord).chr,
+      (SecureRandom.random_number(26) + 'A'.ord).chr,
+      format('%04d', SecureRandom.random_number(10_000)),
+    ].join
   end
 end

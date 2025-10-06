@@ -422,7 +422,8 @@ CREATE TABLE public.users (
     updated_at timestamp(6) without time zone NOT NULL,
     device_id uuid,
     judge_secret character varying NOT NULL,
-    absent boolean DEFAULT false NOT NULL
+    absent boolean DEFAULT false NOT NULL,
+    metadata_secret character varying DEFAULT gen_random_uuid() NOT NULL
 );
 
 
@@ -892,6 +893,7 @@ ALTER TABLE ONLY public.solutions
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20250928153540'),
 ('20250119185329'),
 ('20250119125736'),
 ('20250113065202'),
@@ -934,3 +936,4 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20211009104015'),
 ('20211009102612'),
 ('20211009102503');
+
