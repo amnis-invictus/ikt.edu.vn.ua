@@ -101,6 +101,9 @@ Rails/LexicallyScopedActionFilter:
   Enabled: false
 Rails/FilePath:
   EnforcedStyle: arguments
+Rails/BulkChangeTable:
+  Exclude:
+    - db/migrate/2022*
 RSpec/ImplicitExpect:
   EnforcedStyle: should
 AllCops:
