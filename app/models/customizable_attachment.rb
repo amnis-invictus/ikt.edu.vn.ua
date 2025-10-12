@@ -3,5 +3,5 @@ class CustomizableAttachment < ApplicationRecord
 
   has_one_attached :file
 
-  enum :action, default: 0, open_xml: 1, access: 2
+  enum action: { default: 0, open_xml: 1, access: 2 }
 end
