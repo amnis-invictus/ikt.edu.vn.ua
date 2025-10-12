@@ -14,6 +14,7 @@ class Contest < ApplicationRecord
 
   has_many :tasks, inverse_of: :contest, dependent: :destroy
   has_many :users, inverse_of: :contest, dependent: :destroy
+  has_many :customizable_attachments, inverse_of: :contest, dependent: :destroy
   has_many :solutions, through: :users
 
   scope :available, -> { any_active? ? where(archived: false) : self }

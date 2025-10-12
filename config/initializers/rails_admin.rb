@@ -1,4 +1,4 @@
-Dir[Rails.root.join('lib', 'rails_admin', '**', '*.rb')].each { require _1 }
+Rails.root.glob('lib/rails_admin/**/*.rb').each { require _1 }
 
 RailsAdmin::Config::Fields::Types.register :citext, RailsAdmin::Config::Fields::Types::Citext
 RailsAdmin::Config::Fields::Types.register :pg_string_array, RailsAdmin::Config::Fields::Types::PgStringArray
@@ -10,6 +10,7 @@ RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::ArchiveJudgeLa
 RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::ChecksumDuplicates
 RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::IpsMismatch
 RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::DeviceIdsMismatch
+RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::MetadataMismatch
 RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::SpreadsheetJudge
 RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::SpreadsheetPublic
 
@@ -55,6 +56,7 @@ RailsAdmin.config do |config|
     checksum_duplicates
     ips_mismatch
     device_ids_mismatch
+    metadata_mismatch
     spreadsheet_judge
     spreadsheet_public
 

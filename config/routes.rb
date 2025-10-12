@@ -5,12 +5,15 @@ Rails.application.routes.draw do
 
   resources :contests, only: %i[index show] do
     get :content, on: :member
+    post :content, on: :member
 
     resources :users, only: %i[index new create]
 
     resource :upload, only: %i[new create update]
 
     get :upload, to: redirect('/contests/%{contest_id}/upload/new')
+
+    resources :customizable_attachments, only: :show
 
     resources :statistics, :results, only: :index
 

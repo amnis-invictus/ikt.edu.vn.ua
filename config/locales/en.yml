@@ -66,3 +66,7 @@ en:
         title: Generate spreadsheet results for public show '%{object_label}'
         menu: Generate spreadsheet results for public show
         breadcrumb: Generate spreadsheet results for public show
+      metadata_mismatch:
+        title: Check mismatched metadata for user solutions '%{object_label}'
+        menu: Check metadata
+        breadcrumb: Check metadata

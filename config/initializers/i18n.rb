@@ -5,5 +5,5 @@ Rails.application.configure do
 
   config.i18n.fallbacks = [:en]
 
-  config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
+  config.i18n.load_path += Rails.root.glob 'config/locales/**/*.{rb,yml}'
 end
