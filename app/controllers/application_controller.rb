@@ -15,12 +15,19 @@ class ApplicationController < ActionController::Base
 
   before_action :build_resource, only: :create
 
-  helper_method :parent, :collection, :resource, :contest
+  helper_method :parent, :collection, :resource, :contest, :current_user
 
   private
 
   def ip_addresses
     IP_HEADERS.filter_map { request.headers[_1].presence }.map { _1.split(',').map(&:strip) }.flatten.uniq
+  end
+
+  def current_user
+    return @current_user if instance_variable_defined? :@current_user
+    return @current_user = nil if params[:user_secret].blank?
+
+    @current_user = contest.users.find_by secret: params[:user_secret]
   end
 
   def contest

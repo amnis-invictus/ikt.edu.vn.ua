@@ -13,34 +13,24 @@ module RailsAdmin
         register_instance_option :controller do
           proc do
             all_secrets = @object.users.pluck :metadata_secret
-            @collection = []
-            @object.solutions.each do |solution|
+            @collection = @object.solutions.includes(:user, file_attachment: :blob).find_each.map do |solution|
               user = solution.user
               file = solution.file
 
-              customizable_attachments = @object.customizable_attachments.find do |a|
-                a.file.filename == file.filename
-              end
-              if customizable_attachments.nil?
-                @collection << [user.judge_secret, solution.task.display_name, :ignored]
-                next
+              customizable_attachment = @object.customizable_attachments.find do |ca|
+                ca.file.filename == file.filename
               end
 
-              service_klass = case customizable_attachments.action
-                              when 'default'
-                                CustomizableAttachmentService::Base
-                              when 'open_xml'
-                                CustomizableAttachmentService::OpenXml
-                              when 'access'
-                                CustomizableAttachmentService::Access
-                              end
+              if customizable_attachment.nil?
+                status = :ignored
+              else
+                service = customizable_attachment.service_klass.new \
+                  file, customizable_attachment.options, user.metadata_secret
 
-              service = service_klass.new \
-                file, customizable_attachments.options, user.metadata_secret
+                status = service.valid? all_secrets
+              end
 
-              status = service.valid? all_secrets
-
-              @collection << [user.judge_secret, solution.task.display_name, status]
+              [user.judge_secret, solution.task.display_name, status]
             end
           end
         end

@@ -14,25 +14,6 @@ module CustomizableAttachmentService
       generate_data
     end
 
-    def valid? all_secrets
-      secrets_in_file = load_secrets_from_file
-      all_secrets_except_current_user = Set.new all_secrets
-      all_secrets_except_current_user.delete @secret
-
-      # Condition order is important!
-      # We need to check that secrets_in_file does not include secrets of other users
-      # before checking if it includes the current user's secret
-      # to make sure that file is not shared with other users.
-      if secrets_in_file.intersect? all_secrets_except_current_user
-        :other_user
-      elsif secrets_in_file.include? @secret
-        :current_user
-      else
-        # Includes if secrets_in_file.empty? variant
-        :unknown
-      end
-    end
-
     private
 
     def generate_data
@@ -95,7 +76,7 @@ module CustomizableAttachmentService
             doc_props_core = Nokogiri::XML entry.get_input_stream
             DOC_PROPS_CORE_XPATHES.each do |xpath|
               if (node = doc_props_core.at_xpath xpath)
-                secrets.add node.content
+                secrets.add node.content.encode('UTF-8')
               end
             end
             # Ignore for now because
