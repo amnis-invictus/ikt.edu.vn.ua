@@ -259,7 +259,7 @@ GEM
       activesupport (>= 3.0.0)
     racc (1.8.1)
     rack (3.1.18)
-    rack-mini-profiler (3.3.1)
+    rack-mini-profiler (4.0.1)
       rack (>= 1.2.0)
     rack-session (2.1.1)
       base64 (>= 0.1.0)
@@ -461,7 +461,7 @@ DEPENDENCIES
   pg (~> 1.6)
   puma (~> 6.6)
   pundit
-  rack-mini-profiler (~> 3.3)
+  rack-mini-profiler (~> 4.0)
   rails (~> 7.2.2)
   rails_admin (~> 3.2.1)
   redis (~> 4.8)
