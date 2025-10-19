@@ -1,7 +1,8 @@
-require:
+plugins:
   - rubocop-performance
   - rubocop-rails
   - rubocop-rspec
+  - rubocop-rspec_rails
   - rubocop-capybara
   - rubocop-factory_bot
 Metrics/AbcSize:
@@ -106,6 +107,10 @@ Rails/BulkChangeTable:
     - db/migrate/2022*
 RSpec/ImplicitExpect:
   EnforcedStyle: should
+Naming/PredicateMethod:
+  AllowedMethods:
+    - acquire
+    - release
 AllCops:
   TargetRubyVersion: 3.3.4
   NewCops: enable
