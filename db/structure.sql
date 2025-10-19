@@ -456,7 +456,7 @@ CREATE TABLE public.users (
     device_id uuid,
     judge_secret character varying NOT NULL,
     absent boolean DEFAULT false NOT NULL,
-    metadata_secret character varying DEFAULT gen_random_uuid() NOT NULL
+    metadata_secret character varying NOT NULL
 );
 
 
@@ -1000,4 +1000,3 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20211009104015'),
 ('20211009102612'),
 ('20211009102503');
-
