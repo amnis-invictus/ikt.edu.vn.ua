@@ -10,7 +10,7 @@ module CustomizableAttachmentService
       @file.download
     end
 
-    def valid? _all_secrets
+    def validation_status _all_secrets
       :current_user
     end
   end

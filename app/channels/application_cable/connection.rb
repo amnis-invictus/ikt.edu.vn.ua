@@ -4,7 +4,7 @@ module ApplicationCable
 
     def connect
       @task_id, @client_id = request.params.values_at :task_id, :client_id
-      reject_unauthorized_connection unless task_valid && (token_valid || password_valid)
+      reject_unauthorized_connection unless task_valid? && (token_valid? || password_valid?)
     end
 
     def disconnect
@@ -14,19 +14,19 @@ module ApplicationCable
 
     private
 
-    def task_valid
+    def task_valid?
       @task = Task.find_by id: task_id if task_id.present?
       @task.present?
     end
 
-    def token_valid
+    def token_valid?
       token = request.params[:token]
       return false if token.blank?
 
       Rails.application.message_verifier(:scoring).verified(token) == task_id
     end
 
-    def password_valid
+    def password_valid?
       password = request.params[:password]
       return false if password.blank?
 

@@ -6,7 +6,7 @@ module CustomizableAttachmentService
       @secret = secret
     end
 
-    def valid? all_secrets
+    def validation_status all_secrets
       secrets_in_file = load_secrets_from_file
       all_secrets_except_current_user = Set.new all_secrets
       all_secrets_except_current_user.delete @secret

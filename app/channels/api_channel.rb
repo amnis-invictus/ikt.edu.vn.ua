@@ -17,7 +17,7 @@ class ApiChannel < ApplicationCable::Channel
   end
 
   def add_criterion data
-    return unless scoring_open data
+    return unless scoring_open? data
 
     criterion = task_criterions.create! position: task_criterions.count
     dispatch_all 'criteria/add', criterion
@@ -26,7 +26,7 @@ class ApiChannel < ApplicationCable::Channel
   end
 
   def update_criterion data
-    return unless scoring_open data
+    return unless scoring_open? data
 
     criterion = task_criterions.find data['id']
     criterion.update! data['params']
@@ -34,7 +34,7 @@ class ApiChannel < ApplicationCable::Channel
   end
 
   def delete_criterion data
-    return unless scoring_open data
+    return unless scoring_open? data
 
     criterion = task_criterions.find data['id']
     criterion.destroy!
@@ -43,7 +43,7 @@ class ApiChannel < ApplicationCable::Channel
   end
 
   def add_judge data
-    return unless scoring_open data
+    return unless scoring_open? data
 
     task = Task.find task_id
     task.judges << data['value']
@@ -52,7 +52,7 @@ class ApiChannel < ApplicationCable::Channel
   end
 
   def delete_judge data
-    return unless scoring_open data
+    return unless scoring_open? data
 
     task = Task.find task_id
     if task.judges[data['index']] == data['value']
@@ -65,7 +65,7 @@ class ApiChannel < ApplicationCable::Channel
   end
 
   def write_result_multiplier data
-    return unless scoring_open data
+    return unless scoring_open? data
 
     task = Task.find task_id
     task.result_multiplier = data['value']
@@ -74,7 +74,7 @@ class ApiChannel < ApplicationCable::Channel
   end
 
   def drag_drop data
-    return unless scoring_open data
+    return unless scoring_open? data
 
     from, to = data.values_at 'from', 'to'
     if from > to
@@ -89,7 +89,7 @@ class ApiChannel < ApplicationCable::Channel
   end
 
   def write_result data
-    return unless scoring_open data
+    return unless scoring_open? data
 
     lock = [task_id, data['user'], data['criterion']].join ':'
     performed = RedisLockManager.with_lock lock, client_id do
@@ -109,7 +109,7 @@ class ApiChannel < ApplicationCable::Channel
   end
 
   def write_comment data
-    return unless scoring_open data
+    return unless scoring_open? data
 
     lock = [task_id, data['user'], 'comment'].join ':'
     performed = RedisLockManager.with_lock lock, client_id do
@@ -127,7 +127,7 @@ class ApiChannel < ApplicationCable::Channel
   end
 
   def zero_results data
-    return unless scoring_open data
+    return unless scoring_open? data
 
     user = task_users.find_by! judge_secret: data['user']
     task_criterions.each do |criterion|
@@ -142,7 +142,7 @@ class ApiChannel < ApplicationCable::Channel
   end
 
   def zero_no_solution data
-    return unless scoring_open data
+    return unless scoring_open? data
 
     task = Task.find task_id
     force_close_and_finish! task
@@ -165,7 +165,7 @@ class ApiChannel < ApplicationCable::Channel
   end
 
   def finish data
-    return unless scoring_open data
+    return unless scoring_open? data
 
     task = Task.find task_id
     force_close_and_finish! task
@@ -232,7 +232,7 @@ class ApiChannel < ApplicationCable::Channel
     { contest_name: task.contest.display_name, task_name: task.display_name, read_only: !task.scoring_open }
   end
 
-  def scoring_open data
+  def scoring_open? data
     return true if Task.find(task_id).scoring_open
 
     dispatch_self 'errors/push', "#{data['action']} failed: Scoring is closed"

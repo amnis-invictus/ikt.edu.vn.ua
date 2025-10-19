@@ -27,7 +27,7 @@ module RailsAdmin
                 service = customizable_attachment.service_klass.new \
                   file, customizable_attachment.options, user.metadata_secret
 
-                status = service.valid? all_secrets
+                status = service.validation_status all_secrets
               end
 
               [user.judge_secret, solution.task.display_name, status]
