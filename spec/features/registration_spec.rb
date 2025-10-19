@@ -19,9 +19,8 @@ RSpec.describe 'Registration', :ui do
 
       before { click_on 'commit' }
 
-      it { expect(page).to have_content 'Ви успішно зареєстровані.' }
-
-      it 'delivers email' do
+      it 'succeeds', :aggregate_failures do
+        expect(page).to have_content 'Ви успішно зареєстровані.'
         perform_enqueued_jobs
         expect(ActionMailer::Base.deliveries).to include(registration_email)
       end
@@ -35,9 +34,8 @@ RSpec.describe 'Registration', :ui do
         click_on 'commit'
       end
 
-      it { expect(page).to have_content "Учасник на ім'я #{params[:name]} вже зареєстрований" }
-
-      it 'does not deliver email' do
+      it 'fails', :aggregate_failures do
+        expect(page).to have_content "Учасник на ім'я #{params[:name]} вже зареєстрований"
         perform_enqueued_jobs
         expect(ActionMailer::Base.deliveries).to_not include(registration_email)
       end
@@ -48,9 +46,8 @@ RSpec.describe 'Registration', :ui do
 
       before { click_on 'commit' }
 
-      it { expect(page).to have_content 'Код доступу помилковий' }
-
-      it 'does not deliver email' do
+      it 'fails', :aggregate_failures do
+        expect(page).to have_content 'Код доступу помилковий'
         perform_enqueued_jobs
         expect(ActionMailer::Base.deliveries).to_not include(registration_email)
       end
@@ -61,9 +58,8 @@ RSpec.describe 'Registration', :ui do
 
       before { click_on 'commit' }
 
-      it { expect(find_by_id('user_contest_site').native.attribute('validationMessage')).to be_present }
-
-      it 'does not deliver email' do
+      it 'fails', :aggregate_failures do
+        expect(find_by_id('user_contest_site').native.attribute('validationMessage')).to be_present
         perform_enqueued_jobs
         expect(ActionMailer::Base.deliveries).to_not include(registration_email)
       end
@@ -74,9 +70,8 @@ RSpec.describe 'Registration', :ui do
 
       before { click_on 'commit' }
 
-      it { expect(find_by_id('user_grade').native.attribute('validationMessage')).to be_present }
-
-      it 'does not deliver email' do
+      it 'fails', :aggregate_failures do
+        expect(find_by_id('user_grade').native.attribute('validationMessage')).to be_present
         perform_enqueued_jobs
         expect(ActionMailer::Base.deliveries).to_not include(registration_email)
       end
@@ -87,9 +82,8 @@ RSpec.describe 'Registration', :ui do
 
       before { click_on 'commit' }
 
-      it { expect(find_by_id('user_city').native.attribute('validationMessage')).to be_present }
-
-      it 'does not deliver email' do
+      it 'fails', :aggregate_failures do
+        expect(find_by_id('user_city').native.attribute('validationMessage')).to be_present
         perform_enqueued_jobs
         expect(ActionMailer::Base.deliveries).to_not include(registration_email)
       end
@@ -100,10 +94,8 @@ RSpec.describe 'Registration', :ui do
 
       before { click_on 'commit' }
 
-      it('stays on registration page') { expect(page).to have_current_path(registration_path) }
-      it { expect(page).to have_no_content 'Ваш e-mail не може бути порожнім' }
-
-      it 'does not deliver email' do
+      it 'fails', :aggregate_failures do
+        expect(find_by_id('user_email').native.attribute('validationMessage')).to be_present
         perform_enqueued_jobs
         expect(ActionMailer::Base.deliveries).to_not include(registration_email)
       end
@@ -114,9 +106,8 @@ RSpec.describe 'Registration', :ui do
 
       before { click_on 'commit' }
 
-      it { expect(find_by_id('user_institution').native.attribute('validationMessage')).to be_present }
-
-      it 'does not deliver email' do
+      it 'fails', :aggregate_failures do
+        expect(find_by_id('user_institution').native.attribute('validationMessage')).to be_present
         perform_enqueued_jobs
         expect(ActionMailer::Base.deliveries).to_not include(registration_email)
       end
@@ -127,10 +118,8 @@ RSpec.describe 'Registration', :ui do
 
       before { click_on 'commit' }
 
-      it('stays on registration page') { expect(page).to have_current_path(registration_path) }
-      it { expect(page).to have_no_content 'Прізвище, Ім\'я, По батькові не може бути пустим' }
-
-      it 'does not deliver email' do
+      it 'fails', :aggregate_failures do
+        expect(find_by_id('user_name').native.attribute('validationMessage')).to be_present
         perform_enqueued_jobs
         expect(ActionMailer::Base.deliveries).to_not include(registration_email)
       end
@@ -150,23 +139,20 @@ RSpec.describe 'Registration', :ui do
 
       before { click_on 'commit' }
 
-      it { expect(page).to have_content 'Ви успішно зареєстровані.' }
-
-      it 'delivers email' do
+      it 'succeeds', :aggregate_failures do
+        expect(page).to have_content 'Ви успішно зареєстровані.'
         perform_enqueued_jobs
         expect(ActionMailer::Base.deliveries).to include(registration_email)
       end
     end
 
-    context 'without contest_site' do
+    context 'without contest site' do
       let(:params) { attributes_for :user, contest_site: nil }
 
       before { click_on 'commit' }
 
-      it('stays on registration page') { expect(page).to have_current_path(registration_path) }
-      it { expect(page).to have_no_content 'Заклад, у якому ви пишете олімпіаду не може бути порожнім' }
-
-      it 'does not deliver email' do
+      it 'fails', :aggregate_failures do
+        expect(find_by_id('user_contest_site').native.attribute('validationMessage')).to be_present
         perform_enqueued_jobs
         expect(ActionMailer::Base.deliveries).to_not include(registration_email)
       end
@@ -186,9 +172,8 @@ RSpec.describe 'Registration', :ui do
 
       before { click_on 'commit' }
 
-      it { expect(page).to have_content 'Ви успішно зареєстровані.' }
-
-      it 'delivers email' do
+      it 'succeeds', :aggregate_failures do
+        expect(page).to have_content 'Ви успішно зареєстровані.'
         perform_enqueued_jobs
         expect(ActionMailer::Base.deliveries).to include(registration_email)
       end
@@ -199,10 +184,8 @@ RSpec.describe 'Registration', :ui do
 
       before { click_on 'commit' }
 
-      it('stays on registration page') { expect(page).to have_current_path(registration_path) }
-      it { expect(page).to have_no_content 'Ваш навчальний заклад не може бути порожнім' }
-
-      it 'does not deliver email' do
+      it 'fails', :aggregate_failures do
+        expect(find_by_id('user_institution').native.attribute('validationMessage')).to be_present
         perform_enqueued_jobs
         expect(ActionMailer::Base.deliveries).to_not include(registration_email)
       end
@@ -222,9 +205,8 @@ RSpec.describe 'Registration', :ui do
 
       before { click_on 'commit' }
 
-      it { expect(page).to have_content 'Ви успішно зареєстровані.' }
-
-      it 'delivers email' do
+      it 'succeeds', :aggregate_failures do
+        expect(page).to have_content 'Ви успішно зареєстровані.'
         perform_enqueued_jobs
         expect(ActionMailer::Base.deliveries).to include(registration_email)
       end
@@ -235,10 +217,8 @@ RSpec.describe 'Registration', :ui do
 
       before { click_on 'commit' }
 
-      it('stays on registration page') { expect(page).to have_current_path(registration_path) }
-      it { expect(page).to have_no_content 'Місто не може бути порожнім' }
-
-      it 'does not deliver email' do
+      it 'fails', :aggregate_failures do
+        expect(find_by_id('user_city').native.attribute('validationMessage')).to be_present
         perform_enqueued_jobs
         expect(ActionMailer::Base.deliveries).to_not include(registration_email)
       end
