@@ -1,6 +1,8 @@
 <h3 class="for-form">Відправка розв'язків</h3>
 
-<%= form_with model: resource, url: [contest, :upload], method: :patch, class: 'default-form' do |f| %>
+<%= form_with model: resource, url: [contest, :upload], method: :patch, class: 'default-form', data: { coh: true } do |f| %>
+  <%= render 'widgets/coh_form_field' %>
+
   <%= f.hidden_field :secret %>
 
   <%= f.fields_for :solutions, include_id: false do |b| %>
@@ -18,6 +20,6 @@
   <% end %>
 
   <div class="field" align="right">
-    <%= f.submit 'Завантажити', class: 'btn' %>
+    <%= f.submit 'Завантажити', class: 'btn', data: { disable_with: false } %>
   </div>
 <% end %>

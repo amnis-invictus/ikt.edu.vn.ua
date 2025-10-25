@@ -59,3 +59,8 @@ form.default-form div.field input.btn {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#53b5ae', endColorstr='#007069',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
   cursor: pointer;
 }
+
+form.default-form div.field input.btn:disabled {
+  cursor: not-allowed;
+  background: #636363;
+}

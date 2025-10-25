@@ -1,7 +1,7 @@
 class Upload
   include ActiveModel::Model
 
-  attr_accessor :secret, :solutions, :ips, :contest, :device_id
+  attr_accessor :secret, :solutions, :ips, :contest, :device_id, :sleep_mngr_guid
 
   validates :user, presence: true
 
@@ -11,7 +11,7 @@ class Upload
 
   def solutions_attributes= attributes
     attributes = attributes.values if attributes.is_a? Hash
-    @solutions = attributes.map { Solution.new **_1, user:, ips:, device_id: }
+    @solutions = attributes.map { Solution.new **_1, user:, ips:, device_id:, sleep_mngr_guid: }
   end
 
   def save
