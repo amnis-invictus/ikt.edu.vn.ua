@@ -11,7 +11,10 @@ module Orgcom
     private
 
     def resource_params
-      params.require(:contest).permit(:cities, :institutions, :contest_sites).transform_values { _1.split(/[\r\n]+/) }
+      contest_params = params.require :contest
+      base_params = contest_params.permit :info
+      array_params = contest_params.permit :cities, :institutions, :contest_sites
+      array_params.transform_values { _1.lines chomp: true }.merge(base_params)
     end
   end
 end
