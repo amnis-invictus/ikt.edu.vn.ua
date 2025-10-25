@@ -10,6 +10,7 @@ uk:
       messages:
         blank: не може бути порожнім
         invalid: помилковий
+        coh_invalid: Технічна помилка автентифікації. Спробуйте ще раз, або повідомте технічного працівника.
       models:
         user:
           attributes:
@@ -21,6 +22,11 @@ uk:
           attributes:
             file:
               blank: не може бути порожнім (0 байт). Можливо, файл відкрито у програмі MS Office.
+        upload:
+          attributes:
+            user:
+              format: '%{message}'
+              blank: Технічна помилка! Ви ввели помилковий код =(
     attributes:
       user:
         registration_secret: Код доступу

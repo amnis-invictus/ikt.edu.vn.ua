@@ -1,8 +1,10 @@
-<% if resource.errors[:user].any? %>
-  <div class="error mb-2">
-    Технічна помилка! Ви ввели помилковий код =(
-  </div>
-<% end %>
+<h3 class="for-form">Відправка розв'язків</h3>
+
+<ul class="messages-list">
+  <% resource.errors.full_messages.each do |message| %>
+    <li class="error"><%= message %></li>
+  <% end %>
+</ul>
 
 <ul class="messages-list">
   <% resource.messages.each do |message| %>

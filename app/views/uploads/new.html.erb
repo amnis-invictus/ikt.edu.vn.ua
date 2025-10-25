@@ -1,10 +1,10 @@
 <h3 class="for-form">Відправка розв'язків</h3>
 
-<% if resource.errors[:user].any? %>
-  <div class="error mb-2">
-    Технічна помилка! Ви ввели помилковий код =(
-  </div>
-<% end %>
+<ul class="messages-list">
+  <% resource.errors.full_messages.each do |message| %>
+    <li class="error"><%= message %></li>
+  <% end %>
+</ul>
 
 <% if policy(resource).create? %>
   <%= form_with model: resource, url: [contest, :upload], class: 'default-form' do |f| %>
