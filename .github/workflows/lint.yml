@@ -13,10 +13,9 @@ jobs:
       BUNDLE_WITHOUT: development
     steps:
       - uses: actions/checkout@v5
-      - name: Set up Ruby 3.3.4
+      - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.3.4
           bundler-cache: true
 
       - name: Run static code analysis using rubocop

@@ -112,7 +112,7 @@ Naming/PredicateMethod:
     - acquire
     - release
 AllCops:
-  TargetRubyVersion: 3.3.4
+  TargetRubyVersion: 3.3
   NewCops: enable
   Exclude:
     - 'node_modules/**/*'
