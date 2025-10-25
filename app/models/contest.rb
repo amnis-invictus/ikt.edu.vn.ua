@@ -1,6 +1,8 @@
 class Contest < ApplicationRecord
   validates :display_name, :judge_password, :orgcom_password, :registration_secret, presence: true
 
+  enum :sleep_mngr, { disabled: 0, optional: 1, forced: 2 }, prefix: true
+
   has_one_attached :all_archive
   has_one_attached :last_archive
   has_one_attached :all_judge_archive

@@ -1,0 +1,4 @@
+<% unless contest.sleep_mngr_disabled? %>
+  <%= content_tag :div, nil, id: 'coh', data: { config: contest.sleep_mngr,
+                                                url: Rails.application.credentials.integration.coh } %>
+<% end %>
