@@ -20,7 +20,7 @@ gem 'rails', '~> 7.2.2'
 gem 'rails_admin', '~> 3.2.1'
 gem 'redis', '~> 4.8', require: %w[redis redis/connection/hiredis]
 gem 'redis-namespace'
-gem 'rubyzip', '~> 2.4', require: 'zip'
+gem 'rubyzip', '~> 3.2', require: 'zip'
 gem 'sassc-rails'
 gem 'terser'
 
