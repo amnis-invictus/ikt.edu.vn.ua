@@ -20,7 +20,7 @@ gem 'rails', '~> 7.2.2'
 gem 'rails_admin', '~> 3.2.1'
 gem 'redis', '~> 4.8', require: %w[redis redis/connection/hiredis]
 gem 'redis-namespace'
-gem 'rubyzip', require: 'zip'
+gem 'rubyzip', '~> 2.4', require: 'zip'
 gem 'sassc-rails'
 gem 'terser'
 
@@ -55,4 +55,4 @@ group :development do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+gem 'tzinfo-data', platforms: %i[windows jruby]
