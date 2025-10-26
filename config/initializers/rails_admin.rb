@@ -14,6 +14,8 @@ RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::DeviceIdsMisma
 RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::MetadataMismatch
 RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::SpreadsheetJudge
 RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::SpreadsheetPublic
+RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::AssignServices
+RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::RemoveServices
 
 RailsAdmin.config do |config|
   ### Popular gems integration
@@ -60,6 +62,8 @@ RailsAdmin.config do |config|
     metadata_mismatch
     spreadsheet_judge
     spreadsheet_public
+    assign_services
+    remove_services
 
     ## With an audit adapter, you can add:
     # history_index

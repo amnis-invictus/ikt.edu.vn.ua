@@ -70,3 +70,11 @@ en:
         title: Check mismatched metadata for user solutions '%{object_label}'
         menu: Check metadata
         breadcrumb: Check metadata
+      assign_services:
+        title: Assign contest sleep services in '%{object_label}'
+        menu: Assign services
+        breadcrumb: Assign services
+      remove_services:
+        title: Remove contest sleep services in '%{object_label}'
+        menu: Remove services
+        breadcrumb: Remove services
