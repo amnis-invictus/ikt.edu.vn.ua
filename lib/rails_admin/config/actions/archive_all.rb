@@ -6,7 +6,7 @@ module RailsAdmin
 
         register_instance_option(:only) { Contest }
 
-        register_instance_option(:link_icon) { 'icon-download' }
+        register_instance_option(:link_icon) { 'fa fa-download' }
 
         register_instance_option(:http_methods) { [:get] }
 
