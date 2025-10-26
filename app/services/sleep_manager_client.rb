@@ -18,7 +18,7 @@ module SleepManagerClient
       Rails.logger.debug { "SleepManagerClient assign services #{service_ids.inspect} to workers #{worker_ids.inspect}" }
 
       response = make_request(:put, '/workers_services', { worker_ids:, service_ids: })
-      return true if response.is_a? Net::HTTPOK
+      return true if response.is_a? Net::HTTPNoContent
 
       Rails.logger.error "SleepManagerClient unexpected response #{response.inspect}"
       false
@@ -31,7 +31,7 @@ module SleepManagerClient
       Rails.logger.debug { "SleepManagerClient remove services #{service_ids.inspect} from workers #{worker_ids.inspect}" }
 
       response = make_request(:delete, '/workers_services', { worker_ids:, service_ids: })
-      return true if response.is_a? Net::HTTPOK
+      return true if response.is_a? Net::HTTPNoContent
 
       Rails.logger.error "SleepManagerClient unexpected response #{response.inspect}"
       false
