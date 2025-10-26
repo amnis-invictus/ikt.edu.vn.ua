@@ -21,6 +21,10 @@ class Contest < ApplicationRecord
 
   scope :available, -> { any_active? ? where(archived: false) : self }
 
+  def should_assign_sleep_services?
+    !sleep_mngr_disabled? && sleep_services.present?
+  end
+
   class << self
     def any_active?
       Contest.where(archived: false).where('upload_open OR registration_open').exists?
