@@ -199,7 +199,8 @@ CREATE TABLE public.contests (
     head_of_appeal_commission character varying DEFAULT ''::character varying NOT NULL,
     info text DEFAULT ''::text NOT NULL,
     orgcom_password character varying NOT NULL,
-    sleep_mngr integer DEFAULT 0 NOT NULL
+    sleep_mngr integer DEFAULT 0 NOT NULL,
+    sleep_services integer[] DEFAULT '{}'::integer[] NOT NULL
 );
 
 
@@ -960,6 +961,7 @@ ALTER TABLE ONLY public.solutions
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20251026160950'),
 ('20251012114226'),
 ('20251012111259'),
 ('20251012111225'),
