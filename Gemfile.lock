@@ -390,7 +390,7 @@ GEM
       ffi (~> 1.12)
       logger
     ruby2_keywords (0.0.5)
-    rubyzip (2.4.1)
+    rubyzip (3.2.1)
     sassc (2.4.0)
       ffi (~> 1.9)
     sassc-rails (2.1.2)
@@ -493,7 +493,7 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   rubocop-rspec_rails
-  rubyzip (~> 2.4)
+  rubyzip (~> 3.2)
   sassc-rails
   selenium-webdriver
   spring
