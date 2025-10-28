@@ -18,6 +18,7 @@ class User < ApplicationRecord
 
   before_validation :assign_secrets, on: :create
   after_commit :send_email, on: :create, if: :email?
+  after_commit :schedule_sleep_service_assignment, on: :create
 
   scope :attending, -> { where absent: false }
 
@@ -25,6 +26,12 @@ class User < ApplicationRecord
 
   def send_email
     UserMailer.email(self).deliver_later
+  end
+
+  def schedule_sleep_service_assignment
+    return unless sleep_mngr_guid.present? && contest.should_assign_sleep_services?
+
+    AssignSleepServicesJob.perform_later self
   end
 
   def registration_secret_must_be_valid

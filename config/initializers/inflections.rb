@@ -14,4 +14,6 @@
 ActiveSupport::Inflector.inflections :en do |inflect|
   inflect.acronym 'IKT'
   inflect.acronym 'JSON'
+  inflect.acronym 'COH'
+  inflect.acronym 'HTTP'
 end

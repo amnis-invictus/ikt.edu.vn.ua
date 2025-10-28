@@ -3,6 +3,7 @@ Rails.root.glob('lib/rails_admin/**/*.rb').each { require _1 }
 RailsAdmin::Config::Fields::Types.register :citext, RailsAdmin::Config::Fields::Types::Citext
 RailsAdmin::Config::Fields::Types.register :pg_string_array, RailsAdmin::Config::Fields::Types::PgStringArray
 RailsAdmin::Config::Fields::Types.register :pg_inet_array, RailsAdmin::Config::Fields::Types::PgInetArray
+RailsAdmin::Config::Fields::Types.register :pg_int_array, RailsAdmin::Config::Fields::Types::PgIntArray
 
 RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::ArchiveAll
 RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::ArchiveJudgeAll
@@ -13,6 +14,8 @@ RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::DeviceIdsMisma
 RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::MetadataMismatch
 RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::SpreadsheetJudge
 RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::SpreadsheetPublic
+RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::AssignServices
+RailsAdmin::Config::Actions.register RailsAdmin::Config::Actions::RemoveServices
 
 RailsAdmin.config do |config|
   ### Popular gems integration
@@ -59,6 +62,8 @@ RailsAdmin.config do |config|
     metadata_mismatch
     spreadsheet_judge
     spreadsheet_public
+    assign_services
+    remove_services
 
     ## With an audit adapter, you can add:
     # history_index
@@ -102,6 +107,7 @@ RailsAdmin.config do |config|
     configure :cities, :pg_string_array
     configure :institutions, :pg_string_array
     configure :contest_sites, :pg_string_array
+    configure :sleep_services, :pg_int_array
     configure(:tasks) { hide }
     configure(:users) { hide }
     configure(:solutions) { hide }

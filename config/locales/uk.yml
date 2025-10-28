@@ -21,6 +21,11 @@ uk:
           attributes:
             file:
               blank: не може бути порожнім (0 байт). Можливо, файл відкрито у програмі MS Office.
+        upload:
+          attributes:
+            user:
+              format: '%{message}'
+              blank: Технічна помилка! Ви ввели помилковий код =(
     attributes:
       user:
         registration_secret: Код доступу

@@ -1,13 +1,19 @@
-<%= form_with model: [contest, resource], id: 'regform', class: 'default-form', html: { autocomplete: 'off' } do |f| %>
+<%= form_with model: [contest, resource], id: 'regform', class: 'default-form', data: { coh: true },
+              html: { autocomplete: 'off' } do |f| %>
+  <%= render 'widgets/coh_form_field' %>
+
   <div class="field">
     <%= f.password_field :registration_secret, required: true, placeholder: true, autocomplete: 'new-password' %>
   </div>
+
   <div class="field">
     <%= f.text_field :name, required: true, placeholder: true %>
   </div>
+
   <div class="field">
     <%= f.email_field :email, required: true, placeholder: true %>
   </div>
+
   <div class="field">
     <% if contest.cities.present? %>
       <%= f.select :city, contest.cities, required: true, prompt: t('users.new.city_prompt') %>
@@ -15,6 +21,7 @@
       <%= f.text_field :city, required: true, placeholder: true %>
     <% end %>
   </div>
+
   <div class="field">
     <% if contest.institutions.present? %>
       <%= f.select :institution, contest.institutions, required: true, prompt: t('users.new.institution_prompt') %>
@@ -22,9 +29,11 @@
       <%= f.text_field :institution, required: true, placeholder: true %>
     <% end %>
   </div>
+
   <div class="field">
     <%= f.select :grade, Grade.all.map { [_1.name, _1.id] }, required: true, prompt: t('users.new.grade_prompt') %>
   </div>
+
   <div class="field">
     <% if contest.contest_sites.present? %>
       <%= f.select :contest_site, contest.contest_sites, required: true, prompt: t('users.new.contest_site_prompt') %>
@@ -32,7 +41,8 @@
       <%= f.text_field :contest_site, required: true, placeholder: true %>
     <% end %>
   </div>
+
   <div class="field" align="right">
-    <%= f.submit 'Зареєструватись', class: 'btn' %>
+    <%= f.submit 'Зареєструватись', class: 'btn', data: { disable_with: false } %>
   </div>
 <% end %>

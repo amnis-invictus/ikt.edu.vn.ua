@@ -1,6 +1,7 @@
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
@@ -197,7 +198,9 @@ CREATE TABLE public.contests (
     secretary_of_organizing_committee character varying DEFAULT ''::character varying NOT NULL,
     head_of_appeal_commission character varying DEFAULT ''::character varying NOT NULL,
     info text DEFAULT ''::text NOT NULL,
-    orgcom_password character varying NOT NULL
+    orgcom_password character varying NOT NULL,
+    sleep_mngr integer DEFAULT 0 NOT NULL,
+    sleep_services integer[] DEFAULT '{}'::integer[] NOT NULL
 );
 
 
@@ -374,7 +377,8 @@ CREATE TABLE public.solutions (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     upload_number integer DEFAULT 1 NOT NULL,
-    device_id uuid
+    device_id uuid,
+    sleep_mngr_guid character varying
 );
 
 
@@ -456,7 +460,8 @@ CREATE TABLE public.users (
     device_id uuid,
     judge_secret character varying NOT NULL,
     absent boolean DEFAULT false NOT NULL,
-    metadata_secret character varying NOT NULL
+    metadata_secret character varying NOT NULL,
+    sleep_mngr_guid character varying
 );
 
 
@@ -956,6 +961,10 @@ ALTER TABLE ONLY public.solutions
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20251026160950'),
+('20251012114226'),
+('20251012111259'),
+('20251012111225'),
 ('20251003175723'),
 ('20250928153540'),
 ('20250119185329'),
