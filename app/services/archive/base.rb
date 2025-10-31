@@ -16,7 +16,7 @@ module Archive
 
     def write_archive
       FileUtils.remove @path, force: true
-      Zip::File.open(@path, create: true) do |zip|
+      Zip::File.open @path, create: true do |zip|
         @contest.users.includes(solutions: [:task, file_attachment: :blob]).find_each do |user|
           secret = fetch_secret user
           fetch_solutions(user).each { write_solution zip, secret, _1 unless _1.nil? }
