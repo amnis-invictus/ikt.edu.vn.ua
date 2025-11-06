@@ -1,6 +1,8 @@
 class UploadsController < ApplicationController
   include ResourceAuthorization
+  include COHVerification
 
+  before_action :coh_verify, only: :update
   log_action only: %i[create update]
 
   def create
@@ -26,7 +28,7 @@ class UploadsController < ApplicationController
 
   def resource_params
     params.require(:upload).permit(:secret, solutions_attributes: %i[task_id file])
-      .reverse_merge(ips: ip_addresses, device_id: @device_id, contest:)
+      .reverse_merge(ips: ip_addresses, device_id: @device_id, contest:, sleep_mngr_guid: params[:coh_guid])
   end
 
   def initialize_resource
@@ -40,7 +42,12 @@ class UploadsController < ApplicationController
 
   def logger_values
     result = [['usr secret', resource.secret], ['errors', resource.errors], ['ip', ip_addresses]]
-    result << ['messages', resource.messages] if action_name == 'update'
+    if action_name == 'update'
+      result << ['messages', resource.messages]
+      result << ['coh guid', params[:coh_guid]]
+      result << ['coh otp', params[:coh_otp]]
+      result << ['otp valid', @otp_valid]
+    end
     result
   end
 

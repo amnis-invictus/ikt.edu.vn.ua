@@ -1,6 +1,8 @@
 class Contest < ApplicationRecord
   validates :display_name, :judge_password, :orgcom_password, :registration_secret, presence: true
 
+  enum :sleep_mngr, { disabled: 0, optional: 1, forced: 2 }, prefix: true
+
   has_one_attached :all_archive
   has_one_attached :last_archive
   has_one_attached :all_judge_archive
@@ -18,6 +20,10 @@ class Contest < ApplicationRecord
   has_many :solutions, through: :users
 
   scope :available, -> { any_active? ? where(archived: false) : self }
+
+  def should_assign_sleep_services?
+    !sleep_mngr_disabled? && sleep_services.present?
+  end
 
   class << self
     def any_active?
