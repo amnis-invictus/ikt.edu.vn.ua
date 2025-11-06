@@ -243,6 +243,7 @@ GEM
       racc (~> 1.4)
     nokogiri (1.18.10-x86_64-linux-gnu)
       racc (~> 1.4)
+    openssl (3.3.2)
     ostruct (0.6.3)
     parallel (1.27.0)
     parser (3.3.9.0)
@@ -450,6 +451,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-20
+  arm64-darwin-23
   ruby
   x86_64-linux
 
@@ -476,6 +478,7 @@ DEPENDENCIES
   jquery-rails
   letter_opener
   listen (~> 3.9)
+  openssl (~> 3.3, >= 3.3.2)
   pg (~> 1.6)
   puma (~> 6.6)
   pundit
