@@ -41,7 +41,7 @@ jobs:
       REDIS_URL: "redis://localhost:6379/0"
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
